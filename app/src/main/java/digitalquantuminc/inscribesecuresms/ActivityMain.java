@@ -33,25 +33,35 @@ import digitalquantuminc.inscribesecuresms.View.ViewSessionList;
 
 public class ActivityMain extends AppCompatActivity {
 
-    // Global Variable for UX Binding
+    //region Global Variable
+    // Development Mode Switch
+    // Put 1 to enable development mode otherwise 0
+    // Development mode will automatically populates SQLite Database with dummy data for easy development.
+    // It will destroy the database, recreate database, and load dummy data each runtime.
     private static final int DEVELOPMENT_MODE = 1;
 
+    // Global Variable for UX Binding
+    // Variable for ViewPager that has been modified to inflate standard activity layout (not fragment)
     private ViewPager mViewPager;
     private ViewPagerAdapter adapter;
 
+    // Variable for Children Activity (i.e. inflated layout on each tab viewpager
     private ViewConversationList viewconversationlist;
     private ViewContactsList viewcontactslist;
     private ViewSessionList viewsessionlist;
 
+    // Variable for Toolbar
     private Toolbar toolbar;
 
+    // Variable for Tablayout
     private TabLayout tabLayout;
 
+    //endregion
+    //region Override Method
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         // Dummy data, only for development only.
         if (DEVELOPMENT_MODE == 1) {
@@ -62,14 +72,9 @@ public class ActivityMain extends AppCompatActivity {
 
         // UX Layout Setup
         setupUXLayout();
-        //setButtonOnClickListener();
-
-        // UI Component Binding
-        //UIComponentBinding();
 
         // Contact List
         LoadContactList(viewcontactslist.getList_contacts());
-
     }
 
     @Override
@@ -81,6 +86,7 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // TODO: Plan what kind of menu that should be included in MenuItem and Their respective action
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -96,6 +102,7 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Handle all feedbackcode request from child activity to be executed in parent activity
         super.onActivityResult(requestCode, resultCode, data);
         // Check request code send by child activity before it closes itself.
         switch (requestCode) {
@@ -112,6 +119,8 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
+    //endregion
+    //region UX Layout and Binding Method
     private void setupUXLayout() {
 
         // Instantiate Child View for ViewPager
@@ -140,11 +149,17 @@ public class ActivityMain extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
+    //endregion
+    //region Method
     public void LoadContactList(ListView listcontact) {
+        // Access the database and load all of its content to ArrayList
         contactRepository repo = new contactRepository(this);
         ArrayList<HashMap<String, String>> contactList = repo.getContactListSorted();
+        // If there is at least one element
         if (contactList.size() != 0) {
+            // Set adapter for the listcontact
             listcontact.setAdapter(new contactListAdapter(ActivityMain.this, contactList));
+            // Set the eventhandler when the item in the listcontact gets clicked.
             listcontact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -156,17 +171,25 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-
+    //endregion
+    //region UX EventHandler Method
     private void listview_contactList_onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        TextView textlist_ContactPhoneNumber = (TextView) view.findViewById(R.id.textlist_ContactPhoneNumber);
-        ImageView imageView_ContactAccent = (ImageView) view.findViewById(R.id.imageView_ContactAccent);
+        // Method that handle action when the item in ContactList listview is clicked.
+
+        // First, we need to bind the UX Component into variable to access it easily.
+        TextView textlist_ContactPhoneNumber = view.findViewById(R.id.textlist_ContactPhoneNumber);
+        ImageView imageView_ContactAccent = view.findViewById(R.id.imageView_ContactAccent);
+
+        // Extract the Phone Number as a unique identity for database query.
         String ContactPhoneNumber = textlist_ContactPhoneNumber.getText().toString();
+
+        // Preparing intent to be passed to ActivityContactsDetail as child activity
         Intent objIntent = new Intent(getApplicationContext(), ActivityContactsDetail.class);
         objIntent.putExtra(IntentString.MainToContactsDetails_PhoneNum, ContactPhoneNumber);
         objIntent.putExtra(IntentString.MainToContactsDetails_ColorTheme, ((ColorDrawable) imageView_ContactAccent.getBackground()).getColor());
+
+        // Start the ActivityContactsDetail by passing the intent and the code for feedback request.
         startActivityForResult(objIntent, IntentString.MainFeedbackCode_RefreshContactList);
     }
-
-
-
+    //endregion
 }
