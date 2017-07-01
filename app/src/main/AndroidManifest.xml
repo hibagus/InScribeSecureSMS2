@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ActivityConversationDetail"
+            android:name=".ChildrenActivity.ActivityConversationDetail"
             android:label="@string/title_activity_conversation_detail"
             android:parentActivityName=".ActivityMain"
             android:theme="@style/AppTheme.NoActionBar">
@@ -29,16 +29,16 @@
                 android:value="digitalquantuminc.inscribesecuresms.ActivityMain" />
         </activity>
         <activity
-            android:name=".ActivitySingleMessageView"
+            android:name=".ChildrenActivity.ActivitySingleMessageView"
             android:label="@string/title_activity_single_message_view"
-            android:parentActivityName=".ActivityConversationDetail"
+            android:parentActivityName=".ChildrenActivity.ActivityConversationDetail"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="digitalquantuminc.inscribesecuresms.ActivityConversationDetail" />
+                android:value="digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityConversationDetail" />
         </activity>
         <activity
-            android:name=".ActivityContactsDetail"
+            android:name=".ChildrenActivity.ActivityContactsDetail"
             android:label="@string/title_activity_contacts_detail"
             android:parentActivityName=".ActivityMain"
             android:theme="@style/AppTheme.NoActionBar">
@@ -47,7 +47,7 @@
                 android:value="digitalquantuminc.inscribesecuresms.ActivityMain" />
         </activity>
         <activity
-            android:name=".ActivitySessionDetail"
+            android:name=".ChildrenActivity.ActivitySessionDetail"
             android:label="@string/title_activity_session_detail"
             android:parentActivityName=".ActivityMain"
             android:theme="@style/AppTheme.NoActionBar">
