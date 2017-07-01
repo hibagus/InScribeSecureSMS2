@@ -2,24 +2,11 @@ package digitalquantuminc.inscribesecuresms.DataType;
 
 /**
  * Created by Bagus Hanindhito on 28/06/2017.
+ * Define the TypeSession to handle the Session Data
  */
 
 public class TypeSession {
-    // Private Variable
-    private String phone_number;
-    private String name;
-    private int session_validity;
-    private long session_handshake_date;
-    private int session_role;
-    private String session_ecdh_private_key;
-    private String session_ecdh_public_key;
-    private String session_ecdh_partner_public_key;
-    private String session_ecdh_partner_digital_signature;
-    private int session_ecdh_partner_validity;
-    private String session_ecdh_shared_secret;
-    private String session_ecdh_aes_key;
-
-    // SQL TABLE
+    //region SQL Table Key
     public static final String TABLE = "session";
     public static final String KEY_ID = "id";
     public static final String KEY_phone = "phonenum";
@@ -34,7 +21,23 @@ public class TypeSession {
     public static final String KEY_ecdhvalid = "ecdhvalid";
     public static final String KEY_ecdhsecret = "ecdhsecret";
     public static final String KEY_aeskey = "aeskey";
+    //endregion
+    //region Global Variable
+    private String phone_number;
+    private String name;
+    private int session_validity;
+    private long session_handshake_date;
+    private int session_role;
+    private String session_ecdh_private_key;
+    private String session_ecdh_public_key;
+    private String session_ecdh_partner_public_key;
+    private String session_ecdh_partner_digital_signature;
+    private int session_ecdh_partner_validity;
+    private String session_ecdh_shared_secret;
+    private String session_ecdh_aes_key;
 
+    //endregion
+    //region Constructor
     public TypeSession() {
 
     }
@@ -54,6 +57,8 @@ public class TypeSession {
         this.session_ecdh_aes_key = session_ecdh_aes_key;
     }
 
+    //endregion
+    //region Setter
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
     }
@@ -102,7 +107,8 @@ public class TypeSession {
         this.session_ecdh_aes_key = session_ecdh_aes_key;
     }
 
-
+    //endregion
+    //region Getter
     public String getPhone_number() {
         return this.phone_number;
     }
@@ -150,6 +156,5 @@ public class TypeSession {
     public String getSession_ecdh_aes_key() {
         return this.session_ecdh_aes_key;
     }
-
-
+    //endregion
 }
