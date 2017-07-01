@@ -3,6 +3,7 @@ package digitalquantuminc.inscribesecuresms.DataType;
 /**
  * Created by Bagus Hanindhito on 28/06/2017.
  * Define the TypeProfile to handle the Profile Data
+ * Note Profile Data also includes application last state.
  */
 
 public class TypeProfile {
