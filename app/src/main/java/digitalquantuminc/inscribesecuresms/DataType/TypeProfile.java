@@ -2,17 +2,11 @@ package digitalquantuminc.inscribesecuresms.DataType;
 
 /**
  * Created by Bagus Hanindhito on 28/06/2017.
+ * Define the TypeProfile to handle the Profile Data
  */
 
 public class TypeProfile {
-    // Private Variable
-    private String phone_number;
-    private String name_self;
-    private long generated_date;
-    private String rsa_publickey;
-    private String rsa_privatekey;
-
-    // SQL TABLE
+    //region SQL Table Key
     public static final String TABLE = "profile";
     public static final String KEY_ID = "id";
     public static final String KEY_phone = "phonenum";
@@ -20,7 +14,16 @@ public class TypeProfile {
     public static final String KEY_date = "generateddate";
     public static final String KEY_rsapub = "rsapubkey";
     public static final String KEY_rsapriv = "rsaprivkey";
+    //endregion
+    //region Global Variable
+    private String phone_number;
+    private String name_self;
+    private long generated_date;
+    private String rsa_publickey;
+    private String rsa_privatekey;
 
+    //endregion
+    //region Constructor
     public TypeProfile() {
 
     }
@@ -33,6 +36,8 @@ public class TypeProfile {
         this.rsa_privatekey = rsa_privatekey;
     }
 
+    //endregion
+    //region Setter
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
     }
@@ -53,6 +58,8 @@ public class TypeProfile {
         this.rsa_privatekey = rsa_privatekey;
     }
 
+    //endregion
+    //region Getter
     public long getGenerated_date() {
         return generated_date;
     }
@@ -72,4 +79,5 @@ public class TypeProfile {
     public String getRsa_publickey() {
         return rsa_publickey;
     }
+    //endregion
 }
