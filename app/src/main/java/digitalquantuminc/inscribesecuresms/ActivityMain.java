@@ -17,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityContactsDetail;
 import digitalquantuminc.inscribesecuresms.Development.ContactDummyData;
 import digitalquantuminc.inscribesecuresms.Intent.IntentString;
 import digitalquantuminc.inscribesecuresms.ListViewAdapter.contactListAdapter;
