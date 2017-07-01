@@ -8,6 +8,8 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeProfile;
 
 /**
  * Created by Bagus Hanindhito on 28/06/2017.
+ * This class is handle SQLite Database for the Profile Database.
+ * Basically, the profile DB is also an application DB that contains last state of the apps.
  */
 
 public class profileDBHelper extends SQLiteOpenHelper {
