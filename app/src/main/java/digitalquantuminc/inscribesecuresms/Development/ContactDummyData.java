@@ -14,7 +14,7 @@ import digitalquantuminc.inscribesecuresms.Repository.contactRepository;
  */
 
 public class ContactDummyData {
-
+    //region Global Variable
     private static final ArrayList<TypeContact> DummyContactList = new ArrayList<TypeContact>() {{
         add(new TypeContact("081395170700", "Bagus Hanindhito", System.currentTimeMillis(), "00000000"));
         add(new TypeContact("081321132456", "Fulan Bin Abi Fulan", System.currentTimeMillis(), "00000000"));
@@ -33,6 +33,8 @@ public class ContactDummyData {
         add(new TypeContact("036587855457", "Maung Bandung", System.currentTimeMillis(), "00000000"));
     }};
 
+    //endregion
+    //region Static Methods
     public static void LoadDummyData(Context contex) {
 
         contactRepository contactRepo = new contactRepository(contex);
@@ -50,4 +52,5 @@ public class ContactDummyData {
         contactRepository contactRepo = new contactRepository(context);
         contactRepo.CreateTable();
     }
+    //endregion
 }
