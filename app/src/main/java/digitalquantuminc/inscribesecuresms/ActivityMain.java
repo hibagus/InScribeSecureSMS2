@@ -5,8 +5,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,11 +15,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import digitalquantuminc.inscribesecuresms.Development.ContactDummyData;
 import digitalquantuminc.inscribesecuresms.Intent.IntentString;
 import digitalquantuminc.inscribesecuresms.ListViewAdapter.contactListAdapter;
@@ -30,6 +25,14 @@ import digitalquantuminc.inscribesecuresms.View.ViewContactsList;
 import digitalquantuminc.inscribesecuresms.View.ViewConversationList;
 import digitalquantuminc.inscribesecuresms.View.ViewPagerAdapter;
 import digitalquantuminc.inscribesecuresms.View.ViewSessionList;
+
+/**
+ * Created by Bagus Hanindhito on 01/07/2017.
+ * This is class for ActivityMain which is the launcher activity for this program.
+ * There is only small things to do in this class, such as instantiating the child view to be displayed in ViewPager,
+ * initialize the ViewPager, TabLayout, and ViewPager Adapter, handle the feedback code request from the child activity,
+ * send appropriate intent to each child activity before launched.
+ */
 
 public class ActivityMain extends AppCompatActivity {
 
