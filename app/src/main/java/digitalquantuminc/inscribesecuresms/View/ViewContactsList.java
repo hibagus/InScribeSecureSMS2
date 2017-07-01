@@ -7,19 +7,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
-import com.amulyakhare.textdrawable.util.ColorGenerator;
-
-import org.w3c.dom.Text;
-
 import digitalquantuminc.inscribesecuresms.R;
 
 /**
  * Created by Bagus Hanindhito on 30/06/2017.
+ * This class basically provide access to UX Element in Activity Contact List so that the Parent Activity can have access to them.
  */
 
 public class ViewContactsList extends Presenter {
-
+    //region Global Variable
     private ListView list_contacts;
     private TextView text_PartnerNumber;
     private TextView text_PartnerName;
@@ -27,13 +23,14 @@ public class ViewContactsList extends Presenter {
     private EditText text_partnerRSAPubKey;
     private Button btn_DeleteContact;
 
-    private ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
-    private TextDrawable.IBuilder mDrawableBuilder;
-
+    //endregion
+    //region Constructor
     public ViewContactsList(AppCompatActivity activity, View view) {
         super(activity, view);
     }
 
+    //endregion
+    //region Override Method
     @Override
     public void onCreateView() {
         list_contacts = view.findViewById(R.id.list_contacts);
@@ -42,9 +39,10 @@ public class ViewContactsList extends Presenter {
         text_ContactAcquisitionDate = view.findViewById(R.id.text_ContactAcquisitionDate);
         text_partnerRSAPubKey = view.findViewById(R.id.text_partnerRSAPubKey);
         btn_DeleteContact = view.findViewById(R.id.btn_DeleteContact);
-        mDrawableBuilder = TextDrawable.builder().round();
     }
 
+    //endregion
+    //region Getter
     public ListView getList_contacts() {
         return list_contacts;
     }
@@ -68,4 +66,5 @@ public class ViewContactsList extends Presenter {
     public Button getBtn_DeleteContact() {
         return btn_DeleteContact;
     }
+    //endregion
 }
