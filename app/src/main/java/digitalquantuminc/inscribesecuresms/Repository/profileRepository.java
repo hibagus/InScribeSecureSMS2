@@ -13,16 +13,22 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeProfile;
 
 /**
  * Created by Bagus Hanindhito on 29/06/2017.
+ * This class handle the operation for Profile Data and its SQLite Database
  */
 
 public class profileRepository {
 
+    //region Global Variable
     private profileDBHelper dbHelper;
 
+    //endregion
+    //region Constructor
     public profileRepository(Context context) {
         dbHelper = new profileDBHelper(context);
     }
 
+    //endregion
+    //region INSERT Method
     public int insert(TypeProfile profile) {
         // Prepare Values to be inserted
         ContentValues values = new ContentValues();
@@ -41,6 +47,8 @@ public class profileRepository {
         return (int) profile_id;
     }
 
+    //endregion
+    //region DELETE Method
     public void delete(int profile_id) {
         // Open connection to write the DB
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -59,6 +67,8 @@ public class profileRepository {
         db.close();
     }
 
+    //endregion
+    //region UPDATE Method
     public void update(TypeProfile profile, String old_phonenum) {
         // Prepare Values to be inserted
         ContentValues values = new ContentValues();
@@ -75,6 +85,8 @@ public class profileRepository {
         db.close();
     }
 
+    //endregion
+    //region GET ITEM Method
     public TypeProfile getProfile(int profile_id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT "
@@ -102,6 +114,8 @@ public class profileRepository {
         return profile;
     }
 
+    //endregion
+    //region GET ID Method
     public int getProfileId(String phonenum) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT "
@@ -120,6 +134,8 @@ public class profileRepository {
         return profile_id;
     }
 
+    //endregion
+    //region GET LIST ITEM Method
     public ArrayList<HashMap<String, String>> getProfileList() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT "
@@ -130,11 +146,11 @@ public class profileRepository {
                 + TypeProfile.KEY_rsapub + ", "
                 + TypeProfile.KEY_rsapriv + " FROM "
                 + TypeProfile.TABLE;
-        ArrayList<HashMap<String, String>> profileList = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> profileList = new ArrayList<>();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
-                HashMap<String, String> profile = new HashMap<String, String>();
+                HashMap<String, String> profile = new HashMap<>();
                 profile.put("id", cursor.getString(cursor.getColumnIndex(TypeProfile.KEY_ID)));
                 profile.put("phone", cursor.getString(cursor.getColumnIndex(TypeProfile.KEY_phone)));
                 profile.put("name", cursor.getString(cursor.getColumnIndex(TypeProfile.KEY_name)));
@@ -148,4 +164,5 @@ public class profileRepository {
         db.close();
         return profileList;
     }
+    //endregion
 }
