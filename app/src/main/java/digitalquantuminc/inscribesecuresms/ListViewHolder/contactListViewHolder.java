@@ -8,28 +8,29 @@ import digitalquantuminc.inscribesecuresms.R;
 
 /**
  * Created by Bagus Hanindhito on 01/07/2017.
+ * This class basically handle each of the item in Contact List.
  */
 
 public class contactListViewHolder {
-
+    //region Global Variable
     private View view;
-
     private ImageView imageView_ContactView;
-
     private ImageView imageView_ContactAccent;
-
     private TextView textlist_ContactName;
-
     private TextView textlist_ContactPhoneNumber;
 
+    //endregion
+    //region Constructor
     public contactListViewHolder(View view) {
         this.view = view;
-        imageView_ContactView = (ImageView) view.findViewById(R.id.imageView_ContactView);
-        textlist_ContactName = (TextView) view.findViewById(R.id.textlist_ContactName);
-        textlist_ContactPhoneNumber = (TextView) view.findViewById(R.id.textlist_ContactPhoneNumber);
-        imageView_ContactAccent = (ImageView) view.findViewById(R.id.imageView_ContactAccent);
+        imageView_ContactView = view.findViewById(R.id.imageView_ContactView);
+        textlist_ContactName = view.findViewById(R.id.textlist_ContactName);
+        textlist_ContactPhoneNumber = view.findViewById(R.id.textlist_ContactPhoneNumber);
+        imageView_ContactAccent = view.findViewById(R.id.imageView_ContactAccent);
     }
 
+    //endregion
+    //region Setter
     public void setView(View view) {
         this.view = view;
     }
@@ -50,6 +51,8 @@ public class contactListViewHolder {
         this.imageView_ContactAccent = imageView_ContactAccent;
     }
 
+    //endregion
+    //region Getter
     public ImageView getImageView_ContactView() {
         return imageView_ContactView;
     }
@@ -65,4 +68,5 @@ public class contactListViewHolder {
     public ImageView getImageView_ContactAccent() {
         return imageView_ContactAccent;
     }
+    //endregion
 }
