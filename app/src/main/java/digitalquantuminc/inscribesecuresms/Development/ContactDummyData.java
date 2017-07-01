@@ -9,11 +9,13 @@ import digitalquantuminc.inscribesecuresms.Repository.contactRepository;
 
 /**
  * Created by Bagus Hanindhito on 01/07/2017.
+ * This class is used for development purpose only
+ * It will load dummy data into Contact Database
  */
 
 public class ContactDummyData {
 
-    public static final ArrayList<TypeContact> DummyContactList = new ArrayList<TypeContact>() {{
+    private static final ArrayList<TypeContact> DummyContactList = new ArrayList<TypeContact>() {{
         add(new TypeContact("081395170700", "Bagus Hanindhito", System.currentTimeMillis(), "00000000"));
         add(new TypeContact("081321132456", "Fulan Bin Abi Fulan", System.currentTimeMillis(), "00000000"));
         add(new TypeContact("087213131321", "Cindy Agustina", System.currentTimeMillis(), "00000000"));
