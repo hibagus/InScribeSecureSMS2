@@ -182,8 +182,8 @@ public class ActivityMain extends AppCompatActivity {
         // Method that handle action when the item in ContactList listview is clicked.
 
         // First, we need to bind the UX Component into variable to access it easily.
-        TextView textlist_ContactPhoneNumber = view.findViewById(R.id.textlist_ContactPhoneNumber);
-        ImageView imageView_ContactAccent = view.findViewById(R.id.imageView_ContactAccent);
+        TextView textlist_ContactPhoneNumber = (TextView) view.findViewById(R.id.textlist_ContactPhoneNumber);
+        ImageView imageView_ContactAccent = (ImageView) view.findViewById(R.id.imageView_ContactAccent);
 
         // Extract the Phone Number as a unique identity for database query.
         String ContactPhoneNumber = textlist_ContactPhoneNumber.getText().toString();
