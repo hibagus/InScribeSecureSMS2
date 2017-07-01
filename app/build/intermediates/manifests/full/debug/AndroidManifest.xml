@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="digitalquantuminc.inscribesecuresms"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="22"
+        android:targetSdkVersion="26" />
+
+    <meta-data
+        android:name="android.support.VERSION"
+        android:value="26.0.0-alpha1" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="digitalquantuminc.inscribesecuresms.ActivityMain"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="digitalquantuminc.inscribesecuresms.ActivityConversationDetail"
+            android:label="@string/title_activity_conversation_detail"
+            android:parentActivityName="digitalquantuminc.inscribesecuresms.ActivityMain"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="digitalquantuminc.inscribesecuresms.ActivityMain" />
+        </activity>
+        <activity
+            android:name="digitalquantuminc.inscribesecuresms.ActivitySingleMessageView"
+            android:label="@string/title_activity_single_message_view"
+            android:parentActivityName="digitalquantuminc.inscribesecuresms.ActivityConversationDetail"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="digitalquantuminc.inscribesecuresms.ActivityConversationDetail" />
+        </activity>
+        <activity
+            android:name="digitalquantuminc.inscribesecuresms.ActivityContactsDetail"
+            android:label="@string/title_activity_contacts_detail"
+            android:parentActivityName="digitalquantuminc.inscribesecuresms.ActivityMain"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="digitalquantuminc.inscribesecuresms.ActivityMain" />
+        </activity>
+        <activity
+            android:name="digitalquantuminc.inscribesecuresms.ActivitySessionDetail"
+            android:label="@string/title_activity_session_detail"
+            android:parentActivityName="digitalquantuminc.inscribesecuresms.ActivityMain"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="digitalquantuminc.inscribesecuresms.ActivityMain" />
+        </activity>
+    </application>
+
+</manifest>

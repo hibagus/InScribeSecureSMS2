@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\Bagus Hanindhito\.android\build-cache\e51c0fe695b949b1752a4fdd624ce59725a3da11\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="d237556caead5b93d97e18a071059a2c0045978e">
+        <dex dex="E:\Android_Studio\InScribeSecureSMS2\app\build\intermediates\pre-dexed\debug\classes_a684ad4bd3201b67517c3aa77dffe0400977b807.jar" />
+    </item>
+
+</items>

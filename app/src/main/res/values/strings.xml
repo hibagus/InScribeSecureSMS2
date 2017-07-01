@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">InScribe Secure SMS</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_conversation_detail">conversation_detail</string>
+    <string name="title_activity_single_message_view">single_message_view</string>
+    <string name="title_activity_contacts_detail">contacts_detail</string>
+    <string name="title_activity_session_detail">session_detail</string>
+</resources>
