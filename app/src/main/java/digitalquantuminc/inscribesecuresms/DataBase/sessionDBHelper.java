@@ -8,6 +8,7 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeSession;
 
 /**
  * Created by Bagus Hanindhito on 28/06/2017.
+ * This class is handle SQLite Database for the Session Database.
  */
 
 public class sessionDBHelper extends SQLiteOpenHelper {
