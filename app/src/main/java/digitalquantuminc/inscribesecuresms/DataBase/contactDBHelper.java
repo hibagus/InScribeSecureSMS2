@@ -8,6 +8,7 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
 
 /**
  * Created by Bagus Hanindhito on 28/06/2017.
+ * This class is handle SQLite Database for the Contact Database.
  */
 
 public class contactDBHelper extends SQLiteOpenHelper {
