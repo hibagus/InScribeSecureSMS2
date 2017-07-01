@@ -5,12 +5,11 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -44,7 +43,6 @@ public class ActivityContactsDetail extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
 
         // Binding UI Component to Code
         UIComponentBinding();
@@ -52,6 +50,7 @@ public class ActivityContactsDetail extends AppCompatActivity {
         // Get Intent
         IntentProcessor();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -63,6 +62,7 @@ public class ActivityContactsDetail extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
+            IntentFeedback(IntentString.MainFeedbackCode_DoNothing);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -98,6 +98,12 @@ public class ActivityContactsDetail extends AppCompatActivity {
         text_partnerRSAPubKey.setKeyListener(null);
     }
 
+    protected void IntentFeedback(int FeedbackType) {
+        Intent intent = new Intent();
+        setResult(FeedbackType, intent);
+        finish();
+    }
+
 
     public void setStatusBarColor(int color) {
 
@@ -122,6 +128,14 @@ public class ActivityContactsDetail extends AppCompatActivity {
         Color.colorToHSV(color, hsv);
         hsv[2] *= 0.8f;
         return Color.HSVToColor(hsv);
+    }
+
+    public void btn_DeleteContact_onClick(View v) {
+        String PhoneNumber = text_PartnerNumber.getText().toString();
+        contactRepository repo = new contactRepository(this);
+        repo.delete(PhoneNumber);
+        onBackPressed();
+        IntentFeedback(IntentString.MainFeedbackCode_RefreshContactList);
     }
 
 }
