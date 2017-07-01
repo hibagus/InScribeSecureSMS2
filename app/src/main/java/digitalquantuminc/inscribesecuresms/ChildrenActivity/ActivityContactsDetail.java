@@ -1,4 +1,4 @@
-package digitalquantuminc.inscribesecuresms;
+package digitalquantuminc.inscribesecuresms.ChildrenActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,6 +21,7 @@ import java.util.Date;
 
 import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
 import digitalquantuminc.inscribesecuresms.Intent.IntentString;
+import digitalquantuminc.inscribesecuresms.R;
 import digitalquantuminc.inscribesecuresms.Repository.contactRepository;
 
 public class ActivityContactsDetail extends AppCompatActivity {

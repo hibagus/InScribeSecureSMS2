@@ -1,4 +1,4 @@
-package digitalquantuminc.inscribesecuresms;
+package digitalquantuminc.inscribesecuresms.ChildrenActivity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,12 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class ActivitySingleMessageView extends AppCompatActivity {
+import digitalquantuminc.inscribesecuresms.R;
+
+public class ActivitySessionDetail extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_single_message_view);
+        setContentView(R.layout.activity_session_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
