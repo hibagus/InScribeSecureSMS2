@@ -6,11 +6,11 @@
 
     <uses-sdk
         android:minSdkVersion="22"
-        android:targetSdkVersion="26" />
+        android:targetSdkVersion="25" />
 
     <meta-data
         android:name="android.support.VERSION"
-        android:value="26.0.0-alpha1" />
+        android:value="25.3.1" />
 
     <application
         android:allowBackup="true"
@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="digitalquantuminc.inscribesecuresms.ActivityConversationDetail"
+            android:name="digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityConversationDetail"
             android:label="@string/title_activity_conversation_detail"
             android:parentActivityName="digitalquantuminc.inscribesecuresms.ActivityMain"
             android:theme="@style/AppTheme.NoActionBar" >
@@ -39,16 +39,16 @@
                 android:value="digitalquantuminc.inscribesecuresms.ActivityMain" />
         </activity>
         <activity
-            android:name="digitalquantuminc.inscribesecuresms.ActivitySingleMessageView"
+            android:name="digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivitySingleMessageView"
             android:label="@string/title_activity_single_message_view"
-            android:parentActivityName="digitalquantuminc.inscribesecuresms.ActivityConversationDetail"
+            android:parentActivityName="digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityConversationDetail"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="digitalquantuminc.inscribesecuresms.ActivityConversationDetail" />
+                android:value="digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityConversationDetail" />
         </activity>
         <activity
-            android:name="digitalquantuminc.inscribesecuresms.ActivityContactsDetail"
+            android:name="digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityContactsDetail"
             android:label="@string/title_activity_contacts_detail"
             android:parentActivityName="digitalquantuminc.inscribesecuresms.ActivityMain"
             android:theme="@style/AppTheme.NoActionBar" >
@@ -57,7 +57,7 @@
                 android:value="digitalquantuminc.inscribesecuresms.ActivityMain" />
         </activity>
         <activity
-            android:name="digitalquantuminc.inscribesecuresms.ActivitySessionDetail"
+            android:name="digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivitySessionDetail"
             android:label="@string/title_activity_session_detail"
             android:parentActivityName="digitalquantuminc.inscribesecuresms.ActivityMain"
             android:theme="@style/AppTheme.NoActionBar" >

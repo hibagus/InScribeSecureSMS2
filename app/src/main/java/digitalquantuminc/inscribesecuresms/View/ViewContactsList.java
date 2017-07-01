@@ -33,12 +33,12 @@ public class ViewContactsList extends Presenter {
     //region Override Method
     @Override
     public void onCreateView() {
-        list_contacts = view.findViewById(R.id.list_contacts);
-        text_PartnerNumber = view.findViewById(R.id.text_PartnerNumber);
-        text_PartnerName = view.findViewById(R.id.text_PartnerName);
-        text_ContactAcquisitionDate = view.findViewById(R.id.text_ContactAcquisitionDate);
-        text_partnerRSAPubKey = view.findViewById(R.id.text_partnerRSAPubKey);
-        btn_DeleteContact = view.findViewById(R.id.btn_DeleteContact);
+        list_contacts = (ListView) view.findViewById(R.id.list_contacts);
+        text_PartnerNumber = (TextView) view.findViewById(R.id.text_PartnerNumber);
+        text_PartnerName = (TextView) view.findViewById(R.id.text_PartnerName);
+        text_ContactAcquisitionDate = (TextView) view.findViewById(R.id.text_ContactAcquisitionDate);
+        text_partnerRSAPubKey = (EditText) view.findViewById(R.id.text_partnerRSAPubKey);
+        btn_DeleteContact = (Button) view.findViewById(R.id.btn_DeleteContact);
     }
 
     //endregion
