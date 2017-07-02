@@ -13,16 +13,21 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
 
 /**
  * Created by Bagus Hanindhito on 29/06/2017.
+ * This class handle the operation for Contact Data and its SQLite Database
  */
 
 public class contactRepository {
-
+    //region Global Variable
     private contactDBHelper dbHelper;
 
+    //endregion
+    //region Constructor
     public contactRepository(Context context) {
         dbHelper = new contactDBHelper(context);
     }
 
+    //endregion
+    //region INSERT Method
     public int insert(TypeContact contact) {
         // Prepare Values to be inserted
         ContentValues values = new ContentValues();
@@ -41,6 +46,8 @@ public class contactRepository {
         return (int) contact_id;
     }
 
+    //endregion
+    //region DELETE Method
     public void delete(int contact_id) {
         // Open connection to write the DB
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -59,6 +66,8 @@ public class contactRepository {
         db.close();
     }
 
+    //endregion
+    //region UPDATE method
     public void update(TypeContact contact, String old_phonenum) {
         // Prepare Values to be updated
         ContentValues values = new ContentValues();
@@ -72,6 +81,8 @@ public class contactRepository {
         db.update(TypeContact.TABLE, values, TypeContact.KEY_phone + " = ?", new String[]{String.valueOf(old_phonenum)});
     }
 
+    //endregion
+    //region GET ITEM Method
     public TypeContact getContact(int contact_id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT "
@@ -124,6 +135,8 @@ public class contactRepository {
         return contact;
     }
 
+    //endregion
+    //region GET ID Method
     public int getContactId(String phonenum) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT "
@@ -143,6 +156,8 @@ public class contactRepository {
         return contact_id;
     }
 
+    //endregion
+    //region GET LIST ITEM Method
     public ArrayList<HashMap<String, String>> getContactList() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT "
@@ -153,11 +168,11 @@ public class contactRepository {
                 + TypeContact.KEY_rsapub + " FROM "
                 + TypeContact.TABLE;
 
-        ArrayList<HashMap<String, String>> contactList = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> contactList = new ArrayList<>();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
-                HashMap<String, String> contact = new HashMap<String, String>();
+                HashMap<String, String> contact = new HashMap<>();
                 contact.put(TypeContact.KEY_ID, cursor.getString(cursor.getColumnIndex(TypeContact.KEY_ID)));
                 contact.put(TypeContact.KEY_phone, cursor.getString(cursor.getColumnIndex(TypeContact.KEY_phone)));
                 contact.put(TypeContact.KEY_name, cursor.getString(cursor.getColumnIndex(TypeContact.KEY_name)));
@@ -182,11 +197,11 @@ public class contactRepository {
                 + TypeContact.TABLE + " ORDER BY "
                 + TypeContact.KEY_name + " ASC ";
 
-        ArrayList<HashMap<String, String>> contactList = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> contactList = new ArrayList<>();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
-                HashMap<String, String> contact = new HashMap<String, String>();
+                HashMap<String, String> contact = new HashMap<>();
                 contact.put(TypeContact.KEY_ID, cursor.getString(cursor.getColumnIndex(TypeContact.KEY_ID)));
                 contact.put(TypeContact.KEY_phone, cursor.getString(cursor.getColumnIndex(TypeContact.KEY_phone)));
                 contact.put(TypeContact.KEY_name, cursor.getString(cursor.getColumnIndex(TypeContact.KEY_name)));
@@ -200,6 +215,8 @@ public class contactRepository {
         return contactList;
     }
 
+    //endregion
+    //region TABLE Method
     public void DropTable() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + TypeContact.TABLE);
@@ -216,4 +233,5 @@ public class contactRepository {
 
         db.execSQL(CREATE_TABLE_CONTACT);
     }
+    //endregion
 }

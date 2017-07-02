@@ -2,23 +2,26 @@ package digitalquantuminc.inscribesecuresms.DataType;
 
 /**
  * Created by Bagus Hanindhito on 28/06/2017.
+ * Define the TypeContact to handle the Contact Data
  */
 
 public class TypeContact {
-    // Private Variable
-    private String phone_number;
-    private String contact_name;
-    private long acquisition_date;
-    private String rsa_publickey;
-
-    // SQL TABLE
+    //region SQL Table Key
     public static final String TABLE = "contact";
     public static final String KEY_ID = "id";
     public static final String KEY_phone = "phonenum";
     public static final String KEY_name = "contactname";
     public static final String KEY_date = "acquisitiondate";
     public static final String KEY_rsapub = "rsapubkey";
+    //endregion
+    //region Global Variable
+    private String phone_number;
+    private String contact_name;
+    private long acquisition_date;
+    private String rsa_publickey;
 
+    //endregion
+    //region Constructor
     public TypeContact() {
 
     }
@@ -30,6 +33,8 @@ public class TypeContact {
         this.rsa_publickey = rsa_publickey;
     }
 
+    //endregion
+    //region Setter
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
     }
@@ -46,6 +51,8 @@ public class TypeContact {
         this.rsa_publickey = rsa_publickey;
     }
 
+    //endregion
+    //region Getter
     public String getPhone_number() {
         return this.phone_number;
     }
@@ -61,5 +68,5 @@ public class TypeContact {
     public String getRsa_publickey() {
         return this.rsa_publickey;
     }
-
+    //endregion
 }

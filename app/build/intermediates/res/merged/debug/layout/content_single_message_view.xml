@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="digitalquantuminc.inscribesecuresms.ActivitySingleMessageView"
+    tools:context="digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivitySingleMessageView"
     tools:showIn="@layout/activity_single_message_view">
 
     <LinearLayout
@@ -29,13 +29,13 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sender Name:" />
+            android:text="@string/sender_name" />
 
         <TextView
             android:id="@+id/text_SenderName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fulan Bin Abi Fulan"
+            android:text="@string/dev_dummy_name"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -47,13 +47,13 @@
             android:id="@+id/textView6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sender Number:" />
+            android:text="@string/sender_number" />
 
         <TextView
             android:id="@+id/text_SenderNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="+6281000000000"
+            android:text="@string/dev_dummy_number"
             android:textSize="18sp" />
 
         <Space
@@ -64,13 +64,13 @@
             android:id="@+id/textView8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Message Timestamp:" />
+            android:text="@string/message_timestamp" />
 
         <TextView
             android:id="@+id/text_MessageTimeStamp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2017-06-12 11:12:54"
+            android:text="@string/dev_dummy_date"
             android:textSize="18sp" />
 
         <Space
@@ -81,13 +81,13 @@
             android:id="@+id/textView10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Last Secure Session Handshake:" />
+            android:text="@string/last_secure_session_handshake" />
 
         <TextView
             android:id="@+id/text_SessionHandshakeTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="2017-06-12 12:54:32"
+            android:text="@string/dev_dummy_date"
             android:textSize="18sp" />
 
         <Space
@@ -98,13 +98,13 @@
             android:id="@+id/textView12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Secure Session Status:" />
+            android:text="@string/secure_session_status" />
 
         <TextView
             android:id="@+id/text_SessionValidity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="INVALID"
+            android:text="@string/dev_dummy_status"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -117,19 +117,20 @@
             android:id="@+id/textView14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Encrypted Message Body:" />
+            android:text="@string/encrypted_message_body" />
 
         <EditText
             android:id="@+id/text_EncryptedMessageBody"
+            android:labelFor="@+id/text_EncryptedMessageBody"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:gravity="top|left"
+            android:gravity="start"
             android:inputType="textMultiLine"
             android:maxLines="4"
             android:minLines="4"
             android:scrollbars="vertical"
-            android:text="some encrypted text some encrypted text some encrypted text some encrypted text some encrypted text some encrypted text some encrypted text some encrypted text some encrypted text"
+            android:text="@string/dev_dummy_longtext"
             android:textSize="18sp" />
 
         <Space
@@ -140,19 +141,20 @@
             android:id="@+id/textView15"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Plain Message Body:" />
+            android:text="@string/plain_message_body" />
 
         <EditText
             android:id="@+id/text_PlainMessageBody"
+            android:labelFor="@+id/text_PlainMessageBody"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:gravity="top|left"
+            android:gravity="start"
             android:inputType="textMultiLine"
             android:maxLines="4"
             android:minLines="4"
             android:scrollbars="vertical"
-            android:text="some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text"
+            android:text="@string/dev_dummy_longtext"
             android:textSize="18sp" />
 
     </LinearLayout>

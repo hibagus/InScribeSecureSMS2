@@ -8,18 +8,22 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
 
 /**
  * Created by Bagus Hanindhito on 28/06/2017.
+ * This class is handle SQLite Database for the Contact Database.
  */
 
 public class contactDBHelper extends SQLiteOpenHelper {
-
+    //region Global Variable
     private static final int DATABASE_VERSION = 1;
-
     private static final String DATABASE_NAME = "isms.db";
 
+    //endregion
+    //region Constructor
     public contactDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    //endregion
+    //region Override Method
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE_CONTACT = "CREATE TABLE " + TypeContact.TABLE + "("
@@ -37,4 +41,5 @@ public class contactDBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TypeContact.TABLE);
         onCreate(db);
     }
+    //endregion
 }

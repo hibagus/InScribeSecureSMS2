@@ -5,18 +5,27 @@ import android.view.View;
 
 /**
  * Created by Bagus Hanindhito on 30/06/2017.
+ * This class basically provide access to UX Element in Activity Conversation List so that the Parent Activity can have access to them.
  */
 
 public class ViewConversationList extends Presenter {
 
-    //TextView textViewStep1;
+    //TODO: Create Binding to UX Element with their Getter (IT IS STILL UNIMPLEMENTED)
+    //region Global Variable
 
+    //endregion
+    //region Constructor
     public ViewConversationList(AppCompatActivity activity, View view) {
         super(activity, view);
     }
 
+    //endregion
+    //region Override Method
     @Override
     public void onCreateView() {
-        //textViewStep1 = (TextView) view.findViewById(R.id.step1_textView);
+
     }
+    //endregion
+    //region Getter
+    //endregion
 }

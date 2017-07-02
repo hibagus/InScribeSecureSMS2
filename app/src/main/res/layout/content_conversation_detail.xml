@@ -5,18 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="digitalquantuminc.inscribesecuresms.ActivityConversationDetail"
+    tools:context="digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityConversationDetail"
     tools:showIn="@layout/activity_conversation_detail">
 
-    <LinearLayout
+    <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/prl_toplevel"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        android:weightSum="12"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -28,37 +28,41 @@
 
         <ListView
             android:id="@+id/list_conversation_detail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp" />
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_heightPercent="92%"
+            app:layout_widthPercent="100%" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="11"
-            android:weightSum="3"
-            android:orientation="horizontal">
+        <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/prl_bottom"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_below="@+id/list_conversation_detail"
+            app:layout_heightPercent="8%"
+            app:layout_widthPercent="100%">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:id="@+id/ll_convdetail_leftcolumn"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:orientation="vertical"
+                app:layout_heightPercent="100%"
+                app:layout_widthPercent="33%">
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Secure Session"
+                    android:text="@string/secure_session"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/text_SecureSessionStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ACTIVATED"
+                    android:text="@string/dev_dummy_status"
                     android:textAlignment="center"
                     android:textColor="@android:color/holo_green_dark"
                     android:textSize="18sp"
@@ -66,54 +70,56 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:id="@+id/ll_convdetail_middlecolumn"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_toEndOf="@+id/ll_convdetail_leftcolumn"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:orientation="vertical"
+                app:layout_heightPercent="100%"
+                app:layout_widthPercent="33%">
 
                 <TextView
                     android:id="@+id/textView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Last Handshake"
+                    android:text="@string/last_handshake"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/text_LastHandshake"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="20170602-112432"
+                    android:text="@string/dev_dummy_shortdate"
                     android:textAlignment="center" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:id="@+id/ll_convdetail_rightcolumn"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_toEndOf="@+id/ll_convdetail_middlecolumn"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:orientation="vertical"
+                app:layout_heightPercent="100%"
+                app:layout_widthPercent="33%">
 
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Session Duration"
+                    android:text="@string/session_duration"
                     android:textAlignment="center" />
 
                 <TextView
                     android:id="@+id/text_SessionDuration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="22D 50h32m"
+                    android:text="@string/dev_dummy_duration"
                     android:textAlignment="center" />
             </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
+        </android.support.percent.PercentRelativeLayout>
+    </android.support.percent.PercentRelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

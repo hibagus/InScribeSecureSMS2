@@ -8,18 +8,23 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeProfile;
 
 /**
  * Created by Bagus Hanindhito on 28/06/2017.
+ * This class is handle SQLite Database for the Profile Database.
+ * Basically, the profile DB is also an application DB that contains last state of the apps.
  */
 
 public class profileDBHelper extends SQLiteOpenHelper {
-
+    //region Global Variable
     private static final int DATABASE_VERSION = 1;
-
     private static final String DATABASE_NAME = "isms.db";
 
+    //endregion
+    //region Constructor
     public profileDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    //endregion
+    //region Override Method
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_TABLE_PROFILE = "CREATE TABLE " + TypeProfile.TABLE + "("
@@ -38,4 +43,5 @@ public class profileDBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TypeProfile.TABLE);
         onCreate(db);
     }
+    //endregion
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="digitalquantuminc.inscribesecuresms.ActivitySessionDetail"
+    tools:context="digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivitySessionDetail"
     tools:showIn="@layout/activity_session_detail">
 
     <ScrollView
@@ -27,20 +27,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Partner Name:"
+                android:text="@string/partner_name"
                 android:textAlignment="viewStart" />
 
             <TextView
                 android:id="@+id/text_partner_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fulan Bin Abi Fulan"
+                android:text="@string/dev_dummy_name"
                 android:textSize="18sp" />
 
             <Space
@@ -51,13 +51,13 @@
                 android:id="@+id/textView7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Partner Number:" />
+                android:text="@string/partner_number" />
 
             <TextView
                 android:id="@+id/text_PartnerNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="+62810000000000"
+                android:text="@string/dev_dummy_number"
                 android:textSize="18sp" />
 
             <Space
@@ -68,19 +68,20 @@
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Partner RSA Public Key:" />
+                android:text="@string/partner_rsa_pub_key" />
 
             <EditText
                 android:id="@+id/text_partnerRSAPubKey"
+                android:labelFor="@+id/text_partnerRSAPubKey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:gravity="top|left"
+                android:gravity="start"
                 android:inputType="textMultiLine"
                 android:maxLines="3"
                 android:minLines="3"
                 android:scrollbars="vertical"
-                android:text="some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text"
+                android:text="@string/dev_dummy_longtext"
                 android:textSize="18sp" />
 
             <Space
@@ -91,13 +92,13 @@
                 android:id="@+id/textView16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Secure Session Status:" />
+                android:text="@string/secure_session_status" />
 
             <TextView
                 android:id="@+id/text_SecureSessionStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="VALID"
+                android:text="@string/dev_dummy_status"
                 android:textColor="@android:color/holo_green_dark"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -110,13 +111,13 @@
                 android:id="@+id/textView17"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Last Session Handshake:" />
+                android:text="@string/last_secure_session_handshake" />
 
             <TextView
                 android:id="@+id/text_LastSessionHandshake"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2017-07-28 12:34:43"
+                android:text="@string/dev_dummy_date"
                 android:textSize="18sp" />
 
             <Space
@@ -127,19 +128,20 @@
                 android:id="@+id/textView18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="ECDH Session Private Key:" />
+                android:text="@string/ecdh_session_priv_key" />
 
             <EditText
                 android:id="@+id/text_ECDHSessionPrivateKey"
+                android:labelFor="@+id/text_ECDHSessionPrivateKey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:gravity="top|left"
+                android:gravity="start"
                 android:inputType="textMultiLine"
                 android:maxLines="3"
                 android:minLines="3"
                 android:scrollbars="vertical"
-                android:text="some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text"
+                android:text="@string/dev_dummy_longtext"
                 android:textSize="18sp" />
 
             <Space
@@ -150,19 +152,20 @@
                 android:id="@+id/textView19"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="ECDH Session Public Key:" />
+                android:text="@string/ecdh_session_pub_key" />
 
             <EditText
                 android:id="@+id/text_ECDHSessionPublicKey"
+                android:labelFor="@+id/text_ECDHSessionPublicKey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:gravity="top|left"
+                android:gravity="start"
                 android:inputType="textMultiLine"
                 android:maxLines="3"
                 android:minLines="3"
                 android:scrollbars="vertical"
-                android:text="some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text"
+                android:text="@string/dev_dummy_longtext"
                 android:textSize="18sp" />
 
             <Space
@@ -173,19 +176,20 @@
                 android:id="@+id/textView20"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Partner Received ECDH Session Public Key:" />
+                android:text="@string/ecdh_partner_session_pub_key" />
 
             <EditText
                 android:id="@+id/text_PartnerECDHSessionPublicKey"
+                android:labelFor="@+id/text_PartnerECDHSessionPublicKey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:gravity="top|left"
+                android:gravity="start"
                 android:inputType="textMultiLine"
                 android:maxLines="3"
                 android:minLines="3"
                 android:scrollbars="vertical"
-                android:text="some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text"
+                android:text="@string/dev_dummy_longtext"
                 android:textSize="18sp" />
 
             <Space
@@ -196,19 +200,20 @@
                 android:id="@+id/textView21"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Partner Received Digital Signature:" />
+                android:text="@string/ecdh_partner_digsign" />
 
             <EditText
                 android:id="@+id/text_Partner_DigitalSignature"
+                android:labelFor="@+id/text_Partner_DigitalSignature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:gravity="top|left"
+                android:gravity="start"
                 android:inputType="textMultiLine"
                 android:maxLines="3"
                 android:minLines="3"
                 android:scrollbars="vertical"
-                android:text="some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text"
+                android:text="@string/dev_dummy_longtext"
                 android:textSize="18sp" />
 
             <Space
@@ -219,13 +224,13 @@
                 android:id="@+id/textView22"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Partner ECDH Session Public Key Validity:" />
+                android:text="@string/ecdh_partner_validity" />
 
             <TextView
                 android:id="@+id/textView27"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="VERIFIED"
+                android:text="@string/dev_dummy_status"
                 android:textColor="@android:color/holo_green_dark"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -238,19 +243,20 @@
                 android:id="@+id/textView23"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Session Shared Secret:" />
+                android:text="@string/session_shared_secret" />
 
             <EditText
                 android:id="@+id/text_SharedSecret"
+                android:labelFor="@+id/text_SharedSecret"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:gravity="top|left"
+                android:gravity="start"
                 android:inputType="textMultiLine"
                 android:maxLines="3"
                 android:minLines="3"
                 android:scrollbars="vertical"
-                android:text="some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text"
+                android:text="@string/dev_dummy_longtext"
                 android:textSize="18sp" />
 
             <Space
@@ -261,19 +267,20 @@
                 android:id="@+id/textView24"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Session AES Key:" />
+                android:text="@string/session_aes_key" />
 
             <EditText
                 android:id="@+id/text_SessionAESKey"
+                android:labelFor="@+id/text_SessionAESKey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:gravity="top|left"
+                android:gravity="start"
                 android:inputType="textMultiLine"
                 android:maxLines="3"
                 android:minLines="3"
                 android:scrollbars="vertical"
-                android:text="some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text"
+                android:text="@string/dev_dummy_longtext"
                 android:textSize="18sp" />
 
             <Space
@@ -284,7 +291,7 @@
                 android:id="@+id/btn_InitiateSession"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Initiate Session" />
+                android:text="@string/initiate_secure_session" />
 
             <Space
                 android:layout_width="match_parent"
@@ -294,7 +301,7 @@
                 android:id="@+id/btn_RestartSession"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Restart Session" />
+                android:text="@string/restart_secure_session" />
 
             <Space
                 android:layout_width="match_parent"
@@ -304,7 +311,7 @@
                 android:id="@+id/btn_EndSession"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="End Session" />
+                android:text="@string/end_secure_session" />
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

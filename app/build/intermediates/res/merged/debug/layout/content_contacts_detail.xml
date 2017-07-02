@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="digitalquantuminc.inscribesecuresms.ActivityContactsDetail"
+    tools:context="digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityContactsDetail"
     tools:showIn="@layout/activity_contacts_detail">
 
     <ScrollView
@@ -36,14 +36,14 @@
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Contact Name:"
+                android:text="@string/contact_name"
                 android:textAlignment="viewStart" />
 
             <TextView
                 android:id="@+id/text_PartnerName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fulan Bin Abi Fulan"
+                android:text="@string/dev_dummy_name"
                 android:textSize="18sp" />
 
             <Space
@@ -54,13 +54,13 @@
                 android:id="@+id/textView7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Contact Number:" />
+                android:text="@string/contact_number" />
 
             <TextView
                 android:id="@+id/text_PartnerNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="+62810000000000"
+                android:text="@string/dev_dummy_number"
                 android:textSize="18sp" />
 
             <Space
@@ -71,13 +71,13 @@
                 android:id="@+id/textView17"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Contact Acquisition Date:" />
+                android:text="@string/contact_acquisition_date" />
 
             <TextView
                 android:id="@+id/text_ContactAcquisitionDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2017-07-28 12:34:43"
+                android:text="@string/dev_dummy_date"
                 android:textSize="18sp" />
 
             <Space
@@ -88,20 +88,21 @@
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Contact RSA Public Key:" />
+                android:text="@string/contact_rsa_pub_key" />
 
             <EditText
                 android:id="@+id/text_partnerRSAPubKey"
+                android:labelFor="@+id/text_partnerRSAPubKey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:gravity="top|left"
+                android:gravity="start"
                 android:inputType="textMultiLine"
                 android:maxLines="3"
                 android:lines="3"
                 android:minLines="3"
                 android:scrollbars="vertical"
-                android:text="some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text some plain text"
+                android:text="@string/dev_dummy_longtext"
                 android:textSize="18sp" />
 
             <Space
@@ -113,7 +114,8 @@
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:text="Delete Contact" />
+                android:onClick="btn_DeleteContact_onClick"
+                android:text="@string/delete_this_contact" />
 
         </LinearLayout>
     </ScrollView>

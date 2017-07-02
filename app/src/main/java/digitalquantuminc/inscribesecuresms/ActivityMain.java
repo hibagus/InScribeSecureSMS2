@@ -5,11 +5,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,12 +15,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
+import digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityContactsDetail;
+import digitalquantuminc.inscribesecuresms.Development.ContactDummyData;
 import digitalquantuminc.inscribesecuresms.Intent.IntentString;
 import digitalquantuminc.inscribesecuresms.ListViewAdapter.contactListAdapter;
 import digitalquantuminc.inscribesecuresms.Repository.contactRepository;
@@ -32,56 +28,58 @@ import digitalquantuminc.inscribesecuresms.View.ViewConversationList;
 import digitalquantuminc.inscribesecuresms.View.ViewPagerAdapter;
 import digitalquantuminc.inscribesecuresms.View.ViewSessionList;
 
+/**
+ * Created by Bagus Hanindhito on 01/07/2017.
+ * This is class for ActivityMain which is the launcher activity for this program.
+ * There is only small things to do in this class, such as instantiating the child view to be displayed in ViewPager,
+ * initialize the ViewPager, TabLayout, and ViewPager Adapter, handle the feedback code request from the child activity,
+ * send appropriate intent to each child activity before launched.
+ */
+
 public class ActivityMain extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    // Global Variable for UX Binding
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
+    //region Global Variable
+    // Development Mode Switch
+    // Put 1 to enable development mode otherwise 0
+    // Development mode will automatically populates SQLite Database with dummy data for easy development.
+    // It will destroy the database, recreate database, and load dummy data each runtime.
     private static final int DEVELOPMENT_MODE = 1;
 
+    // Global Variable for UX Binding
+    // Variable for ViewPager that has been modified to inflate standard activity layout (not fragment)
     private ViewPager mViewPager;
     private ViewPagerAdapter adapter;
 
+    // Variable for Children Activity (i.e. inflated layout on each tab viewpager
     private ViewConversationList viewconversationlist;
     private ViewContactsList viewcontactslist;
     private ViewSessionList viewsessionlist;
 
+    // Variable for Toolbar
     private Toolbar toolbar;
 
+    // Variable for Tablayout
     private TabLayout tabLayout;
 
+    //endregion
+    //region Override Method
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         // Dummy data, only for development only.
         if (DEVELOPMENT_MODE == 1) {
-            ClearDB();
-            CreateDB();
-            LoadDummyData();
+            ContactDummyData.ClearDB(this);
+            ContactDummyData.CreateDB(this);
+            ContactDummyData.LoadDummyData(this);
         }
 
         // UX Layout Setup
         setupUXLayout();
 
-        // UI Component Binding
-        //UIComponentBinding();
-
         // Contact List
         LoadContactList(viewcontactslist.getList_contacts());
-
     }
 
     @Override
@@ -93,6 +91,7 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // TODO: Plan what kind of menu that should be included in MenuItem and Their respective action
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -106,6 +105,27 @@ public class ActivityMain extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Handle all feedbackcode request from child activity to be executed in parent activity
+        super.onActivityResult(requestCode, resultCode, data);
+        // Check request code send by child activity before it closes itself.
+        switch (requestCode) {
+            case IntentString.MainFeedbackCode_DoNothing: {
+                break;
+            }
+            case IntentString.MainFeedbackCode_RefreshContactList: {
+                LoadContactList(viewcontactslist.getList_contacts());
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
+
+    //endregion
+    //region UX Layout and Binding Method
     private void setupUXLayout() {
 
         // Instantiate Child View for ViewPager
@@ -134,11 +154,17 @@ public class ActivityMain extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
+    //endregion
+    //region Method
     public void LoadContactList(ListView listcontact) {
+        // Access the database and load all of its content to ArrayList
         contactRepository repo = new contactRepository(this);
         ArrayList<HashMap<String, String>> contactList = repo.getContactListSorted();
+        // If there is at least one element
         if (contactList.size() != 0) {
+            // Set adapter for the listcontact
             listcontact.setAdapter(new contactListAdapter(ActivityMain.this, contactList));
+            // Set the eventhandler when the item in the listcontact gets clicked.
             listcontact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -150,58 +176,25 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-
-    //public void list_conversation_OnItemClick(AdapterView<?> parent, View view, int position, long id)
-    //{
-    //    TextView text_ContactPhoneNumber = view.findViewById(R.id.text_ContactPhoneNumber)
-    //}
-
+    //endregion
+    //region UX EventHandler Method
     private void listview_contactList_onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // Method that handle action when the item in ContactList listview is clicked.
+
+        // First, we need to bind the UX Component into variable to access it easily.
         TextView textlist_ContactPhoneNumber = (TextView) view.findViewById(R.id.textlist_ContactPhoneNumber);
         ImageView imageView_ContactAccent = (ImageView) view.findViewById(R.id.imageView_ContactAccent);
+
+        // Extract the Phone Number as a unique identity for database query.
         String ContactPhoneNumber = textlist_ContactPhoneNumber.getText().toString();
+
+        // Preparing intent to be passed to ActivityContactsDetail as child activity
         Intent objIntent = new Intent(getApplicationContext(), ActivityContactsDetail.class);
         objIntent.putExtra(IntentString.MainToContactsDetails_PhoneNum, ContactPhoneNumber);
         objIntent.putExtra(IntentString.MainToContactsDetails_ColorTheme, ((ColorDrawable) imageView_ContactAccent.getBackground()).getColor());
-        startActivity(objIntent);
-    }
 
-    public void LoadDummyData() {
-        TypeContact test1 = new TypeContact("081395141700", "Bagus Hanindhito", System.currentTimeMillis(), "00000000");
-        TypeContact test2 = new TypeContact("081321132456", "Fulan Bin Abi Fulan", System.currentTimeMillis(), "00000000");
-        TypeContact test3 = new TypeContact("085320456178", "Chobi Chocobi", System.currentTimeMillis(), "00000000");
-        TypeContact test4 = new TypeContact("089203040120", "Oryza Sativa", System.currentTimeMillis(), "00000000");
-        TypeContact test5 = new TypeContact("085320456179", "Cannabis Sativa", System.currentTimeMillis(), "00000000");
-        TypeContact test6 = new TypeContact("087482813212", "Aurelia Auritania", System.currentTimeMillis(), "00000000");
-        TypeContact test7 = new TypeContact("082145875521", "Fitria Ridayanti", System.currentTimeMillis(), "00000000");
-        TypeContact test8 = new TypeContact("087545221214", "Wisnu Wijayanto", System.currentTimeMillis(), "00000000");
-        TypeContact test9 = new TypeContact("025871422552", "Netizen Budiman", System.currentTimeMillis(), "00000000");
-        TypeContact test10 = new TypeContact("025478525224", "Mantan Terindah", System.currentTimeMillis(), "00000000");
-        TypeContact test11 = new TypeContact("025874568545", "Dia Yang Tersakiti", System.currentTimeMillis(), "00000000");
-        TypeContact test12 = new TypeContact("036587855457", "Maung Bandung", System.currentTimeMillis(), "00000000");
-        contactRepository contactRepo = new contactRepository(this);
-        contactRepo.insert(test1);
-        contactRepo.insert(test2);
-        contactRepo.insert(test3);
-        contactRepo.insert(test4);
-        contactRepo.insert(test5);
-        contactRepo.insert(test6);
-        contactRepo.insert(test7);
-        contactRepo.insert(test8);
-        contactRepo.insert(test9);
-        contactRepo.insert(test10);
-        contactRepo.insert(test11);
-        contactRepo.insert(test12);
+        // Start the ActivityContactsDetail by passing the intent and the code for feedback request.
+        startActivityForResult(objIntent, IntentString.MainFeedbackCode_RefreshContactList);
     }
-
-    public void ClearDB() {
-        contactRepository contactRepo = new contactRepository(this);
-        contactRepo.DropTable();
-    }
-
-    public void CreateDB() {
-        contactRepository contactRepo = new contactRepository(this);
-        contactRepo.CreateTable();
-    }
-
+    //endregion
 }

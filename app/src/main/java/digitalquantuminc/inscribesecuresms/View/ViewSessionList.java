@@ -5,18 +5,26 @@ import android.view.View;
 
 /**
  * Created by Bagus Hanindhito on 30/06/2017.
+ * This class basically provide access to UX Element in Activity Session List so that the Parent Activity can have access to them.
  */
 
 public class ViewSessionList extends Presenter {
+    //TODO: Create Binding to UX Element with their Getter (IT IS STILL UNIMPLEMENTED)
+    //region Global Variable
 
-    //TextView textViewStep1;
-
+    //endregion
+    //region Constructor
     public ViewSessionList(AppCompatActivity activity, View view) {
         super(activity, view);
     }
 
+    //endregion
+    //region Override Method
     @Override
     public void onCreateView() {
-        //textViewStep1 = (TextView) view.findViewById(R.id.step1_textView);
+
     }
+    //endregion
+    //region Getter
+    //endregion
 }

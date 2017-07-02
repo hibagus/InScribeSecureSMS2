@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,16 +13,21 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeSession;
 
 /**
  * Created by Bagus Hanindhito on 29/06/2017.
+ * This class handle the operation for Session Data and its SQLite Database
  */
 
 public class sessionRepository {
-
+    //region Global Variable
     private sessionDBHelper dbHelper;
 
+    //endregion
+    //region Constructor
     public sessionRepository(Context context) {
         dbHelper = new sessionDBHelper(context);
     }
 
+    //endregion
+    //region INSERT Method
     public int insert(TypeSession session) {
         // Prepare Values to be inserted
         ContentValues values = new ContentValues();
@@ -50,6 +54,8 @@ public class sessionRepository {
         return (int) session_id;
     }
 
+    //endregion
+    //region DELETE Method
     public void delete(int session_id) {
         // Open connection to write the DB
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -68,6 +74,8 @@ public class sessionRepository {
         db.close();
     }
 
+    //endregion
+    //region UPDATE Method
     public void update(TypeSession session, String old_phonenum) {
         // Prepare Values to be inserted
         ContentValues values = new ContentValues();
@@ -92,6 +100,8 @@ public class sessionRepository {
         db.close();
     }
 
+    //endregion
+    //region GET ITEM Method
     public TypeSession getSession(int session_id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT "
@@ -174,6 +184,8 @@ public class sessionRepository {
         return session;
     }
 
+    //endregion
+    //region GET ID Method
     public int getSessionId(String phonenum) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT "
@@ -193,6 +205,8 @@ public class sessionRepository {
         return session_id;
     }
 
+    //endregion
+    //region GET LIST ITEM Method
     public ArrayList<HashMap<String, String>> getSessionList() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT "
@@ -211,11 +225,11 @@ public class sessionRepository {
                 + TypeSession.KEY_aeskey + " FROM "
                 + TypeSession.TABLE;
 
-        ArrayList<HashMap<String, String>> sessionList = new ArrayList<HashMap<String, String>>();
+        ArrayList<HashMap<String, String>> sessionList = new ArrayList<>();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
-                HashMap<String, String> session = new HashMap<String, String>();
+                HashMap<String, String> session = new HashMap<>();
                 session.put(TypeSession.KEY_ID, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ID)));
                 session.put(TypeSession.KEY_phone, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_phone)));
                 session.put(TypeSession.KEY_name, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_name)));
@@ -236,4 +250,5 @@ public class sessionRepository {
         db.close();
         return sessionList;
     }
+    //endregion
 }
