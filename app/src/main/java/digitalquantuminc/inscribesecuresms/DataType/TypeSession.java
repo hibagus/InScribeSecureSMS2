@@ -21,6 +21,7 @@ public class TypeSession {
     public static final String KEY_ecdhvalid = "ecdhvalid";
     public static final String KEY_ecdhsecret = "ecdhsecret";
     public static final String KEY_aeskey = "aeskey";
+    public static final String KEY_nummessage = "nummessage";
     //endregion
     //region Global Variable
     private String phone_number;
@@ -35,6 +36,7 @@ public class TypeSession {
     private int session_ecdh_partner_validity;
     private String session_ecdh_shared_secret;
     private String session_ecdh_aes_key;
+    private int session_num_message;
 
     //endregion
     //region Constructor
@@ -42,7 +44,7 @@ public class TypeSession {
 
     }
 
-    public TypeSession(String phone_number, String name, int session_validity, long session_handshake_date, int session_role, String session_ecdh_private_key, String session_ecdh_public_key, String session_ecdh_partner_public_key, String session_ecdh_partner_digital_signature, int session_ecdh_partner_validity, String session_ecdh_shared_secret, String session_ecdh_aes_key) {
+    public TypeSession(String phone_number, String name, int session_validity, long session_handshake_date, int session_role, String session_ecdh_private_key, String session_ecdh_public_key, String session_ecdh_partner_public_key, String session_ecdh_partner_digital_signature, int session_ecdh_partner_validity, String session_ecdh_shared_secret, String session_ecdh_aes_key, int session_num_message) {
         this.phone_number = phone_number;
         this.name = name;
         this.session_validity = session_validity;
@@ -55,6 +57,7 @@ public class TypeSession {
         this.session_ecdh_partner_validity = session_ecdh_partner_validity;
         this.session_ecdh_shared_secret = session_ecdh_shared_secret;
         this.session_ecdh_aes_key = session_ecdh_aes_key;
+        this.session_num_message = session_num_message;
     }
 
     //endregion
@@ -107,6 +110,10 @@ public class TypeSession {
         this.session_ecdh_aes_key = session_ecdh_aes_key;
     }
 
+    public void setSession_num_message(int session_num_message) {
+        this.session_num_message = session_num_message;
+    }
+
     //endregion
     //region Getter
     public String getPhone_number() {
@@ -155,6 +162,10 @@ public class TypeSession {
 
     public String getSession_ecdh_aes_key() {
         return this.session_ecdh_aes_key;
+    }
+
+    public int getSession_num_message() {
+        return session_num_message;
     }
     //endregion
 }
