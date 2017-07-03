@@ -23,10 +23,10 @@ public class contactListViewHolder {
     //region Constructor
     public contactListViewHolder(View view) {
         this.view = view;
-        imageView_ContactView = (ImageView) view.findViewById(R.id.imageView_ContactView);
-        textlist_ContactName = (TextView) view.findViewById(R.id.textlist_ContactName);
-        textlist_ContactPhoneNumber = (TextView) view.findViewById(R.id.textlist_ContactPhoneNumber);
-        imageView_ContactAccent = (ImageView) view.findViewById(R.id.imageView_ContactAccent);
+        this.imageView_ContactView = (ImageView) view.findViewById(R.id.imageView_ContactView);
+        this.textlist_ContactName = (TextView) view.findViewById(R.id.textlist_ContactName);
+        this.textlist_ContactPhoneNumber = (TextView) view.findViewById(R.id.textlist_ContactPhoneNumber);
+        this.imageView_ContactAccent = (ImageView) view.findViewById(R.id.imageView_ContactAccent);
     }
 
     //endregion
