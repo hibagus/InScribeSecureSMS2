@@ -43,6 +43,7 @@ public class sessionRepository {
         values.put(TypeSession.KEY_ecdhvalid, session.getSession_ecdh_partner_validity());
         values.put(TypeSession.KEY_ecdhsecret, session.getSession_ecdh_shared_secret());
         values.put(TypeSession.KEY_aeskey, session.getSession_ecdh_aes_key());
+        values.put(TypeSession.KEY_nummessage, session.getSession_num_message());
 
         // Open connection to write the DB
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -91,6 +92,7 @@ public class sessionRepository {
         values.put(TypeSession.KEY_ecdhvalid, session.getSession_ecdh_partner_validity());
         values.put(TypeSession.KEY_ecdhsecret, session.getSession_ecdh_shared_secret());
         values.put(TypeSession.KEY_aeskey, session.getSession_ecdh_aes_key());
+        values.put(TypeSession.KEY_nummessage, session.getSession_num_message());
 
         // Open connection to write the DB
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -117,7 +119,8 @@ public class sessionRepository {
                 + TypeSession.KEY_ecdhds + ", "
                 + TypeSession.KEY_ecdhvalid + ", "
                 + TypeSession.KEY_ecdhsecret + ", "
-                + TypeSession.KEY_aeskey + " FROM "
+                + TypeSession.KEY_aeskey + ", "
+                + TypeSession.KEY_nummessage + " FROM "
                 + TypeSession.TABLE + " WHERE "
                 + TypeSession.KEY_ID + " = ?";
         TypeSession session = new TypeSession();
@@ -136,6 +139,7 @@ public class sessionRepository {
                 session.setSession_ecdh_partner_validity(cursor.getInt(cursor.getColumnIndex(TypeSession.KEY_ecdhvalid)));
                 session.setSession_ecdh_shared_secret(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhsecret)));
                 session.setSession_ecdh_aes_key(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_aeskey)));
+                session.setSession_num_message(cursor.getInt(cursor.getColumnIndex(TypeSession.KEY_nummessage)));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -158,7 +162,8 @@ public class sessionRepository {
                 + TypeSession.KEY_ecdhds + ", "
                 + TypeSession.KEY_ecdhvalid + ", "
                 + TypeSession.KEY_ecdhsecret + ", "
-                + TypeSession.KEY_aeskey + " FROM "
+                + TypeSession.KEY_aeskey + ", "
+                + TypeSession.KEY_nummessage + " FROM "
                 + TypeSession.TABLE + " WHERE "
                 + TypeSession.KEY_phone + " = ?";
         TypeSession session = new TypeSession();
@@ -222,7 +227,8 @@ public class sessionRepository {
                 + TypeSession.KEY_ecdhds + ", "
                 + TypeSession.KEY_ecdhvalid + ", "
                 + TypeSession.KEY_ecdhsecret + ", "
-                + TypeSession.KEY_aeskey + " FROM "
+                + TypeSession.KEY_aeskey + ", "
+                + TypeSession.KEY_nummessage + " FROM "
                 + TypeSession.TABLE;
 
         ArrayList<HashMap<String, String>> sessionList = new ArrayList<>();
