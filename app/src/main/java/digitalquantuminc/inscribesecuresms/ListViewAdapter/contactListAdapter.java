@@ -71,12 +71,18 @@ public class contactListAdapter extends BaseAdapter {
 
         // Prepare a HashMap to store single item Contact from Contact List
         HashMap<String, String> item = getItem(position);
+        TypeContact contact = new TypeContact(
+                item.get(TypeContact.KEY_phone),
+                item.get(TypeContact.KEY_name),
+                Long.valueOf(item.get(TypeContact.KEY_date)),
+                item.get(TypeContact.KEY_rsapub)
+        );
 
         // Set the list item based on the information from item Contact
-        holder.getTextlist_ContactName().setText(item.get(TypeContact.KEY_name));
-        holder.getTextlist_ContactPhoneNumber().setText(item.get(TypeContact.KEY_phone));
-        int color = mColorGenerator.getColor(item.get(TypeContact.KEY_name));
-        TextDrawable drawable = mDrawableBuilder.build(String.valueOf(item.get(TypeContact.KEY_name).charAt(0)), color);
+        holder.getTextlist_ContactName().setText(contact.getContact_name());
+        holder.getTextlist_ContactPhoneNumber().setText(contact.getPhone_number());
+        int color = mColorGenerator.getColor(contact.getContact_name());
+        TextDrawable drawable = mDrawableBuilder.build(String.valueOf(contact.getContact_name().charAt(0)), color);
         holder.getImageView_ContactView().setImageDrawable(drawable);
         holder.getImageView_ContactAccent().setBackgroundColor(color);
         // return the view
