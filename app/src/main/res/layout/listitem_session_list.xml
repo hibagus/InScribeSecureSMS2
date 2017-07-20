@@ -58,6 +58,16 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/textlist_PartnerNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/contact_photo"
+            android:text="@string/dev_dummy_number"
+            android:textSize="8sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/textlist_SessionHandshakeDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
