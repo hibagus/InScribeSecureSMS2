@@ -37,7 +37,7 @@
                 android:textAlignment="viewStart" />
 
             <TextView
-                android:id="@+id/text_partner_name"
+                android:id="@+id/text_PartnerName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/dev_dummy_name"
@@ -71,8 +71,8 @@
                 android:text="@string/partner_rsa_pub_key" />
 
             <EditText
-                android:id="@+id/text_partnerRSAPubKey"
-                android:labelFor="@+id/text_partnerRSAPubKey"
+                android:id="@+id/text_PartnerRSAPubKey"
+                android:labelFor="@+id/text_PartnerRSAPubKey"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -108,6 +108,25 @@
                 android:layout_height="8dp" />
 
             <TextView
+                android:id="@+id/textView28"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/secure_session_freshness" />
+
+            <TextView
+                android:id="@+id/text_SecureSessionFreshness"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dev_dummy_status"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="8dp" />
+
+            <TextView
                 android:id="@+id/textView17"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -118,6 +137,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/dev_dummy_date"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/text_SessionHandshakeAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dev_dummy_duration"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="8dp" />
+
+            <TextView
+                android:id="@+id/textView31"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/secure_session_nummessage" />
+
+            <TextView
+                android:id="@+id/text_SessionNumMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dev_dummy_number"
                 android:textSize="18sp" />
 
             <Space
@@ -203,8 +246,8 @@
                 android:text="@string/ecdh_partner_digsign" />
 
             <EditText
-                android:id="@+id/text_Partner_DigitalSignature"
-                android:labelFor="@+id/text_Partner_DigitalSignature"
+                android:id="@+id/text_PartnerDigitalSignature"
+                android:labelFor="@+id/text_PartnerDigitalSignature"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -227,7 +270,7 @@
                 android:text="@string/ecdh_partner_validity" />
 
             <TextView
-                android:id="@+id/textView27"
+                android:id="@+id/text_PartnerValidity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/dev_dummy_status"
