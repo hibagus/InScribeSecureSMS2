@@ -1,17 +1,12 @@
 package digitalquantuminc.inscribesecuresms.ChildrenActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,6 +18,7 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
 import digitalquantuminc.inscribesecuresms.Intent.IntentString;
 import digitalquantuminc.inscribesecuresms.R;
 import digitalquantuminc.inscribesecuresms.Repository.contactRepository;
+import digitalquantuminc.inscribesecuresms.UserInterface.UserInterfaceColor;
 
 public class ActivityContactsDetail extends AppCompatActivity {
 
@@ -73,8 +69,14 @@ public class ActivityContactsDetail extends AppCompatActivity {
         text_PartnerName = (TextView) findViewById(R.id.text_PartnerName);
         text_PartnerNumber = (TextView) findViewById(R.id.text_PartnerNumber);
         text_ContactAcquisitionDate = (TextView) findViewById(R.id.text_ContactAcquisitionDate);
-        text_partnerRSAPubKey = (EditText) findViewById(R.id.text_partnerRSAPubKey);
+        text_partnerRSAPubKey = (EditText) findViewById(R.id.text_PartnerRSAPubKey);
         btn_DeleteContact = (Button) findViewById(R.id.btn_DeleteContact);
+        btn_DeleteContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_DeleteContact_onClick(v);
+            }
+        });
     }
 
     protected void IntentProcessor() {
@@ -89,8 +91,8 @@ public class ActivityContactsDetail extends AppCompatActivity {
 
         // Set Appearance based on Contact Name
         setTitle(contact.getContact_name());
-        setStatusBarColor(color);
-        setTitleBackgroundColor(color);
+        UserInterfaceColor.setStatusBarColor(color, this);
+        UserInterfaceColor.setTitleBackgroundColor(color, this);
         text_PartnerName.setText(contact.getContact_name());
         text_PartnerNumber.setText(contact.getPhone_number());
         text_ContactAcquisitionDate.setText(new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z").format(new Date(contact.getAcquisition_date())));
@@ -105,33 +107,7 @@ public class ActivityContactsDetail extends AppCompatActivity {
         finish();
     }
 
-
-    public void setStatusBarColor(int color) {
-
-        int darken_color = darkenColor(color);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            if (darken_color == Color.BLACK && window.getNavigationBarColor() == Color.BLACK) {
-                window.clearFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            } else {
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            }
-            window.setStatusBarColor(darken_color);
-        }
-    }
-
-    public void setTitleBackgroundColor(int color) {
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(color));
-    }
-
-    private static int darkenColor(int color) {
-        float[] hsv = new float[3];
-        Color.colorToHSV(color, hsv);
-        hsv[2] *= 0.8f;
-        return Color.HSVToColor(hsv);
-    }
-
-    public void btn_DeleteContact_onClick(View v) {
+    private void btn_DeleteContact_onClick(View v) {
         String PhoneNumber = text_PartnerNumber.getText().toString();
         contactRepository repo = new contactRepository(this);
         repo.delete(PhoneNumber);
