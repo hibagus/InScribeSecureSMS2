@@ -6,6 +6,16 @@ package digitalquantuminc.inscribesecuresms.DataType;
  */
 
 public class TypeSession {
+    //region Int Constant
+    public static final int StatusFresh = 0;
+    public static final int StatusStale = 1;
+    public static final int StatusDecomposed = 2;
+    public static final int StatusValid = 4;
+    public static final int StatusNotValid = 5;
+    public static final int StatusDSValid = 6;
+    public static final int StatusDSNotValid = 7;
+    public static final int StatusRoleMaster = 8;
+    public static final int StatusRoleSlave = 9;
     //region SQL Table Key
     public static final String TABLE = "session";
     public static final String KEY_ID = "id";
@@ -18,6 +28,7 @@ public class TypeSession {
     public static final String KEY_ecdhpriv = "ecdhprivkey";
     public static final String KEY_ecdhpubpart = "ecdhpubpartkey";
     public static final String KEY_ecdhds = "ecdhds";
+    public static final String KEY_ecdhcomds = "ecdhcomds";
     public static final String KEY_ecdhvalid = "ecdhvalid";
     public static final String KEY_ecdhsecret = "ecdhsecret";
     public static final String KEY_aeskey = "aeskey";
@@ -33,6 +44,7 @@ public class TypeSession {
     private String session_ecdh_public_key;
     private String session_ecdh_partner_public_key;
     private String session_ecdh_partner_digital_signature;
+    private String session_ecdh_partner_computed_digital_signature;
     private int session_ecdh_partner_validity;
     private String session_ecdh_shared_secret;
     private String session_ecdh_aes_key;
@@ -44,7 +56,7 @@ public class TypeSession {
 
     }
 
-    public TypeSession(String phone_number, String name, int session_validity, long session_handshake_date, int session_role, String session_ecdh_private_key, String session_ecdh_public_key, String session_ecdh_partner_public_key, String session_ecdh_partner_digital_signature, int session_ecdh_partner_validity, String session_ecdh_shared_secret, String session_ecdh_aes_key, int session_num_message) {
+    public TypeSession(String phone_number, String name, int session_validity, long session_handshake_date, int session_role, String session_ecdh_private_key, String session_ecdh_public_key, String session_ecdh_partner_public_key, String session_ecdh_partner_digital_signature, String session_ecdh_partner_computed_digital_signature, int session_ecdh_partner_validity, String session_ecdh_shared_secret, String session_ecdh_aes_key, int session_num_message) {
         this.phone_number = phone_number;
         this.name = name;
         this.session_validity = session_validity;
@@ -54,6 +66,7 @@ public class TypeSession {
         this.session_ecdh_public_key = session_ecdh_public_key;
         this.session_ecdh_partner_public_key = session_ecdh_partner_public_key;
         this.session_ecdh_partner_digital_signature = session_ecdh_partner_digital_signature;
+        this.session_ecdh_partner_computed_digital_signature = session_ecdh_partner_computed_digital_signature;
         this.session_ecdh_partner_validity = session_ecdh_partner_validity;
         this.session_ecdh_shared_secret = session_ecdh_shared_secret;
         this.session_ecdh_aes_key = session_ecdh_aes_key;
@@ -96,6 +109,10 @@ public class TypeSession {
 
     public void setSession_ecdh_partner_digital_signature(String session_ecdh_partner_digital_signature) {
         this.session_ecdh_partner_digital_signature = session_ecdh_partner_digital_signature;
+    }
+
+    public void setSession_ecdh_partner_computed_digital_signature(String session_ecdh_partner_computed_digital_signature) {
+        this.session_ecdh_partner_computed_digital_signature = session_ecdh_partner_computed_digital_signature;
     }
 
     public void setSession_ecdh_partner_validity(int session_ecdh_partner_validity) {
@@ -152,6 +169,10 @@ public class TypeSession {
         return this.session_ecdh_partner_digital_signature;
     }
 
+    public String getSession_ecdh_partner_computed_digital_signature() {
+        return session_ecdh_partner_computed_digital_signature;
+    }
+
     public int getSession_ecdh_partner_validity() {
         return this.session_ecdh_partner_validity;
     }
@@ -166,6 +187,37 @@ public class TypeSession {
 
     public int getSession_num_message() {
         return session_num_message;
+    }
+    //endregion
+
+    //region Method
+    public int computeSessionFreshness() {
+        if (session_validity == StatusValid) {
+
+            int session_freshness = getSessionElapsedHour() * 5 + session_num_message;
+            if (session_freshness < 25) {
+                return StatusFresh;
+            } else if (session_freshness >= 25 && session_freshness <= 100) {
+                return StatusStale;
+            } else {
+                return StatusDecomposed;
+            }
+        } else {
+            return StatusDecomposed;
+        }
+    }
+
+    public int getSessionElapsedHour() {
+        long mills = System.currentTimeMillis() - session_handshake_date;
+        int hours = (int) mills / (1000 * 60 * 60);
+        return hours;
+    }
+
+    public int getSessionElapsedMin() {
+        long mills = System.currentTimeMillis() - session_handshake_date;
+        int hours = (int) mills / (1000 * 60 * 60);
+        int mins = (int) (mills - hours * 1000 * 60 * 60) / (1000 * 60);
+        return mins;
     }
     //endregion
 }
