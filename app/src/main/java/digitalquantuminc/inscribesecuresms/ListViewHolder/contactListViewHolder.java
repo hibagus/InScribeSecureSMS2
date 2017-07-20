@@ -30,28 +30,6 @@ public class contactListViewHolder {
     }
 
     //endregion
-    //region Setter
-    public void setView(View view) {
-        this.view = view;
-    }
-
-    public void setImageView_ContactView(ImageView imageView_ContactView) {
-        this.imageView_ContactView = imageView_ContactView;
-    }
-
-    public void setTextlist_ContactName(TextView textlist_ContactName) {
-        this.textlist_ContactName = textlist_ContactName;
-    }
-
-    public void setTextlist_ContactPhoneNumber(TextView textlist_ContactPhoneNumber) {
-        this.textlist_ContactPhoneNumber = textlist_ContactPhoneNumber;
-    }
-
-    public void setImageView_ContactAccent(ImageView imageView_ContactAccent) {
-        this.imageView_ContactAccent = imageView_ContactAccent;
-    }
-
-    //endregion
     //region Getter
     public ImageView getImageView_ContactView() {
         return imageView_ContactView;
@@ -68,5 +46,6 @@ public class contactListViewHolder {
     public ImageView getImageView_ContactAccent() {
         return imageView_ContactAccent;
     }
+
     //endregion
 }
