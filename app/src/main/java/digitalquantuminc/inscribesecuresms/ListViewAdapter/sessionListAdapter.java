@@ -9,7 +9,9 @@ import android.widget.BaseAdapter;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import digitalquantuminc.inscribesecuresms.DataType.TypeSession;
@@ -69,47 +71,52 @@ public class sessionListAdapter extends BaseAdapter {
             holder = (sessionListViewHolder) convertView.getTag();
         }
 
-        // Prepare a HashMap to store single item Contact from Session List
+        // Prepare a HashMap to store single item Session from Session List
         HashMap<String, String> item = getItem(position);
+        //
+        TypeSession session = new TypeSession(
+                item.get(TypeSession.KEY_phone),
+                item.get(TypeSession.KEY_name),
+                Integer.valueOf(item.get(TypeSession.KEY_valid)),
+                Long.valueOf(item.get(TypeSession.KEY_date)),
+                Integer.valueOf(item.get(TypeSession.KEY_role)),
+                item.get(TypeSession.KEY_ecdhpriv),
+                item.get(TypeSession.KEY_ecdhpub),
+                item.get(TypeSession.KEY_ecdhpubpart),
+                item.get(TypeSession.KEY_ecdhds),
+                item.get(TypeSession.KEY_ecdhcomds),
+                Integer.valueOf(item.get(TypeSession.KEY_ecdhvalid)),
+                item.get(TypeSession.KEY_ecdhsecret),
+                item.get(TypeSession.KEY_aeskey),
+                Integer.valueOf(item.get(TypeSession.KEY_nummessage))
+        );
 
         // Set the list item based on the information from item Session
-        holder.getTextlist_PartnerName().setText(item.get(TypeSession.KEY_name));
-        holder.getTextlist_PartnerNumber().setText(item.get(TypeSession.KEY_phone));
-        holder.getTextlist_SessionHandshakeDate().setText(item.get(TypeSession.KEY_date));
-
-        // Elapsed Time
-        long mills = System.currentTimeMillis() - Long.parseLong(item.get(TypeSession.KEY_date));
-        int hours = (int) mills / (1000 * 60 * 60);
-        int mins = (int) mills % (1000 * 60 * 60);
-        int nummessage = Integer.valueOf(item.get(TypeSession.KEY_nummessage));
-
-        // Session Details
-        String textSessionDetails = "Session age is " + String.valueOf(hours) + " hour(s) " + String.valueOf(mins) + " minute(s) with " + String.valueOf(nummessage) + " message(s) processed.";
-        holder.getTextlist_SessionDetails().setText(textSessionDetails);
-
+        holder.getTextlist_PartnerName().setText(session.getName());
+        holder.getTextlist_PartnerNumber().setText(session.getPhone_number());
+        holder.getTextlist_SessionHandshakeDate().setText(String.format(outer.getString(R.string.session_date), new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z").format(new Date(session.getSession_handshake_date()))));
+        holder.getTextlist_SessionDetails().setText(String.format(outer.getString(R.string.session_details), session.getSessionElapsedHour(), session.getSessionElapsedMin(), session.getSession_num_message()));
         // Set Thumbnail Color
         int color = mColorGenerator.getColor(item.get(TypeSession.KEY_name));
-        TextDrawable drawable = mDrawableBuilder.build(String.valueOf(item.get(TypeSession.KEY_name).charAt(0)), color);
+        TextDrawable drawable = mDrawableBuilder.build(String.valueOf(session.getName().charAt(0)), color);
         holder.getImageView_PartnerView().setImageDrawable(drawable);
 
         // Set Color to Indicates Session Status
-        if (Integer.valueOf(item.get(TypeSession.KEY_valid)) == 1) {
+        if (session.getSession_validity() == TypeSession.StatusValid) {
             holder.getImageView_SessionStatus().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkGreen));
-            // Set Color to Indicates Session Freshness / Stale
-            int session_freshness = hours * 5 + nummessage;
-            if (session_freshness < 25) {
-                holder.getImageView_SessionDuration().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkGreen));
-            } else if (session_freshness >= 25 && session_freshness <= 100) {
-                holder.getImageView_SessionDuration().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorAmber));
-            } else {
-                holder.getImageView_SessionDuration().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkRed));
-            }
         } else {
             holder.getImageView_SessionStatus().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkRed));
-            holder.getImageView_SessionDuration().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkRed));
         }
 
+        // Set Color to Indicates Session Freshness
 
+        if (session.computeSessionFreshness() == TypeSession.StatusFresh) {
+            holder.getImageView_SessionDuration().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkGreen));
+        } else if (session.computeSessionFreshness() == TypeSession.StatusStale) {
+            holder.getImageView_SessionDuration().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorAmber));
+        } else {
+            holder.getImageView_SessionDuration().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkRed));
+        }
 
         // return the view
         return convertView;
