@@ -22,11 +22,13 @@
     <string name="add_new_contacts">Add a New Contact</string>
     <string name="partner_name">Partner Name:</string>
     <string name="partner_number">Partner Number:</string>
+    <string name="partner_role">Partner Role:</string>
     <string name="partner_rsa_pub_key">Partner RSA Public Key:</string>
     <string name="ecdh_session_priv_key">ECDH Session Private Key:</string>
     <string name="ecdh_session_pub_key">ECDH Session Public Key</string>
     <string name="ecdh_partner_session_pub_key">Partner Received ECDH Session Public Key:</string>
     <string name="ecdh_partner_digsign">Partner Received Digital Signature:</string>
+    <string name="ecdh_partner_computedigsign">Partner Computed Digital Signature:</string>
     <string name="ecdh_partner_validity">Partner ECDH Session Public Key Validity:</string>
     <string name="session_shared_secret">Session Shared Secret:</string>
     <string name="session_aes_key">Session AES Key:</string>
@@ -39,7 +41,19 @@
     <string name="contact_acquisition_date">Contact Acquisition Date:</string>
     <string name="contact_rsa_pub_key">Contact RSA Public Key:</string>
     <string name="delete_this_contact">Delete This Contact</string>
-
+    <string name="session_date">Handshake on %1$s</string>
+    <string name="session_details">Age is %1$d hour(s) %2$d minute(s) with %3$d message(s)</string>
+    <string name="session_status_valid">VALID</string>
+    <string name="session_status_notvalid">INVALID</string>
+    <string name="session_status_fresh">FRESH</string>
+    <string name="session_status_stale">STALE</string>
+    <string name="session_status_decomposed">DECOMPOSED</string>
+    <string name="session_age">%1$d Hour(s) %2$d Minute(s)</string>
+    <string name="session_ds_valid">VALID</string>
+    <string name="session_ds_notvalid">INVALID</string>
+    <string name="session_role_master">MASTER</string>
+    <string name="session_role_slave">SLAVE</string>
+    <string name="session_unknown">NOT DEFINED</string>
 
     <!-- For Use in Development View Only -->
     <string name="dev_dummy_name">Fulan Bin Abi Fulan</string>
@@ -50,8 +64,5 @@
     <string name="dev_dummy_status">INVALID</string>
     <string name="dev_dummy_duration">22D 12h32m</string>
     <string name="dev_dummy_longtext">Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text </string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
