@@ -41,6 +41,7 @@ public class sessionRepository {
         values.put(TypeSession.KEY_ecdhpub, session.getSession_ecdh_private_key());
         values.put(TypeSession.KEY_ecdhpubpart, session.getSession_ecdh_partner_public_key());
         values.put(TypeSession.KEY_ecdhds, session.getSession_ecdh_partner_digital_signature());
+        values.put(TypeSession.KEY_ecdhcomds, session.getSession_ecdh_partner_computed_digital_signature());
         values.put(TypeSession.KEY_ecdhvalid, session.getSession_ecdh_partner_validity());
         values.put(TypeSession.KEY_ecdhsecret, session.getSession_ecdh_shared_secret());
         values.put(TypeSession.KEY_aeskey, session.getSession_ecdh_aes_key());
@@ -90,6 +91,7 @@ public class sessionRepository {
         values.put(TypeSession.KEY_ecdhpub, session.getSession_ecdh_private_key());
         values.put(TypeSession.KEY_ecdhpubpart, session.getSession_ecdh_partner_public_key());
         values.put(TypeSession.KEY_ecdhds, session.getSession_ecdh_partner_digital_signature());
+        values.put(TypeSession.KEY_ecdhcomds, session.getSession_ecdh_partner_computed_digital_signature());
         values.put(TypeSession.KEY_ecdhvalid, session.getSession_ecdh_partner_validity());
         values.put(TypeSession.KEY_ecdhsecret, session.getSession_ecdh_shared_secret());
         values.put(TypeSession.KEY_aeskey, session.getSession_ecdh_aes_key());
@@ -118,6 +120,7 @@ public class sessionRepository {
                 + TypeSession.KEY_ecdhpub + ", "
                 + TypeSession.KEY_ecdhpubpart + ", "
                 + TypeSession.KEY_ecdhds + ", "
+                + TypeSession.KEY_ecdhcomds + ", "
                 + TypeSession.KEY_ecdhvalid + ", "
                 + TypeSession.KEY_ecdhsecret + ", "
                 + TypeSession.KEY_aeskey + ", "
@@ -137,6 +140,7 @@ public class sessionRepository {
                 session.setSession_ecdh_public_key(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhpub)));
                 session.setSession_ecdh_partner_public_key(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhpubpart)));
                 session.setSession_ecdh_partner_digital_signature(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhds)));
+                session.setSession_ecdh_partner_computed_digital_signature(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhcomds)));
                 session.setSession_ecdh_partner_validity(cursor.getInt(cursor.getColumnIndex(TypeSession.KEY_ecdhvalid)));
                 session.setSession_ecdh_shared_secret(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhsecret)));
                 session.setSession_ecdh_aes_key(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_aeskey)));
@@ -161,6 +165,7 @@ public class sessionRepository {
                 + TypeSession.KEY_ecdhpub + ", "
                 + TypeSession.KEY_ecdhpubpart + ", "
                 + TypeSession.KEY_ecdhds + ", "
+                + TypeSession.KEY_ecdhcomds + ", "
                 + TypeSession.KEY_ecdhvalid + ", "
                 + TypeSession.KEY_ecdhsecret + ", "
                 + TypeSession.KEY_aeskey + ", "
@@ -180,6 +185,7 @@ public class sessionRepository {
                 session.setSession_ecdh_public_key(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhpub)));
                 session.setSession_ecdh_partner_public_key(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhpubpart)));
                 session.setSession_ecdh_partner_digital_signature(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhds)));
+                session.setSession_ecdh_partner_computed_digital_signature(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhcomds)));
                 session.setSession_ecdh_partner_validity(cursor.getInt(cursor.getColumnIndex(TypeSession.KEY_ecdhvalid)));
                 session.setSession_ecdh_shared_secret(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhsecret)));
                 session.setSession_ecdh_aes_key(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_aeskey)));
@@ -227,6 +233,7 @@ public class sessionRepository {
                 + TypeSession.KEY_ecdhpub + ", "
                 + TypeSession.KEY_ecdhpubpart + ", "
                 + TypeSession.KEY_ecdhds + ", "
+                + TypeSession.KEY_ecdhcomds + ", "
                 + TypeSession.KEY_ecdhvalid + ", "
                 + TypeSession.KEY_ecdhsecret + ", "
                 + TypeSession.KEY_aeskey + ", "
@@ -248,6 +255,7 @@ public class sessionRepository {
                 session.put(TypeSession.KEY_ecdhpub, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhpub)));
                 session.put(TypeSession.KEY_ecdhpubpart, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhpubpart)));
                 session.put(TypeSession.KEY_ecdhds, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhds)));
+                session.put(TypeSession.KEY_ecdhcomds, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhcomds)));
                 session.put(TypeSession.KEY_ecdhvalid, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhvalid)));
                 session.put(TypeSession.KEY_ecdhsecret, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhsecret)));
                 session.put(TypeSession.KEY_aeskey, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_aeskey)));
@@ -273,6 +281,7 @@ public class sessionRepository {
                 + TypeSession.KEY_ecdhpub + ", "
                 + TypeSession.KEY_ecdhpubpart + ", "
                 + TypeSession.KEY_ecdhds + ", "
+                + TypeSession.KEY_ecdhcomds + ", "
                 + TypeSession.KEY_ecdhvalid + ", "
                 + TypeSession.KEY_ecdhsecret + ", "
                 + TypeSession.KEY_aeskey + ", "
@@ -295,6 +304,7 @@ public class sessionRepository {
                 session.put(TypeSession.KEY_ecdhpub, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhpub)));
                 session.put(TypeSession.KEY_ecdhpubpart, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhpubpart)));
                 session.put(TypeSession.KEY_ecdhds, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhds)));
+                session.put(TypeSession.KEY_ecdhcomds, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhcomds)));
                 session.put(TypeSession.KEY_ecdhvalid, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhvalid)));
                 session.put(TypeSession.KEY_ecdhsecret, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhsecret)));
                 session.put(TypeSession.KEY_aeskey, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_aeskey)));
@@ -307,4 +317,30 @@ public class sessionRepository {
         return sessionList;
     }
     //endregion
+    //region TABLE Method
+    public void DropTable() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + TypeSession.TABLE);
+    }
+
+    public void CreateTable() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String CREATE_TABLE_SESSION = "CREATE TABLE IF NOT EXISTS " + TypeSession.TABLE + "("
+                + TypeSession.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + TypeSession.KEY_phone + " TEXT, "
+                + TypeSession.KEY_name + " TEXT, "
+                + TypeSession.KEY_valid + " INTEGER, "
+                + TypeSession.KEY_date + " INTEGER, "
+                + TypeSession.KEY_role + " INTEGER, "
+                + TypeSession.KEY_ecdhpriv + " TEXT, "
+                + TypeSession.KEY_ecdhpub + " TEXT, "
+                + TypeSession.KEY_ecdhpubpart + " TEXT, "
+                + TypeSession.KEY_ecdhds + " TEXT, "
+                + TypeSession.KEY_ecdhcomds + " TEXT, "
+                + TypeSession.KEY_ecdhvalid + " INTEGER, "
+                + TypeSession.KEY_ecdhsecret + " TEXT, "
+                + TypeSession.KEY_aeskey + " TEXT, "
+                + TypeSession.KEY_nummessage + " INTEGER)";
+        db.execSQL(CREATE_TABLE_SESSION);
+    }
 }
