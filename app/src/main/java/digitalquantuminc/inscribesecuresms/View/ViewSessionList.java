@@ -2,6 +2,9 @@ package digitalquantuminc.inscribesecuresms.View;
 
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ListView;
+
+import digitalquantuminc.inscribesecuresms.R;
 
 /**
  * Created by Bagus Hanindhito on 30/06/2017.
@@ -9,9 +12,8 @@ import android.view.View;
  */
 
 public class ViewSessionList extends Presenter {
-    //TODO: Create Binding to UX Element with their Getter (IT IS STILL UNIMPLEMENTED)
     //region Global Variable
-
+    private ListView list_session;
     //endregion
     //region Constructor
     public ViewSessionList(AppCompatActivity activity, View view) {
@@ -22,9 +24,12 @@ public class ViewSessionList extends Presenter {
     //region Override Method
     @Override
     public void onCreateView() {
-
+        list_session = (ListView) view.findViewById(R.id.list_session);
     }
     //endregion
     //region Getter
+    public ListView getList_session() {
+        return list_session;
+    }
     //endregion
 }
