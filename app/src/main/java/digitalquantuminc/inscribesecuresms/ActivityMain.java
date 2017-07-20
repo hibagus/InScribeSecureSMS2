@@ -15,14 +15,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityContactsDetail;
+import digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivitySessionDetail;
 import digitalquantuminc.inscribesecuresms.Development.ContactDummyData;
 import digitalquantuminc.inscribesecuresms.Intent.IntentString;
 import digitalquantuminc.inscribesecuresms.ListViewAdapter.contactListAdapter;
+import digitalquantuminc.inscribesecuresms.ListViewAdapter.sessionListAdapter;
 import digitalquantuminc.inscribesecuresms.Repository.contactRepository;
+import digitalquantuminc.inscribesecuresms.Repository.sessionRepository;
 import digitalquantuminc.inscribesecuresms.View.ViewContactsList;
 import digitalquantuminc.inscribesecuresms.View.ViewConversationList;
 import digitalquantuminc.inscribesecuresms.View.ViewPagerAdapter;
@@ -80,6 +84,9 @@ public class ActivityMain extends AppCompatActivity {
 
         // Contact List
         LoadContactList(viewcontactslist.getList_contacts());
+
+        // Session List
+        LoadSessionList(viewsessionlist.getList_session());
     }
 
     @Override
@@ -176,6 +183,26 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
+    public void LoadSessionList(ListView listsession) {
+        // Access the database and load all of its content to ArrayList
+        sessionRepository repo = new sessionRepository(this);
+        ArrayList<HashMap<String, String>> sessionList = repo.getSessionListSorted();
+        // If there is at least one element
+        if (sessionList.size() != 0) {
+            // Set adapter for the listsession
+            listsession.setAdapter(new sessionListAdapter(ActivityMain.this, sessionList));
+            // Set the Event Handler when the item in the List Session gets clicked.
+            listsession.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    listview_sessionList_onItemClick(parent, view, position, id);
+                }
+            });
+        } else {
+            Toast.makeText(this, "No Session List", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     //endregion
     //region UX EventHandler Method
     private void listview_contactList_onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -195,6 +222,25 @@ public class ActivityMain extends AppCompatActivity {
 
         // Start the ActivityContactsDetail by passing the intent and the code for feedback request.
         startActivityForResult(objIntent, IntentString.MainFeedbackCode_RefreshContactList);
+    }
+
+    private void listview_sessionList_onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // Method that handle action when the item in SessionList listview is clicked.
+
+        // First, we need to bind the UX Component into variable to access it easily.
+        TextView textlist_PartnerNumber = (TextView) view.findViewById(R.id.textlist_PartnerNumber);
+        ImageView imageView_SessionStatus = (ImageView) view.findViewById(R.id.imageView_SessionStatus);
+
+        // Extract the Phone Number as a unique identity for database query.
+        String PartnerNumber = textlist_PartnerNumber.getText().toString();
+
+        // Preparing intent to be passed to ActivitySessionDetail as child activity.
+        Intent objIntent = new Intent(getApplicationContext(), ActivitySessionDetail.class);
+        objIntent.putExtra(IntentString.MainToSessionDetails_PhoneNum, PartnerNumber);
+        objIntent.putExtra(IntentString.MainToSessionDetails_ColorTheme, ((ColorDrawable) imageView_SessionStatus.getBackground()).getColor());
+
+        // Start the ActivitySessionDetail by passing the intent and the code for feedback request.
+        startActivityForResult(objIntent, IntentString.MainFeedbackCode_RefreshSessionList);
     }
     //endregion
 }
