@@ -12,6 +12,8 @@
     <string name="last_secure_session_handshake">Last Secure Session Handshake:</string>
     <string name="last_handshake">Last Handshake</string>
     <string name="secure_session_status">Secure Session Status:</string>
+    <string name="secure_session_freshness">Secure Session Freshness:</string>
+    <string name="secure_session_nummessage">Number of Message Processed:</string>
     <string name="secure_session">Secure Session</string>
     <string name="encrypted_message_body">Encrypted Message Body:</string>
     <string name="plain_message_body">Plain Message Body</string>
@@ -48,5 +50,8 @@
     <string name="dev_dummy_status">INVALID</string>
     <string name="dev_dummy_duration">22D 12h32m</string>
     <string name="dev_dummy_longtext">Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

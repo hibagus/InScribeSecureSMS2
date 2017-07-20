@@ -23,32 +23,10 @@ public class contactListViewHolder {
     //region Constructor
     public contactListViewHolder(View view) {
         this.view = view;
-        imageView_ContactView = (ImageView) view.findViewById(R.id.imageView_ContactView);
-        textlist_ContactName = (TextView) view.findViewById(R.id.textlist_ContactName);
-        textlist_ContactPhoneNumber = (TextView) view.findViewById(R.id.textlist_ContactPhoneNumber);
-        imageView_ContactAccent = (ImageView) view.findViewById(R.id.imageView_ContactAccent);
-    }
-
-    //endregion
-    //region Setter
-    public void setView(View view) {
-        this.view = view;
-    }
-
-    public void setImageView_ContactView(ImageView imageView_ContactView) {
-        this.imageView_ContactView = imageView_ContactView;
-    }
-
-    public void setTextlist_ContactName(TextView textlist_ContactName) {
-        this.textlist_ContactName = textlist_ContactName;
-    }
-
-    public void setTextlist_ContactPhoneNumber(TextView textlist_ContactPhoneNumber) {
-        this.textlist_ContactPhoneNumber = textlist_ContactPhoneNumber;
-    }
-
-    public void setImageView_ContactAccent(ImageView imageView_ContactAccent) {
-        this.imageView_ContactAccent = imageView_ContactAccent;
+        this.imageView_ContactView = (ImageView) view.findViewById(R.id.imageView_ContactView);
+        this.textlist_ContactName = (TextView) view.findViewById(R.id.textlist_ContactName);
+        this.textlist_ContactPhoneNumber = (TextView) view.findViewById(R.id.textlist_ContactPhoneNumber);
+        this.imageView_ContactAccent = (ImageView) view.findViewById(R.id.imageView_ContactAccent);
     }
 
     //endregion
@@ -68,5 +46,6 @@ public class contactListViewHolder {
     public ImageView getImageView_ContactAccent() {
         return imageView_ContactAccent;
     }
+
     //endregion
 }

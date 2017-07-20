@@ -36,9 +36,11 @@ public class sessionDBHelper extends SQLiteOpenHelper {
                 + TypeSession.KEY_ecdhpriv + "TEXT, "
                 + TypeSession.KEY_ecdhpubpart + "TEXT, "
                 + TypeSession.KEY_ecdhds + "TEXT, "
+                + TypeSession.KEY_ecdhcomds + "TEXT, "
                 + TypeSession.KEY_ecdhvalid + "TEXT, "
                 + TypeSession.KEY_ecdhsecret + "TEXT, "
-                + TypeSession.KEY_aeskey + "TEXT)";
+                + TypeSession.KEY_aeskey + "TEXT, "
+                + TypeSession.KEY_nummessage + "INTEGER)";
 
         db.execSQL(CREATE_TABLE_PROFILE);
     }

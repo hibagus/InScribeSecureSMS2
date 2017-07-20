@@ -29,7 +29,7 @@
         android:layout_marginTop="8dp">
 
         <ImageView
-            android:id="@+id/imageView_ContactView"
+            android:id="@+id/imageView_PartnerView"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:contentDescription="@string/contact_photo" />
@@ -49,7 +49,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textlist_ContactName"
+            android:id="@+id/textlist_PartnerName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/contact_photo"
@@ -58,10 +58,26 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textlist_ContactPhoneNumber"
+            android:id="@+id/textlist_PartnerNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/dev_dummy_number" />
+            android:contentDescription="@string/contact_photo"
+            android:text="@string/dev_dummy_number"
+            android:textSize="8sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textlist_SessionHandshakeDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dev_dummy_date" />
+
+        <TextView
+            android:id="@+id/textlist_SessionDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dev_dummy_timestamp" />
     </LinearLayout>
 
     <FrameLayout
@@ -76,10 +92,17 @@
         android:layout_marginTop="0dp">
 
         <ImageView
-            android:id="@+id/imageView_ContactAccent"
+            android:id="@+id/imageView_SessionStatus"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
+            android:layout_height="38dp"
+            android:layout_gravity="top|right"
+            android:contentDescription="@string/color_container" />
+
+        <ImageView
+            android:id="@+id/imageView_SessionDuration"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_gravity="bottom|right"
             android:contentDescription="@string/color_container" />
 
     </FrameLayout>
