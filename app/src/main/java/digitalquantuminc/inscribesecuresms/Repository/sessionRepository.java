@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.Cursor;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -182,6 +183,7 @@ public class sessionRepository {
                 session.setSession_ecdh_partner_validity(cursor.getInt(cursor.getColumnIndex(TypeSession.KEY_ecdhvalid)));
                 session.setSession_ecdh_shared_secret(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhsecret)));
                 session.setSession_ecdh_aes_key(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_aeskey)));
+                session.setSession_num_message(cursor.getInt(cursor.getColumnIndex(TypeSession.KEY_nummessage)));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -249,6 +251,54 @@ public class sessionRepository {
                 session.put(TypeSession.KEY_ecdhvalid, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhvalid)));
                 session.put(TypeSession.KEY_ecdhsecret, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhsecret)));
                 session.put(TypeSession.KEY_aeskey, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_aeskey)));
+                session.put(TypeSession.KEY_nummessage, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_nummessage)));
+                sessionList.add(session);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return sessionList;
+    }
+
+    public ArrayList<HashMap<String, String>> getSessionListSorted() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT "
+                + TypeSession.KEY_ID + ", "
+                + TypeSession.KEY_phone + ", "
+                + TypeSession.KEY_name + ", "
+                + TypeSession.KEY_valid + ", "
+                + TypeSession.KEY_date + ", "
+                + TypeSession.KEY_role + ", "
+                + TypeSession.KEY_ecdhpriv + ", "
+                + TypeSession.KEY_ecdhpub + ", "
+                + TypeSession.KEY_ecdhpubpart + ", "
+                + TypeSession.KEY_ecdhds + ", "
+                + TypeSession.KEY_ecdhvalid + ", "
+                + TypeSession.KEY_ecdhsecret + ", "
+                + TypeSession.KEY_aeskey + ", "
+                + TypeSession.KEY_nummessage + " FROM "
+                + TypeSession.TABLE + " ORDER BY "
+                + TypeSession.KEY_name + " ASC ";
+
+        ArrayList<HashMap<String, String>> sessionList = new ArrayList<>();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> session = new HashMap<>();
+                session.put(TypeSession.KEY_ID, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ID)));
+                session.put(TypeSession.KEY_phone, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_phone)));
+                session.put(TypeSession.KEY_name, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_name)));
+                session.put(TypeSession.KEY_valid, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_valid)));
+                session.put(TypeSession.KEY_date, String.valueOf(cursor.getLong(cursor.getColumnIndex(TypeSession.KEY_date))));
+                session.put(TypeSession.KEY_role, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_role)));
+                session.put(TypeSession.KEY_ecdhpriv, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhpriv)));
+                session.put(TypeSession.KEY_ecdhpub, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhpub)));
+                session.put(TypeSession.KEY_ecdhpubpart, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhpubpart)));
+                session.put(TypeSession.KEY_ecdhds, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhds)));
+                session.put(TypeSession.KEY_ecdhvalid, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhvalid)));
+                session.put(TypeSession.KEY_ecdhsecret, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhsecret)));
+                session.put(TypeSession.KEY_aeskey, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_aeskey)));
+                session.put(TypeSession.KEY_nummessage, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_nummessage)));
                 sessionList.add(session);
             } while (cursor.moveToNext());
         }
