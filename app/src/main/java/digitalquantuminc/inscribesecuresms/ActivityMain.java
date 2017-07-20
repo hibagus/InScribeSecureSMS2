@@ -1,5 +1,6 @@
 package digitalquantuminc.inscribesecuresms;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TabLayout;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +24,7 @@ import java.util.HashMap;
 import digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityContactsDetail;
 import digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivitySessionDetail;
 import digitalquantuminc.inscribesecuresms.Development.ContactDummyData;
+import digitalquantuminc.inscribesecuresms.Development.SessionDummyData;
 import digitalquantuminc.inscribesecuresms.Intent.IntentString;
 import digitalquantuminc.inscribesecuresms.ListViewAdapter.contactListAdapter;
 import digitalquantuminc.inscribesecuresms.ListViewAdapter.sessionListAdapter;
@@ -47,8 +50,10 @@ public class ActivityMain extends AppCompatActivity {
     // Put 1 to enable development mode otherwise 0
     // Development mode will automatically populates SQLite Database with dummy data for easy development.
     // It will destroy the database, recreate database, and load dummy data each runtime.
+    private static final int DEPLOYMENT_MODE = 0;
     private static final int DEVELOPMENT_MODE = 1;
 
+    private static final int RUNTIME_MODE = DEVELOPMENT_MODE;
     // Global Variable for UX Binding
     // Variable for ViewPager that has been modified to inflate standard activity layout (not fragment)
     private ViewPager mViewPager;
@@ -73,10 +78,13 @@ public class ActivityMain extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Dummy data, only for development only.
-        if (DEVELOPMENT_MODE == 1) {
+        if (RUNTIME_MODE == DEVELOPMENT_MODE) {
             ContactDummyData.ClearDB(this);
             ContactDummyData.CreateDB(this);
             ContactDummyData.LoadDummyData(this);
+            SessionDummyData.ClearDB(this);
+            SessionDummyData.CreateDB(this);
+            SessionDummyData.LoadDummyData(this);
         }
 
         // UX Layout Setup
@@ -117,18 +125,29 @@ public class ActivityMain extends AppCompatActivity {
         // Handle all feedbackcode request from child activity to be executed in parent activity
         super.onActivityResult(requestCode, resultCode, data);
         // Check request code send by child activity before it closes itself.
-        switch (requestCode) {
-            case IntentString.MainFeedbackCode_DoNothing: {
-                break;
+        if (resultCode == Activity.RESULT_OK) {
+            int code = data.getIntExtra(IntentString.MainFeedBackCode, IntentString.MainFeedbackCode_DoNothing);
+            switch (code) {
+                case IntentString.MainFeedbackCode_DoNothing: {
+                    break;
+                }
+                case IntentString.MainFeedbackCode_RefreshContactList: {
+                    LoadContactList(viewcontactslist.getList_contacts());
+                    break;
+                }
+                case IntentString.MainFeedbackCode_RefreshBothContactandSessionList: {
+                    LoadContactList(viewcontactslist.getList_contacts());
+                    LoadSessionList(viewsessionlist.getList_session());
+                    break;
+                }
+                default: {
+                    break;
+                }
             }
-            case IntentString.MainFeedbackCode_RefreshContactList: {
-                LoadContactList(viewcontactslist.getList_contacts());
-                break;
-            }
-            default: {
-                break;
-            }
+        } else {
+            // Do Nothing
         }
+
     }
 
     //endregion
