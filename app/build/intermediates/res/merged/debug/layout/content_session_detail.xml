@@ -65,6 +65,23 @@
                 android:layout_height="8dp" />
 
             <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/partner_role" />
+
+            <TextView
+                android:id="@+id/text_PartnerRole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dev_dummy_name"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="8dp" />
+
+            <TextView
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -264,6 +281,30 @@
                 android:layout_height="8dp" />
 
             <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ecdh_partner_computedigsign" />
+
+            <EditText
+                android:id="@+id/text_PartnerComputedDigitalSignature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start"
+                android:inputType="textMultiLine"
+                android:labelFor="@+id/text_PartnerDigitalSignature"
+                android:maxLines="3"
+                android:minLines="3"
+                android:scrollbars="vertical"
+                android:text="@string/dev_dummy_longtext"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="8dp" />
+
+            <TextView
                 android:id="@+id/textView22"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -335,16 +376,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/initiate_secure_session" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="8dp" />
-
-            <Button
-                android:id="@+id/btn_RestartSession"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/restart_secure_session" />
 
             <Space
                 android:layout_width="match_parent"

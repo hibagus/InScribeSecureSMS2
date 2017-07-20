@@ -6,5 +6,6 @@
     <color name="colorDarkGreen">#388E3C</color>
     <color name="colorAmber">#FFC107</color>
     <color name="colorDarkRed">#D32F2F</color>
+    <color name="colorDarkGrey">#616161</color>
 
 </resources>
