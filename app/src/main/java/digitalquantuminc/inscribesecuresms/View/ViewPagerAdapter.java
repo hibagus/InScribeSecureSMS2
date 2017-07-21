@@ -1,11 +1,15 @@
 package digitalquantuminc.inscribesecuresms.View;
 
 import android.support.v4.view.PagerAdapter;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import digitalquantuminc.inscribesecuresms.R;
 
 /**
  * Created by Bagus Hanindhito on 30/06/2017.
@@ -30,10 +34,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         return mPresenterList.size();
     }
 
-    @Override
-    public Object instantiateItem(ViewGroup collection, int position) {
-        return mPresenterList.get(position).getView();
-    }
+
 
     @Override
     public CharSequence getPageTitle(int position) {
@@ -52,6 +53,11 @@ public class ViewPagerAdapter extends PagerAdapter {
                 return "About";
         }
         return null;
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup collection, int position) {
+        return mPresenterList.get(position).getView();
     }
 
     //endregion

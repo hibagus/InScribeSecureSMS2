@@ -23,6 +23,7 @@ repositories {
     maven {
         url 'http://dl.bintray.com/amulyakhare/maven'
     }
+    jcenter()
 }
 
 dependencies {
@@ -37,5 +38,10 @@ dependencies {
     compile 'com.android.support:percent:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    compile 'com.journeyapps:zxing-android-embedded:3.5.0'
+    compile 'com.madgag.spongycastle:core:1.56.0.0'
+    compile 'com.madgag.spongycastle:prov:1.56.0.0'
+    compile 'com.madgag.spongycastle:pkix:1.54.0.0'
+    compile 'com.madgag.spongycastle:pg:1.54.0.0'
     testCompile 'junit:junit:4.12'
 }

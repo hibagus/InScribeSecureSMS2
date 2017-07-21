@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import digitalquantuminc.inscribesecuresms.DataBase.profileDBHelper;
+import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
 import digitalquantuminc.inscribesecuresms.DataType.TypeProfile;
 
 /**
@@ -28,48 +29,9 @@ public class profileRepository {
     }
 
     //endregion
-    //region INSERT Method
-    public int insert(TypeProfile profile) {
-        // Prepare Values to be inserted
-        ContentValues values = new ContentValues();
-        values.put(TypeProfile.KEY_phone, profile.getPhone_number());
-        values.put(TypeProfile.KEY_name, profile.getName_self());
-        values.put(TypeProfile.KEY_date, profile.getGenerated_date());
-        values.put(TypeProfile.KEY_rsapub, profile.getRsa_publickey());
-        values.put(TypeProfile.KEY_rsapriv, profile.getRsa_privatekey());
-        // Open connection to write the DB
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        // Inserting row
-        long profile_id = db.insert(TypeProfile.TABLE, null, values);
-        // Closing DB
-        db.close();
 
-        return (int) profile_id;
-    }
-
-    //endregion
-    //region DELETE Method
-    public void delete(int profile_id) {
-        // Open connection to write the DB
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        // Delete Entry
-        db.delete(TypeProfile.TABLE, TypeProfile.KEY_ID + "= ?", new String[]{String.valueOf(profile_id)});
-        // Closing DB
-        db.close();
-    }
-
-    public void delete(String phonenum) {
-        // Open connection to write the DB
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        // Delete Entry
-        db.delete(TypeProfile.TABLE, TypeProfile.KEY_phone + "= ?", new String[]{String.valueOf(phonenum)});
-        // Closing DB
-        db.close();
-    }
-
-    //endregion
     //region UPDATE Method
-    public void update(TypeProfile profile, String old_phonenum) {
+    public void update(TypeProfile profile) {
         // Prepare Values to be inserted
         ContentValues values = new ContentValues();
         values.put(TypeProfile.KEY_phone, profile.getPhone_number());
@@ -77,10 +39,11 @@ public class profileRepository {
         values.put(TypeProfile.KEY_date, profile.getGenerated_date());
         values.put(TypeProfile.KEY_rsapub, profile.getRsa_publickey());
         values.put(TypeProfile.KEY_rsapriv, profile.getRsa_privatekey());
+        values.put(TypeProfile.KEY_lastsync, profile.getRsa_privatekey());
         // Open connection to write the DB
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         // Inserting row
-        db.update(TypeProfile.TABLE, values, TypeProfile.KEY_phone + " = ?", new String[]{String.valueOf(old_phonenum)});
+        db.update(TypeProfile.TABLE, values, TypeProfile.KEY_ID + " = ?", new String[]{String.valueOf(TypeProfile.DEFAULTID)});
         // Closing DB
         db.close();
     }
@@ -95,7 +58,8 @@ public class profileRepository {
                 + TypeProfile.KEY_name + ", "
                 + TypeProfile.KEY_date + ", "
                 + TypeProfile.KEY_rsapub + ", "
-                + TypeProfile.KEY_rsapriv + " FROM "
+                + TypeProfile.KEY_rsapriv + ", "
+                + TypeProfile.KEY_lastsync + " FROM "
                 + TypeProfile.TABLE + " WHERE "
                 + TypeProfile.KEY_ID + " = ?";
         TypeProfile profile = new TypeProfile();
@@ -107,6 +71,7 @@ public class profileRepository {
                 profile.setGenerated_date(cursor.getLong(cursor.getColumnIndex(TypeProfile.KEY_date)));
                 profile.setRsa_publickey(cursor.getString(cursor.getColumnIndex(TypeProfile.KEY_rsapub)));
                 profile.setRsa_privatekey(cursor.getString(cursor.getColumnIndex(TypeProfile.KEY_rsapriv)));
+                profile.setLastsync(cursor.getLong(cursor.getColumnIndex(TypeProfile.KEY_lastsync)));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -114,29 +79,7 @@ public class profileRepository {
         return profile;
     }
 
-    //endregion
-    //region GET ID Method
-    public int getProfileId(String phonenum) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT "
-                + TypeProfile.KEY_ID + " FROM "
-                + TypeProfile.TABLE + " WHERE "
-                + TypeProfile.KEY_phone + " = ?";
-        int profile_id = 0;
-        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(phonenum)});
-        if (cursor.moveToFirst()) {
-            do {
-                profile_id = cursor.getInt(cursor.getColumnIndex(TypeProfile.KEY_ID));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return profile_id;
-    }
-
-    //endregion
-    //region GET LIST ITEM Method
-    public ArrayList<HashMap<String, String>> getProfileList() {
+    public boolean isProfileExist(int profile_id) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT "
                 + TypeProfile.KEY_ID + ", "
@@ -144,25 +87,71 @@ public class profileRepository {
                 + TypeProfile.KEY_name + ", "
                 + TypeProfile.KEY_date + ", "
                 + TypeProfile.KEY_rsapub + ", "
-                + TypeProfile.KEY_rsapriv + " FROM "
-                + TypeProfile.TABLE;
-        ArrayList<HashMap<String, String>> profileList = new ArrayList<>();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.moveToFirst()) {
-            do {
-                HashMap<String, String> profile = new HashMap<>();
-                profile.put("id", cursor.getString(cursor.getColumnIndex(TypeProfile.KEY_ID)));
-                profile.put("phone", cursor.getString(cursor.getColumnIndex(TypeProfile.KEY_phone)));
-                profile.put("name", cursor.getString(cursor.getColumnIndex(TypeProfile.KEY_name)));
-                profile.put("date", String.valueOf(cursor.getLong(cursor.getColumnIndex(TypeProfile.KEY_date))));
-                profile.put("rsapub", cursor.getString(cursor.getColumnIndex(TypeProfile.KEY_rsapub)));
-                profile.put("rsapriv", cursor.getString(cursor.getColumnIndex(TypeProfile.KEY_rsapriv)));
-                profileList.add(profile);
-            } while (cursor.moveToNext());
+                + TypeProfile.KEY_rsapriv + ", "
+                + TypeProfile.KEY_lastsync + " FROM "
+                + TypeProfile.TABLE + " WHERE "
+                + TypeProfile.KEY_ID + " = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(profile_id)});
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            return false;
         }
         cursor.close();
-        db.close();
-        return profileList;
+        return true;
     }
+
+    //endregion
+
+    //region TABLE Method
+    public void DropTable() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + TypeProfile.TABLE);
+        db.close();
+    }
+
+    public void CreateTable() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String CREATE_TABLE_PROFILE = "CREATE TABLE IF NOT EXISTS " + TypeProfile.TABLE + "("
+                + TypeProfile.KEY_ID + " INTEGER, "
+                + TypeProfile.KEY_phone + " TEXT, "
+                + TypeProfile.KEY_name + " TEXT, "
+                + TypeProfile.KEY_date + " INTEGER, "
+                + TypeProfile.KEY_rsapub + " TEXT, "
+                + TypeProfile.KEY_rsapriv + " TEXT, "
+                + TypeProfile.KEY_lastsync + " INTEGER)";
+        db.execSQL(CREATE_TABLE_PROFILE);
+        db.close();
+    }
+
+    public void CreateTableandInitialize() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String CREATE_TABLE_PROFILE = "CREATE TABLE IF NOT EXISTS " + TypeProfile.TABLE + "("
+                + TypeProfile.KEY_ID + " INTEGER, "
+                + TypeProfile.KEY_phone + " TEXT, "
+                + TypeProfile.KEY_name + " TEXT, "
+                + TypeProfile.KEY_date + " INTEGER, "
+                + TypeProfile.KEY_rsapub + " TEXT, "
+                + TypeProfile.KEY_rsapriv + " TEXT, "
+                + TypeProfile.KEY_lastsync + " INTEGER)";
+        db.execSQL(CREATE_TABLE_PROFILE);
+
+        if(!isProfileExist(TypeProfile.DEFAULTID))
+        {
+            // Prepare Values to be inserted
+            ContentValues values = new ContentValues();
+            values.put(TypeProfile.KEY_ID, TypeProfile.DEFAULTID);
+            values.put(TypeProfile.KEY_name, TypeProfile.DEFAULTNAME);
+            values.put(TypeProfile.KEY_phone, TypeProfile.DEFAULTPHONENUM);
+            values.put(TypeProfile.KEY_date, TypeProfile.DEFAULTGENERATEDDATE);
+            values.put(TypeProfile.KEY_rsapub, TypeProfile.DEFAULTRSAPUBKEY);
+            values.put(TypeProfile.KEY_rsapriv, TypeProfile.DEFAULTRSAPRIVKEY);
+            values.put(TypeProfile.KEY_lastsync, TypeProfile.DEFAULTLASTSYNC);
+
+            // Insert Default Value
+            db.insert(TypeProfile.TABLE, null, values);
+        }
+        db.close();
+    }
+
     //endregion
 }

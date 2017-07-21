@@ -321,6 +321,7 @@ public class sessionRepository {
     public void DropTable() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + TypeSession.TABLE);
+        db.close();
     }
 
     public void CreateTable() {
@@ -342,5 +343,7 @@ public class sessionRepository {
                 + TypeSession.KEY_aeskey + " TEXT, "
                 + TypeSession.KEY_nummessage + " INTEGER)";
         db.execSQL(CREATE_TABLE_SESSION);
+        db.close();
     }
+    //endregion
 }
