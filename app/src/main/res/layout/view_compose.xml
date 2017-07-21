@@ -1,6 +1,290 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarStyle="insideOverlay">
+
+        <LinearLayout
+            android:id="@+id/layoutProfile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_partnername"
+                android:textAlignment="viewStart" />
+
+            <TextView
+                android:id="@+id/text_ComposePartnerName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dev_dummy_name"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_partnernum" />
+
+            <TextView
+                android:id="@+id/text_ComposePartnerNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dev_dummy_number"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <Button
+                android:id="@+id/btn_ComposeSelectSession"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="@string/compose_selectpartner" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_plaintext" />
+
+            <EditText
+                android:id="@+id/text_ComposePlainText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start"
+                android:inputType="textMultiLine"
+                android:labelFor="@+id/text_ComposePlainText"
+                android:lines="10"
+                android:maxLines="10"
+                android:minLines="10"
+                android:scrollbars="vertical"
+                android:text="@string/dev_dummy_longtext"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/text_ComposePlainTextSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_plaintextsize"
+                android:textAlignment="textEnd" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <Button
+                android:id="@+id/btn_ComposeEncryptMessage"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:enabled="false"
+                android:text="@string/compose_encryptmessage" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <TextView
+                android:id="@+id/textView29"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_compressedtext" />
+
+            <EditText
+                android:id="@+id/text_ComposeCompressedText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start"
+                android:inputType="textMultiLine"
+                android:labelFor="@+id/text_ComposeCompressedText"
+                android:lines="3"
+                android:maxLines="3"
+                android:minLines="3"
+                android:scrollbars="vertical"
+                android:text="@string/dev_dummy_longtext"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/text_ComposeCompressedTextSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_compressedtextsize"
+                android:textAlignment="textEnd" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <TextView
+                android:id="@+id/textView25"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_aesivtext" />
+
+            <EditText
+                android:id="@+id/text_ComposeAESIV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start"
+                android:inputType="textMultiLine"
+                android:labelFor="@+id/text_ComposeAESIV"
+                android:lines="3"
+                android:maxLines="3"
+                android:minLines="3"
+                android:scrollbars="vertical"
+                android:text="@string/dev_dummy_longtext"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/text_ComposeAESIVSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_aesivtextsize"
+                android:textAlignment="textEnd" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <TextView
+                android:id="@+id/textView38"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_encryptedtext" />
+
+            <EditText
+                android:id="@+id/text_ComposeEncryptedMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start"
+                android:inputType="textMultiLine"
+                android:labelFor="@+id/text_ComposeEncryptedMessage"
+                android:lines="3"
+                android:maxLines="3"
+                android:minLines="3"
+                android:scrollbars="vertical"
+                android:text="@string/dev_dummy_longtext"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/text_ComposeEncryptedMessageSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_encryptedtextsize"
+                android:textAlignment="textEnd" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <TextView
+                android:id="@+id/textView40"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_encodedtext" />
+
+            <EditText
+                android:id="@+id/text_ComposeEncodedMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start"
+                android:inputType="textMultiLine"
+                android:labelFor="@+id/text_ComposeEncodedMessage"
+                android:lines="3"
+                android:maxLines="3"
+                android:minLines="3"
+                android:scrollbars="vertical"
+                android:text="@string/dev_dummy_longtext"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/text_ComposeEncodedMessageSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_encodedtextsize"
+                android:textAlignment="textEnd" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <TextView
+                android:id="@+id/textView36"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_completeencryptedtext" />
+
+            <EditText
+                android:id="@+id/text_ComposeFinalMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start"
+                android:inputType="textMultiLine"
+                android:labelFor="@+id/text_ComposeFinalMessage"
+                android:lines="3"
+                android:maxLines="3"
+                android:minLines="3"
+                android:scrollbars="vertical"
+                android:text="@string/dev_dummy_longtext"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/text_ComposeMetadataSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_metadatasize"
+                android:textAlignment="textEnd" />
+
+            <TextView
+                android:id="@+id/text_ComposeFinalMessageSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_completeencryptedsize"
+                android:textAlignment="textEnd" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <Button
+                android:id="@+id/btn_ComposeSendMessage"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:enabled="false"
+                android:text="@string/compose_sendmessage" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
