@@ -721,6 +721,24 @@
     <string name="bottom_sheet_behavior" translatable="false">android.support.design.widget.BottomSheetBehavior</string>
     <string name="character_counter_pattern" translatable="false">%1$d / %2$d</string>
     <string name="color_container">Color Container</string>
+    <string name="compose_aesivtext">AES Generated Initialization Vector:</string>
+    <string name="compose_aesivtextsize">AES Initialization Vector Size is %1$d byte(s)</string>
+    <string name="compose_completeencryptedsize">Final Message Size is %1$d byte(s)</string>
+    <string name="compose_completeencryptedtext">Final Message:</string>
+    <string name="compose_compressedtext">Compressed Text Message:</string>
+    <string name="compose_compressedtextsize">Compressed Message Size is %1$d byte(s)</string>
+    <string name="compose_encodedtext">Encoded Text Message:</string>
+    <string name="compose_encodedtextsize">Encoded Message Size is %1$d byte(s)</string>
+    <string name="compose_encryptedtext">Encrypted Text Message:</string>
+    <string name="compose_encryptedtextsize">Encrypted Text Message Size is %1$d byte(s)</string>
+    <string name="compose_encryptmessage">Compress and Encrypt Message</string>
+    <string name="compose_metadatasize">Metadata Size is %1$d byte(s)</string>
+    <string name="compose_partnername">Partner Name:</string>
+    <string name="compose_partnernum">Partner Number:</string>
+    <string name="compose_plaintext">Plain Text Message:</string>
+    <string name="compose_plaintextsize">Message Size is %1$d byte(s)</string>
+    <string name="compose_selectpartner">Select Valid Secure Session</string>
+    <string name="compose_sendmessage">Send Message</string>
     <string name="contact_acquisition_date">Contact Acquisition Date:</string>
     <string name="contact_name">Contact Name:</string>
     <string name="contact_number">Contact Number:</string>

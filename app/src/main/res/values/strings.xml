@@ -66,6 +66,28 @@
     <string name="profile_regenRSA">Regenerate RSA Key Pair</string>
     <string name="profile_update">Update Profile</string>
 
+    <string name="compose_partnername">Partner Name:</string>
+    <string name="compose_partnernum">Partner Number:</string>
+    <string name="compose_selectpartner">Select Valid Secure Session</string>
+
+    <string name="compose_plaintextsize">Message Size is %1$d byte(s)</string>
+    <string name="compose_compressedtextsize">Compressed Message Size is %1$d byte(s)</string>
+    <string name="compose_aesivtextsize">AES Initialization Vector Size is %1$d byte(s)</string>
+    <string name="compose_encryptedtextsize">Encrypted Text Message Size is %1$d byte(s)</string>
+    <string name="compose_metadatasize">Metadata Size is %1$d byte(s)</string>
+    <string name="compose_completeencryptedsize">Final Message Size is %1$d byte(s)</string>
+    <string name="compose_encodedtextsize">Encoded Message Size is %1$d byte(s)</string>
+
+    <string name="compose_plaintext">Plain Text Message:</string>
+    <string name="compose_compressedtext">Compressed Text Message:</string>
+    <string name="compose_aesivtext">AES Generated Initialization Vector:</string>
+    <string name="compose_encryptedtext">Encrypted Text Message:</string>
+    <string name="compose_completeencryptedtext">Final Message:</string>
+    <string name="compose_encodedtext">Encoded Text Message:</string>
+
+    <string name="compose_encryptmessage">Compress and Encrypt Message</string>
+    <string name="compose_sendmessage">Send Message</string>
+
     <!-- For Use in Development View Only -->
     <string name="dev_dummy_name">Fulan Bin Abi Fulan</string>
     <string name="dev_dummy_number">+6281000000000</string>
