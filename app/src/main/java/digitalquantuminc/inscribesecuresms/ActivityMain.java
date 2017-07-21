@@ -2,7 +2,10 @@ package digitalquantuminc.inscribesecuresms;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
+import android.support.constraint.solver.SolverVariable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,25 +17,36 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.spongycastle.util.encoders.Base64;
+
+import java.security.KeyPair;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityContactsDetail;
 import digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivitySessionDetail;
+import digitalquantuminc.inscribesecuresms.DataType.TypeProfile;
 import digitalquantuminc.inscribesecuresms.Development.ContactDummyData;
+import digitalquantuminc.inscribesecuresms.Development.ProfileDummyData;
 import digitalquantuminc.inscribesecuresms.Development.SessionDummyData;
 import digitalquantuminc.inscribesecuresms.Intent.IntentString;
 import digitalquantuminc.inscribesecuresms.ListViewAdapter.contactListAdapter;
 import digitalquantuminc.inscribesecuresms.ListViewAdapter.sessionListAdapter;
 import digitalquantuminc.inscribesecuresms.Repository.contactRepository;
+import digitalquantuminc.inscribesecuresms.Repository.profileRepository;
 import digitalquantuminc.inscribesecuresms.Repository.sessionRepository;
+import digitalquantuminc.inscribesecuresms.UserInterface.QRCodeHandler;
 import digitalquantuminc.inscribesecuresms.View.ViewContactsList;
 import digitalquantuminc.inscribesecuresms.View.ViewConversationList;
 import digitalquantuminc.inscribesecuresms.View.ViewPagerAdapter;
+import digitalquantuminc.inscribesecuresms.View.ViewProfile;
 import digitalquantuminc.inscribesecuresms.View.ViewSessionList;
 
 /**
@@ -54,6 +68,8 @@ public class ActivityMain extends AppCompatActivity {
     private static final int DEVELOPMENT_MODE = 1;
 
     private static final int RUNTIME_MODE = DEVELOPMENT_MODE;
+
+    private static final int RSAKEYSIZE = 2048;
     // Global Variable for UX Binding
     // Variable for ViewPager that has been modified to inflate standard activity layout (not fragment)
     private ViewPager mViewPager;
@@ -63,6 +79,7 @@ public class ActivityMain extends AppCompatActivity {
     private ViewConversationList viewconversationlist;
     private ViewContactsList viewcontactslist;
     private ViewSessionList viewsessionlist;
+    private ViewProfile viewprofile;
 
     // Variable for Toolbar
     private Toolbar toolbar;
@@ -85,6 +102,8 @@ public class ActivityMain extends AppCompatActivity {
             SessionDummyData.ClearDB(this);
             SessionDummyData.CreateDB(this);
             SessionDummyData.LoadDummyData(this);
+            //ProfileDummyData.ClearDB(this);
+            ProfileDummyData.CreateDB(this);
         }
 
         // UX Layout Setup
@@ -95,6 +114,9 @@ public class ActivityMain extends AppCompatActivity {
 
         // Session List
         LoadSessionList(viewsessionlist.getList_session());
+
+        // Profile
+        LoadProfile();
     }
 
     @Override
@@ -158,6 +180,7 @@ public class ActivityMain extends AppCompatActivity {
         viewconversationlist = new ViewConversationList(this, findViewById(R.id.view_conversation_list));
         viewcontactslist = new ViewContactsList(this, findViewById(R.id.view_contacts_list));
         viewsessionlist = new ViewSessionList(this, findViewById(R.id.view_session_list));
+        viewprofile = new ViewProfile(this, findViewById(R.id.view_profile));
 
         // Instantiate View Pager Adapter for the View Pager
         adapter = new ViewPagerAdapter();
@@ -165,11 +188,18 @@ public class ActivityMain extends AppCompatActivity {
         adapter.addView(viewconversationlist);
         adapter.addView(viewcontactslist);
         adapter.addView(viewsessionlist);
+        adapter.addView(viewprofile);
 
         // Instantiate View Pager for the Child View
         mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setOffscreenPageLimit(adapter.getCount());
         mViewPager.setAdapter(adapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                mViewPager_onPageChanged(position);
+            }
+        });
 
         // Setup Tab Layout to use the View Pager
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -222,6 +252,62 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
+    public void LoadProfile()
+    {
+        profileRepository repo = new profileRepository(this);
+        TypeProfile profile = repo.getProfile(TypeProfile.DEFAULTID);
+        viewprofile.getText_ProfileName().setText(profile.getName_self());
+        viewprofile.getText_ProfileNumber().setText(profile.getPhone_number());
+        viewprofile.getText_ProfileLastUpdate().setText(new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z").format(new Date(profile.getGenerated_date())));
+        viewprofile.getText_ProfileRSAPubKey().setText(profile.getRsa_publickey());
+        viewprofile.getText_ProfileRSAPubKey().setTextIsSelectable(true);
+        viewprofile.getText_ProfileRSAPubKey().setKeyListener(null);
+        viewprofile.getText_ProfileRSAPrivKey().setText(profile.getRsa_privatekey());
+        viewprofile.getText_ProfileRSAPrivKey().setTextIsSelectable(true);
+        viewprofile.getText_ProfileRSAPrivKey().setKeyListener(null);
+        GenerateProfileQRCode();
+        viewprofile.getBtn_RegenRSAKeyPair().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_RegenRSAKeyPair_onClick(v);
+            }
+        });
+        viewprofile.getBtn_UpdateProfile().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_UpdateProfile_onClick(v);
+            }
+        });
+    }
+
+    public void RefreshProfile()
+    {
+        profileRepository repo = new profileRepository(this);
+        TypeProfile profile = repo.getProfile(TypeProfile.DEFAULTID);
+        viewprofile.getText_ProfileName().setText(profile.getName_self());
+        viewprofile.getText_ProfileNumber().setText(profile.getPhone_number());
+        viewprofile.getText_ProfileLastUpdate().setText(new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z").format(new Date(profile.getGenerated_date())));
+        viewprofile.getText_ProfileRSAPubKey().setText(profile.getRsa_publickey());
+        viewprofile.getText_ProfileRSAPubKey().setTextIsSelectable(true);
+        viewprofile.getText_ProfileRSAPubKey().setKeyListener(null);
+        viewprofile.getText_ProfileRSAPrivKey().setText(profile.getRsa_privatekey());
+        viewprofile.getText_ProfileRSAPrivKey().setTextIsSelectable(true);
+        viewprofile.getText_ProfileRSAPrivKey().setKeyListener(null);
+        GenerateProfileQRCode();
+    }
+
+    public void GenerateProfileQRCode()
+    {
+        String name = viewprofile.getText_ProfileName().getText().toString();
+        String phonenum = viewprofile.getText_ProfileNumber().getText().toString();
+        String rsapubkey = viewprofile.getText_ProfileRSAPubKey().getText().toString();
+        int size = viewprofile.getImageView_ProfileQRCode().getLayoutParams().height;
+        TypeProfile profile = new TypeProfile(name, phonenum, 0, rsapubkey, "",0);
+        Bitmap bitmap = null;
+        GenerateProfileQRCodeAsync asynctask = new GenerateProfileQRCodeAsync(this, bitmap, size);
+        asynctask.execute(profile);
+    }
+
     //endregion
     //region UX EventHandler Method
     private void listview_contactList_onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -261,5 +347,112 @@ public class ActivityMain extends AppCompatActivity {
         // Start the ActivitySessionDetail by passing the intent and the code for feedback request.
         startActivityForResult(objIntent, IntentString.MainFeedbackCode_RefreshSessionList);
     }
+
+    private void mViewPager_onPageChanged(int position)
+    {
+        // Method to be executed each time the ViewPager Tab is Changed
+        switch(position)
+        {
+            case 0 :{
+                break;
+            }
+            case 1 : {
+                break;
+            }
+            case 2 : {
+                break;
+            }
+            case 3 : {
+                break;
+            }
+            case 4 : {
+                break;
+            }
+            case 5 : {
+                break;
+            }
+            default : {
+                break;
+            }
+        }
+    }
+
+    private void btn_RegenRSAKeyPair_onClick (View v)
+    {
+
+        KeyPair RSAKeyPair = null;
+        GenerateRSAKeyAsync asynctask = new GenerateRSAKeyAsync(this);
+        asynctask.execute(RSAKeyPair, RSAKeyPair, RSAKeyPair);
+    }
+
+    private void btn_UpdateProfile_onClick (View v)
+    {
+
+        profileRepository profileRepository = new profileRepository(this);
+        TypeProfile profileold = profileRepository.getProfile(TypeProfile.DEFAULTID);
+        String name = viewprofile.getText_ProfileName().getText().toString();
+        String phonenum = viewprofile.getText_ProfileNumber().getText().toString();
+        long currentdate = System.currentTimeMillis();
+        String rsapubkey = viewprofile.getText_ProfileRSAPubKey().getText().toString();
+        String rsaprivkey = viewprofile.getText_ProfileRSAPrivKey().getText().toString();
+        long lastsync = profileold.getLastsync();
+        TypeProfile profilenew = new TypeProfile(phonenum, name, currentdate, rsapubkey, rsaprivkey, lastsync);
+        profileRepository.update(profilenew);
+        RefreshProfile();
+    }
     //endregion
+
+    private class GenerateRSAKeyAsync extends AsyncTask<KeyPair, KeyPair, KeyPair> {
+        private Activity outer;
+        public GenerateRSAKeyAsync(Activity outer)
+        {
+            this.outer = outer;
+        }
+        @Override
+        protected void onPreExecute() {
+            viewprofile.getText_ProfileRSAPubKey().setText(outer.getString(R.string.rsakeypairregenload));
+            viewprofile.getText_ProfileRSAPrivKey().setText(outer.getString(R.string.rsakeypairregenload));
+        }
+        @Override
+        protected KeyPair doInBackground(KeyPair... arg) {
+
+            return Cryptography.GenerateRSAKeyPair(RSAKEYSIZE);
+        }
+
+        @Override
+        protected void onPostExecute(KeyPair a) {
+            viewprofile.getText_ProfileRSAPubKey().setText(Base64.toBase64String(a.getPublic().getEncoded()));
+            viewprofile.getText_ProfileRSAPrivKey().setText(Base64.toBase64String(a.getPrivate().getEncoded()));
+        }
+    }
+
+    private class GenerateProfileQRCodeAsync extends AsyncTask<TypeProfile, Bitmap, Bitmap>
+    {
+        private Activity outer;
+        private Bitmap bitmap;
+        private int size;
+        public GenerateProfileQRCodeAsync(Activity outer, Bitmap bitmap, int size)
+        {
+            this.outer = outer;
+            this.bitmap = bitmap;
+            this.size = size;
+        }
+        @Override
+        protected void onPreExecute() {
+            viewprofile.getImageView_ProfileQRCode().setVisibility(View.GONE);
+            viewprofile.getProgressBar_Refresh().setVisibility(View.VISIBLE);
+        }
+        @Override
+        protected Bitmap doInBackground(TypeProfile... arg) {
+            bitmap = QRCodeHandler.GenerateProfileQRCode(outer, arg[0].getName_self(), arg[0].getPhone_number(), arg[0].getRsa_publickey(), size);
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap a) {
+            viewprofile.getImageView_ProfileQRCode().setImageBitmap(bitmap);
+            viewprofile.getImageView_ProfileQRCode().setVisibility(View.VISIBLE);
+            viewprofile.getProgressBar_Refresh().setVisibility(View.GONE);
+        }
+    }
 }
