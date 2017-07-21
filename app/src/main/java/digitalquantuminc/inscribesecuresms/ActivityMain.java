@@ -43,6 +43,7 @@ import digitalquantuminc.inscribesecuresms.Repository.contactRepository;
 import digitalquantuminc.inscribesecuresms.Repository.profileRepository;
 import digitalquantuminc.inscribesecuresms.Repository.sessionRepository;
 import digitalquantuminc.inscribesecuresms.UserInterface.QRCodeHandler;
+import digitalquantuminc.inscribesecuresms.View.ViewCompose;
 import digitalquantuminc.inscribesecuresms.View.ViewContactsList;
 import digitalquantuminc.inscribesecuresms.View.ViewConversationList;
 import digitalquantuminc.inscribesecuresms.View.ViewPagerAdapter;
@@ -69,7 +70,6 @@ public class ActivityMain extends AppCompatActivity {
 
     private static final int RUNTIME_MODE = DEVELOPMENT_MODE;
 
-    private static final int RSAKEYSIZE = 2048;
     // Global Variable for UX Binding
     // Variable for ViewPager that has been modified to inflate standard activity layout (not fragment)
     private ViewPager mViewPager;
@@ -80,6 +80,7 @@ public class ActivityMain extends AppCompatActivity {
     private ViewContactsList viewcontactslist;
     private ViewSessionList viewsessionlist;
     private ViewProfile viewprofile;
+    private ViewCompose viewcompose;
 
     // Variable for Toolbar
     private Toolbar toolbar;
@@ -178,6 +179,7 @@ public class ActivityMain extends AppCompatActivity {
 
         // Instantiate Child View for ViewPager
         viewconversationlist = new ViewConversationList(this, findViewById(R.id.view_conversation_list));
+        viewcompose = new ViewCompose(this, findViewById(R.id.view_compose));
         viewcontactslist = new ViewContactsList(this, findViewById(R.id.view_contacts_list));
         viewsessionlist = new ViewSessionList(this, findViewById(R.id.view_session_list));
         viewprofile = new ViewProfile(this, findViewById(R.id.view_profile));
@@ -186,6 +188,7 @@ public class ActivityMain extends AppCompatActivity {
         adapter = new ViewPagerAdapter();
         // Add Child View to the Adapter
         adapter.addView(viewconversationlist);
+        adapter.addView(viewcompose);
         adapter.addView(viewcontactslist);
         adapter.addView(viewsessionlist);
         adapter.addView(viewprofile);
@@ -416,7 +419,7 @@ public class ActivityMain extends AppCompatActivity {
         @Override
         protected KeyPair doInBackground(KeyPair... arg) {
 
-            return Cryptography.GenerateRSAKeyPair(RSAKEYSIZE);
+            return Cryptography.GenerateRSAKeyPair(Cryptography.RSAKEYSIZE);
         }
 
         @Override
