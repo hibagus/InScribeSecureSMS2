@@ -220,6 +220,7 @@ public class contactRepository {
     public void DropTable() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + TypeContact.TABLE);
+        db.close();
     }
 
     public void CreateTable() {
@@ -232,6 +233,7 @@ public class contactRepository {
                 + TypeContact.KEY_rsapub + " TEXT)";
 
         db.execSQL(CREATE_TABLE_CONTACT);
+        db.close();
     }
     //endregion
 }
