@@ -16,6 +16,7 @@ public class TypeSession {
     public static final int StatusDSNotValid = 7;
     public static final int StatusRoleMaster = 8;
     public static final int StatusRoleSlave = 9;
+    public static final int StatusRoleUnknown = 10;
     //region SQL Table Key
     public static final String TABLE = "session";
     public static final String KEY_ID = "id";
@@ -54,6 +55,23 @@ public class TypeSession {
     //region Constructor
     public TypeSession() {
 
+    }
+
+    public TypeSession(String phone_number, String name) {
+        this.phone_number = phone_number;
+        this.name = name;
+        this.session_validity = StatusNotValid;
+        this.session_handshake_date = 0;
+        this.session_role = StatusRoleUnknown;
+        this.session_ecdh_private_key = "";
+        this.session_ecdh_public_key = "";
+        this.session_ecdh_partner_public_key = "";
+        this.session_ecdh_partner_digital_signature = "";
+        this.session_ecdh_partner_computed_digital_signature = "";
+        this.session_ecdh_partner_validity = StatusDSNotValid;
+        this.session_ecdh_shared_secret = "";
+        this.session_ecdh_aes_key = "";
+        this.session_num_message = 0;
     }
 
     public TypeSession(String phone_number, String name, int session_validity, long session_handshake_date, int session_role, String session_ecdh_private_key, String session_ecdh_public_key, String session_ecdh_partner_public_key, String session_ecdh_partner_digital_signature, String session_ecdh_partner_computed_digital_signature, int session_ecdh_partner_validity, String session_ecdh_shared_secret, String session_ecdh_aes_key, int session_num_message) {
