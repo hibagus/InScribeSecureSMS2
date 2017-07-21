@@ -12,6 +12,7 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.Writer;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import digitalquantuminc.inscribesecuresms.R;
 
@@ -21,50 +22,29 @@ import digitalquantuminc.inscribesecuresms.R;
 
 public class QRCodeHandler {
 
-
     public QRCodeHandler() {
 
     }
 
-    public static Bitmap StringtoQRCode(Activity outer, String Value, int QRCodeWidth) {
-        // Local Variable
-        BitMatrix bitMatrix;
-        // Algorithm
-        try {
-
-            bitMatrix = new MultiFormatWriter().encode(Value, BarcodeFormat.DATA_MATRIX.QR_CODE, QRCodeWidth, QRCodeWidth, null);
-
-        } catch (IllegalArgumentException e) {
-            return null;
-        } catch (WriterException e) {
-            return null;
+    public static Bitmap StringtoQRCode(String Value, int QRCodeWidth)
+    {
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        BitMatrix bitMatrix = null;
+        try
+        {
+            bitMatrix = multiFormatWriter.encode(Value, BarcodeFormat.QR_CODE,QRCodeWidth,QRCodeWidth);
         }
+        catch (WriterException e) {}
 
-        int bitMatrixWidth = bitMatrix.getWidth();
-        int bitMatrixHeight = bitMatrix.getHeight();
-        int[] pixels = new int[bitMatrixWidth * bitMatrixHeight];
-
-        for (int y = 0; y < bitMatrixHeight; y++) {
-            int offset = y * bitMatrixWidth;
-
-            for (int x = 0; x < bitMatrixWidth; x++) {
-
-                if (bitMatrix.get(x, y)) {
-                    pixels[offset + x] = ContextCompat.getColor(outer, R.color.colorBlack);
-                } else {
-                    pixels[offset + x] = ContextCompat.getColor(outer, R.color.colorWhite);
-                }
-            }
-        }
-        Bitmap bitmap = Bitmap.createBitmap(bitMatrixWidth, bitMatrixHeight, Bitmap.Config.ARGB_4444);
-        bitmap.setPixels(pixels, 0, QRCodeWidth, 0, 0, bitMatrixWidth, bitMatrixHeight);
+        BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+        Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
         return bitmap;
     }
 
-    public static Bitmap GenerateProfileQRCode(Activity outer, String name, String phonenum, String RSAPubKey, int width)
+    public static Bitmap GenerateProfileQRCode(String name, String phonenum, String RSAPubKey, int width)
     {
         String TextforQRCode = "{\"name\":\"" + name + "\",\"phone\":\"" + phonenum + "\",\"pubkey\":\"" + RSAPubKey + "\"}";
-        Bitmap bitmap = StringtoQRCode(outer, TextforQRCode, width);
+        Bitmap bitmap = StringtoQRCode(TextforQRCode, width);
         return bitmap;
     }
 
