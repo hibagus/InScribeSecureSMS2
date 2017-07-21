@@ -56,6 +56,15 @@
     <string name="session_role_master">MASTER</string>
     <string name="session_role_slave">SLAVE</string>
     <string name="session_unknown">NOT DEFINED</string>
+    <string name="rsakeypairregenload">Regenerating RSA Key Pair...</string>
+
+    <string name="profile_name">Your Name:</string>
+    <string name="profile_number">Your Phone Number:</string>
+    <string name="profile_lastupdate">Profile Last Update:</string>
+    <string name="profile_rsapubkey">Your RSA Public Key:</string>
+    <string name="profile_rsaprivkey">Your RSA Private Key: </string>
+    <string name="profile_regenRSA">Regenerate RSA Key Pair</string>
+    <string name="profile_update">Update Profile</string>
 
     <!-- For Use in Development View Only -->
     <string name="dev_dummy_name">Fulan Bin Abi Fulan</string>
