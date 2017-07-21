@@ -3,6 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="digitalquantuminc.inscribesecuresms.ActivityMain">
     <item
+        android:id="@+id/new_contacts"
+        android:orderInCategory="100"
+        android:title="@string/action_newcontact"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_refresh"
+        android:orderInCategory="100"
+        android:title="@string/action_refresh"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
