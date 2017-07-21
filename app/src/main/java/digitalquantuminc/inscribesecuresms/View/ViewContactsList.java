@@ -2,6 +2,7 @@ package digitalquantuminc.inscribesecuresms.View;
 
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import digitalquantuminc.inscribesecuresms.R;
@@ -14,6 +15,7 @@ import digitalquantuminc.inscribesecuresms.R;
 public class ViewContactsList extends Presenter {
     //region Global Variable
     private ListView list_contacts;
+    private Button btn_AddContact;
 
     //endregion
     //region Constructor
@@ -26,6 +28,7 @@ public class ViewContactsList extends Presenter {
     @Override
     public void onCreateView() {
         list_contacts = (ListView) view.findViewById(R.id.list_contacts);
+        btn_AddContact = (Button) view.findViewById(R.id.btn_AddContact);
     }
 
     //endregion
@@ -33,5 +36,10 @@ public class ViewContactsList extends Presenter {
     public ListView getList_contacts() {
         return list_contacts;
     }
+
+    public Button getBtn_AddContact() {
+        return btn_AddContact;
+    }
+
     //endregion
 }
