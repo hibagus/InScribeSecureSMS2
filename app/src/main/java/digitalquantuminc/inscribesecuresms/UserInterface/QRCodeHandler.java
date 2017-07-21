@@ -63,7 +63,7 @@ public class QRCodeHandler {
 
     public static Bitmap GenerateProfileQRCode(Activity outer, String name, String phonenum, String RSAPubKey, int width)
     {
-        String TextforQRCode = name + "<>" + phonenum + "<>" + RSAPubKey;
+        String TextforQRCode = "{\"name\":\"" + name + "\",\"phone\":\"" + phonenum + "\",\"pubkey\":\"" + RSAPubKey + "\"}";
         Bitmap bitmap = StringtoQRCode(outer, TextforQRCode, width);
         return bitmap;
     }
