@@ -100,6 +100,27 @@ public class profileRepository {
         return true;
     }
 
+    public boolean isProfileExist(String phonenum) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT "
+                + TypeProfile.KEY_ID + ", "
+                + TypeProfile.KEY_phone + ", "
+                + TypeProfile.KEY_name + ", "
+                + TypeProfile.KEY_date + ", "
+                + TypeProfile.KEY_rsapub + ", "
+                + TypeProfile.KEY_rsapriv + ", "
+                + TypeProfile.KEY_lastsync + " FROM "
+                + TypeProfile.TABLE + " WHERE "
+                + TypeProfile.KEY_phone + " = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{phonenum});
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
+    }
+
     //endregion
 
     //region TABLE Method
