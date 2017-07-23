@@ -72,15 +72,28 @@
 
     <string name="compose_plaintextsize">Message Size is %1$d byte(s)</string>
     <string name="compose_compressedtextsize">Compressed Message Size is %1$d byte(s)</string>
-    <string name="compose_aesivtextsize">AES Initialization Vector Size is %1$d byte(s)</string>
+    <string name="compose_compressedtextalgorithm">Compression Algorithm is %1$s</string>
+    <string name="compose_aesivtextsize">AES CBC Initialization Vector Size is %1$d byte(s)</string>
+    <string name="compose_aesctextsize">AES Cipher Text Size is %1$d byte(s)</string>
     <string name="compose_encryptedtextsize">Encrypted Text Message Size is %1$d byte(s)</string>
     <string name="compose_metadatasize">Metadata Size is %1$d byte(s)</string>
     <string name="compose_completeencryptedsize">Final Message Size is %1$d byte(s)</string>
     <string name="compose_encodedtextsize">Encoded Message Size is %1$d byte(s)</string>
 
+    <string name="compose_plaintextsize0">Message Size is 0 byte(s)</string>
+    <string name="compose_compressedtextsize0">Compressed Message Size is 0 byte(s)</string>
+    <string name="compose_compressedtextalgorithm0">Compression Algorithm is UNCOMPRESSED</string>
+    <string name="compose_aesivtextsize0">AES CBC Initialization Vector Size is 0 byte(s)</string>
+    <string name="compose_aesctextsize0">AES Cipher Text Size is 0 byte(s)</string>
+    <string name="compose_encryptedtextsize0">Encrypted Text Message Size is 0 byte(s)</string>
+    <string name="compose_metadatasize0">Metadata Size is 0 byte(s)</string>
+    <string name="compose_completeencryptedsize0">Final Message Size is 0 byte(s)</string>
+    <string name="compose_encodedtextsize0">Encoded Message Size is 0 byte(s)</string>
+
     <string name="compose_plaintext">Plain Text Message:</string>
     <string name="compose_compressedtext">Compressed Text Message:</string>
-    <string name="compose_aesivtext">AES Generated Initialization Vector:</string>
+    <string name="compose_aesivtext">AES CBC Generated Initialization Vector:</string>
+    <string name="compose_aescttext">AES Cipher Text:</string>
     <string name="compose_encryptedtext">Encrypted Text Message:</string>
     <string name="compose_completeencryptedtext">Final Message:</string>
     <string name="compose_encodedtext">Encoded Text Message:</string>
@@ -96,6 +109,8 @@
     <string name="dev_dummy_shortdate">20170602–112432</string>
     <string name="dev_dummy_status">INVALID</string>
     <string name="dev_dummy_duration">22D 12h32m</string>
+    <string name="dev_dummy_emptystring"> </string>
     <string name="dev_dummy_longtext">Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text </string>
+    <string name="title_activity_valid_session_list">ActivityValidSessionList</string>
 
 </resources>
