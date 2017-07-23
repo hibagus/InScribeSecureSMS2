@@ -18,7 +18,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="16dp" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -31,12 +31,12 @@
                 android:id="@+id/text_ComposePartnerName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/dev_dummy_name"
+                android:text="@string/dev_dummy_emptystring"
                 android:textSize="18sp" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="16dp" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -48,12 +48,12 @@
                 android:id="@+id/text_ComposePartnerNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/dev_dummy_number"
+                android:text="@string/dev_dummy_emptystring"
                 android:textSize="18sp" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="16dp" />
 
             <Button
                 android:id="@+id/btn_ComposeSelectSession"
@@ -64,7 +64,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="16dp" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -77,6 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:enabled="false"
                 android:gravity="start"
                 android:inputType="textMultiLine"
                 android:labelFor="@+id/text_ComposePlainText"
@@ -84,19 +85,19 @@
                 android:maxLines="10"
                 android:minLines="10"
                 android:scrollbars="vertical"
-                android:text="@string/dev_dummy_longtext"
+                android:text="@string/dev_dummy_emptystring"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/text_ComposePlainTextSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/compose_plaintextsize"
+                android:text="@string/compose_plaintextsize0"
                 android:textAlignment="textEnd" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="16dp" />
 
             <Button
                 android:id="@+id/btn_ComposeEncryptMessage"
@@ -108,7 +109,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="16dp" />
 
             <TextView
                 android:id="@+id/textView29"
@@ -128,19 +129,26 @@
                 android:maxLines="3"
                 android:minLines="3"
                 android:scrollbars="vertical"
-                android:text="@string/dev_dummy_longtext"
+                android:text="@string/dev_dummy_emptystring"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/text_ComposeCompressedTextSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/compose_compressedtextsize"
+                android:text="@string/compose_compressedtextsize0"
+                android:textAlignment="textEnd" />
+
+            <TextView
+                android:id="@+id/text_ComposeCompressedAlgorithm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_compressedtextalgorithm0"
                 android:textAlignment="textEnd" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="16dp" />
 
             <TextView
                 android:id="@+id/textView25"
@@ -160,19 +168,51 @@
                 android:maxLines="3"
                 android:minLines="3"
                 android:scrollbars="vertical"
-                android:text="@string/dev_dummy_longtext"
+                android:text="@string/dev_dummy_emptystring"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/text_ComposeAESIVSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/compose_aesivtextsize"
+                android:text="@string/compose_aesivtextsize0"
                 android:textAlignment="textEnd" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="16dp" />
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_aescttext" />
+
+            <EditText
+                android:id="@+id/text_ComposeAESCT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start"
+                android:inputType="textMultiLine"
+                android:labelFor="@+id/text_ComposeAESIV"
+                android:lines="3"
+                android:maxLines="3"
+                android:minLines="3"
+                android:scrollbars="vertical"
+                android:text="@string/dev_dummy_emptystring"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/text_ComposeAESCTSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_aesctextsize0"
+                android:textAlignment="textEnd" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
 
             <TextView
                 android:id="@+id/textView38"
@@ -192,19 +232,19 @@
                 android:maxLines="3"
                 android:minLines="3"
                 android:scrollbars="vertical"
-                android:text="@string/dev_dummy_longtext"
+                android:text="@string/dev_dummy_emptystring"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/text_ComposeEncryptedMessageSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/compose_encryptedtextsize"
+                android:text="@string/compose_encryptedtextsize0"
                 android:textAlignment="textEnd" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="16dp" />
 
             <TextView
                 android:id="@+id/textView40"
@@ -224,19 +264,19 @@
                 android:maxLines="3"
                 android:minLines="3"
                 android:scrollbars="vertical"
-                android:text="@string/dev_dummy_longtext"
+                android:text="@string/dev_dummy_emptystring"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/text_ComposeEncodedMessageSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/compose_encodedtextsize"
+                android:text="@string/compose_encodedtextsize0"
                 android:textAlignment="textEnd" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="16dp" />
 
             <TextView
                 android:id="@+id/textView36"
@@ -256,26 +296,26 @@
                 android:maxLines="3"
                 android:minLines="3"
                 android:scrollbars="vertical"
-                android:text="@string/dev_dummy_longtext"
+                android:text="@string/dev_dummy_emptystring"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/text_ComposeMetadataSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/compose_metadatasize"
+                android:text="@string/compose_metadatasize0"
                 android:textAlignment="textEnd" />
 
             <TextView
                 android:id="@+id/text_ComposeFinalMessageSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/compose_completeencryptedsize"
+                android:text="@string/compose_completeencryptedsize0"
                 android:textAlignment="textEnd" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="16dp" />
 
             <Button
                 android:id="@+id/btn_ComposeSendMessage"
