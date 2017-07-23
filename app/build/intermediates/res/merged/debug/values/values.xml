@@ -721,22 +721,34 @@
     <string name="bottom_sheet_behavior" translatable="false">android.support.design.widget.BottomSheetBehavior</string>
     <string name="character_counter_pattern" translatable="false">%1$d / %2$d</string>
     <string name="color_container">Color Container</string>
-    <string name="compose_aesivtext">AES Generated Initialization Vector:</string>
-    <string name="compose_aesivtextsize">AES Initialization Vector Size is %1$d byte(s)</string>
+    <string name="compose_aesctextsize">AES Cipher Text Size is %1$d byte(s)</string>
+    <string name="compose_aesctextsize0">AES Cipher Text Size is 0 byte(s)</string>
+    <string name="compose_aescttext">AES Cipher Text:</string>
+    <string name="compose_aesivtext">AES CBC Generated Initialization Vector:</string>
+    <string name="compose_aesivtextsize">AES CBC Initialization Vector Size is %1$d byte(s)</string>
+    <string name="compose_aesivtextsize0">AES CBC Initialization Vector Size is 0 byte(s)</string>
     <string name="compose_completeencryptedsize">Final Message Size is %1$d byte(s)</string>
+    <string name="compose_completeencryptedsize0">Final Message Size is 0 byte(s)</string>
     <string name="compose_completeencryptedtext">Final Message:</string>
     <string name="compose_compressedtext">Compressed Text Message:</string>
+    <string name="compose_compressedtextalgorithm">Compression Algorithm is %1$s</string>
+    <string name="compose_compressedtextalgorithm0">Compression Algorithm is UNCOMPRESSED</string>
     <string name="compose_compressedtextsize">Compressed Message Size is %1$d byte(s)</string>
+    <string name="compose_compressedtextsize0">Compressed Message Size is 0 byte(s)</string>
     <string name="compose_encodedtext">Encoded Text Message:</string>
     <string name="compose_encodedtextsize">Encoded Message Size is %1$d byte(s)</string>
+    <string name="compose_encodedtextsize0">Encoded Message Size is 0 byte(s)</string>
     <string name="compose_encryptedtext">Encrypted Text Message:</string>
     <string name="compose_encryptedtextsize">Encrypted Text Message Size is %1$d byte(s)</string>
+    <string name="compose_encryptedtextsize0">Encrypted Text Message Size is 0 byte(s)</string>
     <string name="compose_encryptmessage">Compress and Encrypt Message</string>
     <string name="compose_metadatasize">Metadata Size is %1$d byte(s)</string>
+    <string name="compose_metadatasize0">Metadata Size is 0 byte(s)</string>
     <string name="compose_partnername">Partner Name:</string>
     <string name="compose_partnernum">Partner Number:</string>
     <string name="compose_plaintext">Plain Text Message:</string>
     <string name="compose_plaintextsize">Message Size is %1$d byte(s)</string>
+    <string name="compose_plaintextsize0">Message Size is 0 byte(s)</string>
     <string name="compose_selectpartner">Select Valid Secure Session</string>
     <string name="compose_sendmessage">Send Message</string>
     <string name="contact_acquisition_date">Contact Acquisition Date:</string>
@@ -747,6 +759,7 @@
     <string name="delete_this_contact">Delete This Contact</string>
     <string name="dev_dummy_date">Wed, 4 Jul 2001 12:08:56 -0700</string>
     <string name="dev_dummy_duration">22D 12h32m</string>
+    <string name="dev_dummy_emptystring"> </string>
     <string name="dev_dummy_longtext">Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text </string>
     <string name="dev_dummy_name">Fulan Bin Abi Fulan</string>
     <string name="dev_dummy_number">+6281000000000</string>
@@ -812,6 +825,7 @@
     <string name="title_activity_conversation_detail">conversation_detail</string>
     <string name="title_activity_session_detail">session_detail</string>
     <string name="title_activity_single_message_view">single_message_view</string>
+    <string name="title_activity_valid_session_list">ActivityValidSessionList</string>
     <string name="zxing_app_name">Barcode Scanner</string>
     <string name="zxing_button_ok">OK</string>
     <string name="zxing_msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the device.</string>

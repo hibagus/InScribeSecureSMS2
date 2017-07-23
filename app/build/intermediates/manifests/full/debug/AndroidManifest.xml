@@ -87,6 +87,10 @@
                 android:value="digitalquantuminc.inscribesecuresms.ActivityMain" />
         </activity>
         <activity
+            android:name="digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityValidSessionList"
+            android:label="@string/title_activity_valid_session_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:clearTaskOnLaunch="true"
             android:screenOrientation="sensorLandscape"
