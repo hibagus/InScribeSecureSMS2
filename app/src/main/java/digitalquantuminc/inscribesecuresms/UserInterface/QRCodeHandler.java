@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 
 import com.google.zxing.BarcodeFormat;
@@ -14,6 +15,9 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import javax.crypto.SecretKey;
+
+import digitalquantuminc.inscribesecuresms.Cryptography;
 import digitalquantuminc.inscribesecuresms.R;
 
 /**
@@ -21,6 +25,8 @@ import digitalquantuminc.inscribesecuresms.R;
  */
 
 public class QRCodeHandler {
+
+    public static final String ProfileQRCodeAESKey = "BagusHanindhitoFarizAzmiPratamaUlfahNadya";
 
     public QRCodeHandler() {
 
@@ -43,8 +49,11 @@ public class QRCodeHandler {
 
     public static Bitmap GenerateProfileQRCode(String name, String phonenum, String RSAPubKey, int width)
     {
+        SecretKey AESKey = Cryptography.GenerateAESKey(ProfileQRCodeAESKey, Cryptography.PBKDF2ITERATION, Cryptography.AESKEYSIZE);
         String TextforQRCode = "{\"name\":\"" + name + "\",\"phone\":\"" + phonenum + "\",\"pubkey\":\"" + RSAPubKey + "\"}";
-        Bitmap bitmap = StringtoQRCode(TextforQRCode, width);
+        byte[] DecryptedQR = TextforQRCode.getBytes();
+        byte[] EncryptedQR = Cryptography.EncryptMessageAESSpongy(AESKey, DecryptedQR);
+        Bitmap bitmap = StringtoQRCode(Cryptography.BytetoBase64String(EncryptedQR), width);
         return bitmap;
     }
 
