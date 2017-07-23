@@ -52,6 +52,7 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeAESByte;
 public class Cryptography {
     public static final int RSAKEYSIZE = 2048;
     public static final int AESKEYSIZE = 256;
+    public static final int AESIVLENGTH = 16;
     public static final int PBKDF2ITERATION = 2048;
     public static final String ELIPTICCURVENAME = "secp224k1";
     public static final int AESBLOCKBYTE = 16;
@@ -113,6 +114,7 @@ public class Cryptography {
         return sharedkey;
     }
 
+
     public static SecretKey GenerateAESKey(SecretKey SharedSecret, int iteration, int aeskeysize) {
         MessageDigest md;
         byte[] salt;
@@ -126,6 +128,28 @@ public class Cryptography {
             salt = md.digest();
 
             spec = new PBEKeySpec(BytetoBase64String(SharedSecret.getEncoded()).toCharArray(), salt, iteration, aeskeysize);
+            secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256", "SC");
+            PBKDF2Key = secretKeyFactory.generateSecret(spec);
+            AESKey = new SecretKeySpec(PBKDF2Key.getEncoded(), "AES");
+        } catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeySpecException e) {
+
+        }
+        return AESKey;
+    }
+
+    public static SecretKey GenerateAESKey(String password, int iteration, int aeskeysize) {
+        MessageDigest md;
+        byte[] salt;
+        KeySpec spec;
+        SecretKeyFactory secretKeyFactory;
+        SecretKey PBKDF2Key;
+        SecretKey AESKey = null;
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+            md.update(password.getBytes());
+            salt = md.digest();
+
+            spec = new PBEKeySpec(password.toCharArray(), salt, iteration, aeskeysize);
             secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256", "SC");
             PBKDF2Key = secretKeyFactory.generateSecret(spec);
             AESKey = new SecretKeySpec(PBKDF2Key.getEncoded(), "AES");
@@ -198,10 +222,10 @@ public class Cryptography {
     public static byte[] DecryptMessageAESSpongy(SecretKey AESKey, byte[] ciphertext) {
         try {
             PaddedBufferedBlockCipher cipher = new PaddedBufferedBlockCipher(new CBCBlockCipher(new AESEngine()));
-            byte[] ivBytes = new byte[16];
-            System.arraycopy(ciphertext, 0, ivBytes, 0, ivBytes.length); // Get iv from data
-            byte[] dataonly = new byte[ciphertext.length - ivBytes.length];
-            System.arraycopy(ciphertext, ivBytes.length, dataonly, 0, ciphertext.length - ivBytes.length);
+            byte[] ivBytes = new byte[AESBLOCKBYTE];
+            System.arraycopy(ciphertext, 0, ivBytes, 0, AESBLOCKBYTE); // Get iv from data
+            byte[] dataonly = new byte[ciphertext.length - AESBLOCKBYTE];
+            System.arraycopy(ciphertext, AESBLOCKBYTE, dataonly, 0, ciphertext.length - AESBLOCKBYTE);
 
             cipher.init(false, new ParametersWithIV(new KeyParameter(AESKey.getEncoded()), ivBytes));
             byte[] plaintext = new byte[cipher.getOutputSize(dataonly.length)];
@@ -213,6 +237,20 @@ public class Cryptography {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static byte[] GetAESIV(byte [] cipherText)
+    {
+        byte[] AESIV = new byte[AESBLOCKBYTE];
+        System.arraycopy(cipherText, 0, AESIV, 0, AESIV.length);
+        return AESIV;
+    }
+
+    public static byte[] GetAESContent(byte [] cipherText)
+    {
+        byte[] AESCT = new byte[cipherText.length - AESBLOCKBYTE];
+        System.arraycopy(cipherText, AESBLOCKBYTE, AESCT, 0, cipherText.length - AESBLOCKBYTE);
+        return AESCT;
     }
 
     public static byte[] CreateDigitalSignatureRSA(byte[] data, PrivateKey rsaprivatekey) {
@@ -285,6 +323,11 @@ public class Cryptography {
 
         }
         return privatekey;
+    }
+
+    public static SecretKey BytetoKeyAES(byte[] KeyAES)
+    {
+        return new SecretKeySpec(KeyAES, 0, KeyAES.length, "AES");
     }
 
 
