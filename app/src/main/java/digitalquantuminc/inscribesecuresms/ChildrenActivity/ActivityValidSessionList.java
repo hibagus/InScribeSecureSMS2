@@ -41,7 +41,7 @@ public class ActivityValidSessionList extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        setTitle("Select a Valid Secure Session");
         // Binding UI Component to Code
         UIComponentBinding();
 
