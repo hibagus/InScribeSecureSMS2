@@ -11,8 +11,13 @@ public class IntentString {
     public static final String MainToSessionDetails_PhoneNum = "PartnerNum";
     public static final String MainToSessionDetails_ColorTheme = "ColorTheme";
     public static final String MainFeedBackCode = "MainFeedbackCode";
+    public static final String ValidSessiontoMain_PhoneNum = "ValidPhoneNum";
+    public static final String ValidSessiontoMain_Name = "ValidName";
     public static final int MainFeedbackCode_DoNothing = 0;
     public static final int MainFeedbackCode_RefreshContactList = 1;
     public static final int MainFeedbackCode_RefreshSessionList = 2;
     public static final int MainFeedbackCode_RefreshBothContactandSessionList = 3;
+    public static final int MainFeedbackCode_LoadValidSession = 4;
+    public static final int MainFeedbackCode_DiscardValidSession = 5;
+    public static final int MainFeedBackCode_RefreshContactListSessionListCompose = 6;
 }
