@@ -23,8 +23,11 @@ public class ViewCompose extends Presenter {
     private Button btn_ComposeEncryptMessage;
     private EditText text_ComposeCompressedText;
     private TextView text_ComposeCompressedTextSize;
+    private TextView text_ComposeCompressedTextAlgorithm;
     private EditText text_ComposeAESIV;
     private TextView text_ComposeAESIVSize;
+    private EditText text_ComposeAESCT;
+    private TextView text_ComposeAESCTSize;
     private EditText text_ComposeEncryptedMessage;
     private TextView text_ComposeEncryptedMessageSize;
     private EditText text_ComposeEncodedMessage;
@@ -53,8 +56,11 @@ public class ViewCompose extends Presenter {
         btn_ComposeEncryptMessage = (Button) view.findViewById(R.id.btn_ComposeEncryptMessage);
         text_ComposeCompressedText = (EditText) view.findViewById(R.id.text_ComposeCompressedText);
         text_ComposeCompressedTextSize = (TextView) view.findViewById(R.id.text_ComposeCompressedTextSize);
+        text_ComposeCompressedTextAlgorithm = (TextView) view.findViewById(R.id.text_ComposeCompressedAlgorithm);
         text_ComposeAESIV = (EditText) view.findViewById(R.id.text_ComposeAESIV);
         text_ComposeAESIVSize = (TextView) view.findViewById(R.id.text_ComposeAESIVSize);
+        text_ComposeAESCT = (EditText) view.findViewById(R.id.text_ComposeAESCT);
+        text_ComposeAESCTSize = (TextView) view.findViewById(R.id.text_ComposeAESCTSize);
         text_ComposeEncryptedMessage = (EditText) view.findViewById(R.id.text_ComposeEncryptedMessage);
         text_ComposeEncryptedMessageSize = (TextView) view.findViewById(R.id.text_ComposeEncryptedMessageSize);
         text_ComposeEncodedMessage = (EditText) view.findViewById(R.id.text_ComposeEncodedMessage);
@@ -85,6 +91,10 @@ public class ViewCompose extends Presenter {
         return text_ComposeAESIV;
     }
 
+    public EditText getText_ComposeAESCT() {
+        return text_ComposeAESCT;
+    }
+
     public EditText getText_ComposeCompressedText() {
         return text_ComposeCompressedText;
     }
@@ -109,8 +119,16 @@ public class ViewCompose extends Presenter {
         return text_ComposeAESIVSize;
     }
 
+    public TextView getText_ComposeAESCTSize() {
+        return text_ComposeAESCTSize;
+    }
+
     public TextView getText_ComposeCompressedTextSize() {
         return text_ComposeCompressedTextSize;
+    }
+
+    public TextView getText_ComposeCompressedTextAlgorithm() {
+        return text_ComposeCompressedTextAlgorithm;
     }
 
     public TextView getText_ComposeEncodedMessageSize() {
