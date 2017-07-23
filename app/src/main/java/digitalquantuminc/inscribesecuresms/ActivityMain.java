@@ -5,23 +5,27 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
-import android.support.constraint.solver.SolverVariable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.spongycastle.util.encoders.Base64;
 
 import java.security.KeyPair;
@@ -30,9 +34,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.crypto.SecretKey;
+
 import digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityContactsDetail;
 import digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivitySessionDetail;
+import digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityValidSessionList;
+import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
 import digitalquantuminc.inscribesecuresms.DataType.TypeProfile;
+import digitalquantuminc.inscribesecuresms.DataType.TypeSession;
 import digitalquantuminc.inscribesecuresms.Development.ContactDummyData;
 import digitalquantuminc.inscribesecuresms.Development.ProfileDummyData;
 import digitalquantuminc.inscribesecuresms.Development.SessionDummyData;
@@ -42,6 +51,8 @@ import digitalquantuminc.inscribesecuresms.ListViewAdapter.sessionListAdapter;
 import digitalquantuminc.inscribesecuresms.Repository.contactRepository;
 import digitalquantuminc.inscribesecuresms.Repository.profileRepository;
 import digitalquantuminc.inscribesecuresms.Repository.sessionRepository;
+import digitalquantuminc.inscribesecuresms.UserInterface.CompressionDecompression;
+import digitalquantuminc.inscribesecuresms.UserInterface.GSMEncodingDecoding;
 import digitalquantuminc.inscribesecuresms.UserInterface.QRCodeHandler;
 import digitalquantuminc.inscribesecuresms.View.ViewCompose;
 import digitalquantuminc.inscribesecuresms.View.ViewContactsList;
@@ -49,6 +60,7 @@ import digitalquantuminc.inscribesecuresms.View.ViewConversationList;
 import digitalquantuminc.inscribesecuresms.View.ViewPagerAdapter;
 import digitalquantuminc.inscribesecuresms.View.ViewProfile;
 import digitalquantuminc.inscribesecuresms.View.ViewSessionList;
+
 
 /**
  * Created by Bagus Hanindhito on 01/07/2017.
@@ -88,6 +100,9 @@ public class ActivityMain extends AppCompatActivity {
     // Variable for Tablayout
     private TabLayout tabLayout;
 
+    // QR Code Scanner
+    private IntentIntegrator qrScan;
+
     //endregion
     //region Override Method
     @Override
@@ -118,6 +133,13 @@ public class ActivityMain extends AppCompatActivity {
 
         // Profile
         LoadProfile();
+
+        // Compose
+        ClearComposeMessageForm();
+
+        // QR Code Scanner
+        qrScan = new IntentIntegrator(this);
+        qrScan.setOrientationLocked(false);
     }
 
     @Override
@@ -145,32 +167,95 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Handle all feedbackcode request from child activity to be executed in parent activity
-        super.onActivityResult(requestCode, resultCode, data);
-        // Check request code send by child activity before it closes itself.
-        if (resultCode == Activity.RESULT_OK) {
-            int code = data.getIntExtra(IntentString.MainFeedBackCode, IntentString.MainFeedbackCode_DoNothing);
-            switch (code) {
-                case IntentString.MainFeedbackCode_DoNothing: {
-                    break;
-                }
-                case IntentString.MainFeedbackCode_RefreshContactList: {
-                    LoadContactList(viewcontactslist.getList_contacts());
-                    break;
-                }
-                case IntentString.MainFeedbackCode_RefreshBothContactandSessionList: {
-                    LoadContactList(viewcontactslist.getList_contacts());
-                    LoadSessionList(viewsessionlist.getList_session());
-                    break;
-                }
-                default: {
-                    break;
+        // Check for QR Code Scanner
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            //if qrcode has nothing in it
+            if (result.getContents() == null) {
+                Toast.makeText(this, "QR Code Not Found", Toast.LENGTH_SHORT).show();
+            } else {
+                //if qr contains data
+                try {
+                    //converting the data to json
+                    byte[] EncryptedQR = Cryptography.Base64StringtoByte(result.getContents());
+                    SecretKey AESKey = Cryptography.GenerateAESKey(QRCodeHandler.ProfileQRCodeAESKey, Cryptography.PBKDF2ITERATION, Cryptography.AESKEYSIZE);
+                    byte[] DecryptedQR = Cryptography.DecryptMessageAESSpongy(AESKey, EncryptedQR);
+                    JSONObject obj = new JSONObject(new String(DecryptedQR));
+
+                    String name = obj.getString("name");
+                    String phonenum = obj.getString("phone");
+                    String pubkey = obj.getString("pubkey");
+
+                    // Check if Number Exist
+                    contactRepository repo = new contactRepository(this);
+                    if (!repo.isContactExist(phonenum)) {
+                        profileRepository repo2 = new profileRepository(this);
+                        if (!repo2.isProfileExist(phonenum)) {
+                            sessionRepository repo3 = new sessionRepository(this);
+                            TypeContact newcontact = new TypeContact(phonenum, name, System.currentTimeMillis(), pubkey);
+                            TypeSession newsession = new TypeSession(phonenum, name);
+                            repo.insert(newcontact);
+                            repo3.insert(newsession);
+                            LoadContactList(viewcontactslist.getList_contacts());
+                            LoadSessionList(viewsessionlist.getList_session());
+                            Toast.makeText(this, "Success: New Contact has been added to Phone Book", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(this, "Failed: Phone Number is already registered as Your Number", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(this, "Failed: Phone Number is already registered in Phone Book", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Cannot Recognize QRCode", Toast.LENGTH_SHORT).show();
                 }
             }
-        } else {
-            // Do Nothing
+        } else { // Normal Intent Processor (Outside the QR Code)
+            // Handle all feedbackcode request from child activity to be executed in parent activity
+            super.onActivityResult(requestCode, resultCode, data);
+            // Check request code send by child activity before it closes itself.
+            if (resultCode == Activity.RESULT_OK) {
+                int code = data.getIntExtra(IntentString.MainFeedBackCode, IntentString.MainFeedbackCode_DoNothing);
+                switch (code) {
+                    case IntentString.MainFeedbackCode_DoNothing: {
+                        break;
+                    }
+                    case IntentString.MainFeedbackCode_RefreshContactList: {
+                        LoadContactList(viewcontactslist.getList_contacts());
+                        break;
+                    }
+                    case IntentString.MainFeedbackCode_RefreshBothContactandSessionList: {
+                        LoadContactList(viewcontactslist.getList_contacts());
+                        LoadSessionList(viewsessionlist.getList_session());
+                        break;
+                    }
+                    case IntentString.MainFeedbackCode_LoadValidSession: {
+                        String name = data.getStringExtra(IntentString.ValidSessiontoMain_Name);
+                        String phone = data.getStringExtra(IntentString.ValidSessiontoMain_PhoneNum);
+                        ClearComposeMessageForm();
+                        viewcompose.getText_ComposePartnerName().setText(name);
+                        viewcompose.getText_ComposePartnerNumber().setText(phone);
+                        viewcompose.getText_ComposePlainText().setEnabled(true);
+                        viewcompose.getBtn_ComposeEncryptMessage().setEnabled(true);
+                        break;
+                    }
+                    case IntentString.MainFeedbackCode_DiscardValidSession: {
+                        Toast.makeText(this, "No Valid Secure Session Selected", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case IntentString.MainFeedBackCode_RefreshContactListSessionListCompose: {
+                        LoadContactList(viewcontactslist.getList_contacts());
+                        LoadSessionList(viewsessionlist.getList_session());
+                        ClearComposeMessageForm();
+                    }
+                    default: {
+                        break;
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Operation Canceled", Toast.LENGTH_SHORT).show();
+            }
         }
-
     }
 
     //endregion
@@ -233,6 +318,12 @@ public class ActivityMain extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No Contact List", Toast.LENGTH_SHORT).show();
         }
+        viewcontactslist.getBtn_AddContact().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_AddContact_onClick(v);
+            }
+        });
     }
 
     public void LoadSessionList(ListView listsession) {
@@ -255,8 +346,7 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    public void LoadProfile()
-    {
+    public void LoadProfile() {
         profileRepository repo = new profileRepository(this);
         TypeProfile profile = repo.getProfile(TypeProfile.DEFAULTID);
         viewprofile.getText_ProfileName().setText(profile.getName_self());
@@ -283,8 +373,7 @@ public class ActivityMain extends AppCompatActivity {
         });
     }
 
-    public void RefreshProfile()
-    {
+    public void RefreshProfile() {
         profileRepository repo = new profileRepository(this);
         TypeProfile profile = repo.getProfile(TypeProfile.DEFAULTID);
         viewprofile.getText_ProfileName().setText(profile.getName_self());
@@ -299,16 +388,190 @@ public class ActivityMain extends AppCompatActivity {
         GenerateProfileQRCode();
     }
 
-    public void GenerateProfileQRCode()
-    {
+    public void GenerateProfileQRCode() {
         String name = viewprofile.getText_ProfileName().getText().toString();
         String phonenum = viewprofile.getText_ProfileNumber().getText().toString();
         String rsapubkey = viewprofile.getText_ProfileRSAPubKey().getText().toString();
         int size = viewprofile.getImageView_ProfileQRCode().getLayoutParams().height;
-        TypeProfile profile = new TypeProfile(name, phonenum, 0, rsapubkey, "",0);
+        TypeProfile profile = new TypeProfile(phonenum, name, 0, rsapubkey, "", 0);
         Bitmap bitmap = null;
-        GenerateProfileQRCodeAsync asynctask = new GenerateProfileQRCodeAsync(this, bitmap, size);
+        GenerateProfileQRCodeAsync asynctask = new GenerateProfileQRCodeAsync(bitmap, size);
         asynctask.execute(profile);
+    }
+
+    public void ClearComposeMessageForm() {
+        viewcompose.getText_ComposePartnerName().setText("");
+        viewcompose.getText_ComposePartnerNumber().setText("");
+
+        viewcompose.getText_ComposePlainText().setText("");
+        viewcompose.getText_ComposePlainText().setEnabled(false);
+        viewcompose.getText_ComposePlainText().addTextChangedListener(ComposePlainTextWatcher);
+
+        viewcompose.getText_ComposeCompressedText().setText("");
+        viewcompose.getText_ComposeCompressedText().setTextIsSelectable(true);
+        viewcompose.getText_ComposeCompressedText().setKeyListener(null);
+
+        viewcompose.getText_ComposeAESIV().setText("");
+        viewcompose.getText_ComposeAESIV().setTextIsSelectable(true);
+        viewcompose.getText_ComposeAESIV().setKeyListener(null);
+
+        viewcompose.getText_ComposeAESCT().setText("");
+        viewcompose.getText_ComposeAESCT().setTextIsSelectable(true);
+        viewcompose.getText_ComposeAESCT().setKeyListener(null);
+
+        viewcompose.getText_ComposeEncryptedMessage().setText("");
+        viewcompose.getText_ComposeEncryptedMessage().setTextIsSelectable(true);
+        viewcompose.getText_ComposeEncryptedMessage().setKeyListener(null);
+
+        viewcompose.getText_ComposeEncodedMessage().setText("");
+        viewcompose.getText_ComposeEncodedMessage().setTextIsSelectable(true);
+        viewcompose.getText_ComposeEncodedMessage().setKeyListener(null);
+
+        viewcompose.getText_ComposeFinalMessage().setText("");
+        viewcompose.getText_ComposeFinalMessage().setTextIsSelectable(true);
+        viewcompose.getText_ComposeFinalMessage().setKeyListener(null);
+
+        viewcompose.getBtn_ComposeSendMessage().setEnabled(false);
+        viewcompose.getBtn_ComposeEncryptMessage().setEnabled(false);
+
+        viewcompose.getText_ComposePlainTextSize().setText(String.format(this.getString(R.string.compose_plaintextsize0)));
+        viewcompose.getText_ComposeCompressedTextSize().setText(String.format(this.getString(R.string.compose_compressedtextsize0)));
+        viewcompose.getText_ComposeCompressedTextAlgorithm().setText(String.format(this.getString(R.string.compose_compressedtextalgorithm0)));
+        viewcompose.getText_ComposeAESIVSize().setText(String.format(this.getString(R.string.compose_aesivtextsize0)));
+        viewcompose.getText_ComposeEncryptedMessageSize().setText(String.format(this.getString(R.string.compose_encryptedtextsize0)));
+        viewcompose.getText_ComposeEncodedMessageSize().setText(String.format(this.getString(R.string.compose_encodedtextsize0)));
+        viewcompose.getText_ComposeMetadataSize().setText(String.format(this.getString(R.string.compose_metadatasize0)));
+        viewcompose.getText_ComposeFinalMessageSize().setText(String.format(this.getString(R.string.compose_completeencryptedsize0)));
+        viewcompose.getBtn_ComposeEncryptMessage().setEnabled(false);
+        viewcompose.getBtn_ComposeEncryptMessage().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_ComposeEncryptMessage_onClick(v);
+            }
+        });
+
+        viewcompose.getBtn_ComposeSendMessage().setEnabled(false);
+        viewcompose.getBtn_ComposeSelectSession().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_ComposeSelectSession_onClick(v);
+            }
+        });
+    }
+
+    public void EncryptEncodeComposeMessage()
+    {
+        SecretKey AESKey;
+        String PhoneNum;
+        String AESKeyText;
+        String PlainText;
+        int CompressionMethod;
+        byte[] PlainByte;
+        byte[] CompressedByteBLZ4;
+        byte[] CompressedByteDeflate;
+        byte[] CompressedByte;
+        byte[] UncompressedByte;
+        byte[] AESIV;
+        byte[] AESCT;
+        byte[] EncryptedByte;
+        String EncodedText;
+        byte[] EncodedByte;
+        byte[] MetadataByte;
+        byte[] FinalByte;
+
+        // Get Phone Number and the Plain Text
+        PhoneNum = viewcompose.getText_ComposePartnerNumber().getText().toString();
+        PlainText = viewcompose.getText_ComposePlainText().getText().toString();
+
+        // Convert the Plain Text into Byte
+        PlainByte = PlainText.getBytes();
+
+        // Get the AES Session Key
+        //sessionRepository repo = new sessionRepository(this);
+        //TypeSession session = repo.getSession(PhoneNum);
+        //AESKeyText = session.getSession_ecdh_aes_key();
+        //AESKey = Cryptography.BytetoKeyAES(Cryptography.Base64StringtoByte(AESKeyText));
+
+        //DEVELOPMENT ONLY
+        AESKey = Cryptography.GenerateAESKey(QRCodeHandler.ProfileQRCodeAESKey, Cryptography.PBKDF2ITERATION, Cryptography.AESKEYSIZE);
+
+        // Compress the PlainByte
+        CompressedByteBLZ4 = CompressionDecompression.BlockLZ4Compress(PlainByte);
+        CompressedByteDeflate = CompressionDecompression.DeflateCompress(PlainByte);
+
+        if(CompressedByteBLZ4.length>=CompressedByteDeflate.length) // choose Deflate or Plain
+        {
+            if(CompressedByteDeflate.length>=PlainByte.length) // choose Plain
+            {
+                CompressedByte = PlainByte;
+                CompressionMethod = 0;
+            }
+            else
+            {
+                CompressedByte = CompressedByteDeflate;
+                CompressionMethod = 1;
+            }
+        }
+        else // choose BLZ4
+        {
+            if(CompressedByteBLZ4.length>=PlainByte.length) // choose Plain
+            {
+                CompressedByte = PlainByte;
+                CompressionMethod = 0;
+            }
+            else
+            {
+                CompressedByte = CompressedByteBLZ4;
+                CompressionMethod = 2;
+            }
+        }
+
+        // Encryption AES
+        EncryptedByte = Cryptography.EncryptMessageAESSpongy(AESKey, CompressedByte);
+        AESIV = Cryptography.GetAESIV(EncryptedByte);
+        AESCT = Cryptography.GetAESContent(EncryptedByte);
+
+        // Encoding
+        EncodedText = GSMEncodingDecoding.encode(new String(EncryptedByte));
+        EncodedByte = EncodedText.getBytes();
+
+
+        // Update View
+        viewcompose.getText_ComposeCompressedText().setText(Cryptography.BytetoBase64String(CompressedByte));
+        viewcompose.getText_ComposeAESIV().setText(Cryptography.BytetoBase64String(AESIV));
+        viewcompose.getText_ComposeAESCT().setText(Cryptography.BytetoBase64String(AESCT));
+        viewcompose.getText_ComposeEncryptedMessage().setText(Cryptography.BytetoBase64String(EncryptedByte));
+        viewcompose.getText_ComposeEncodedMessage().setText(Cryptography.BytetoBase64String(EncodedByte));
+
+        viewcompose.getText_ComposePlainTextSize().setText(String.format(this.getString(R.string.compose_plaintextsize), PlainByte.length));
+        viewcompose.getText_ComposeCompressedTextSize().setText(String.format(this.getString(R.string.compose_compressedtextsize), CompressedByte.length));
+        viewcompose.getText_ComposeAESIVSize().setText(String.format(this.getString(R.string.compose_aesivtextsize), AESIV.length));
+        viewcompose.getText_ComposeAESCTSize().setText(String.format(this.getString(R.string.compose_aesctextsize), AESCT.length));
+        viewcompose.getText_ComposeEncryptedMessageSize().setText(String.format(this.getString(R.string.compose_encryptedtextsize), EncryptedByte.length));
+        viewcompose.getText_ComposeEncodedMessageSize().setText(String.format(this.getString(R.string.compose_encodedtextsize), EncodedByte.length));
+
+        switch (CompressionMethod)
+        {
+            case 0 : {
+                viewcompose.getText_ComposeCompressedTextAlgorithm().setText(String.format(this.getString(R.string.compose_compressedtextalgorithm), "UNCOMPRESSED"));
+                break;
+            }
+            case 1 :
+            {
+                viewcompose.getText_ComposeCompressedTextAlgorithm().setText(String.format(this.getString(R.string.compose_compressedtextalgorithm), "DEFLATE"));
+                break;
+            }
+            case 2 : {
+                viewcompose.getText_ComposeCompressedTextAlgorithm().setText(String.format(this.getString(R.string.compose_compressedtextalgorithm), "BLOCK-LZ4"));
+                break;
+            }
+            default: {
+                viewcompose.getText_ComposeCompressedTextAlgorithm().setText(String.format(this.getString(R.string.compose_compressedtextalgorithm), "UNCOMPRESSED"));
+                break;
+            }
+        }
+
+
     }
 
     //endregion
@@ -351,45 +614,41 @@ public class ActivityMain extends AppCompatActivity {
         startActivityForResult(objIntent, IntentString.MainFeedbackCode_RefreshSessionList);
     }
 
-    private void mViewPager_onPageChanged(int position)
-    {
+    private void mViewPager_onPageChanged(int position) {
         // Method to be executed each time the ViewPager Tab is Changed
-        switch(position)
-        {
-            case 0 :{
+        switch (position) {
+            case 0: {
                 break;
             }
-            case 1 : {
+            case 1: {
                 break;
             }
-            case 2 : {
+            case 2: {
                 break;
             }
-            case 3 : {
+            case 3: {
                 break;
             }
-            case 4 : {
+            case 4: {
                 break;
             }
-            case 5 : {
+            case 5: {
                 break;
             }
-            default : {
+            default: {
                 break;
             }
         }
     }
 
-    private void btn_RegenRSAKeyPair_onClick (View v)
-    {
+    private void btn_RegenRSAKeyPair_onClick(View v) {
 
         KeyPair RSAKeyPair = null;
         GenerateRSAKeyAsync asynctask = new GenerateRSAKeyAsync(this);
         asynctask.execute(RSAKeyPair, RSAKeyPair, RSAKeyPair);
     }
 
-    private void btn_UpdateProfile_onClick (View v)
-    {
+    private void btn_UpdateProfile_onClick(View v) {
 
         profileRepository profileRepository = new profileRepository(this);
         TypeProfile profileold = profileRepository.getProfile(TypeProfile.DEFAULTID);
@@ -403,19 +662,64 @@ public class ActivityMain extends AppCompatActivity {
         profileRepository.update(profilenew);
         RefreshProfile();
     }
+
+    private void btn_AddContact_onClick(View v) {
+        qrScan.initiateScan();
+    }
+
+    private void btn_ComposeSelectSession_onClick(View v)
+    {
+        Intent objIntent = new Intent(getApplicationContext(), ActivityValidSessionList.class);
+        startActivityForResult(objIntent, IntentString.MainFeedbackCode_DiscardValidSession);
+    }
+
+    private void btn_ComposeEncryptMessage_onClick(View v)
+    {
+        if(viewcompose.getText_ComposePlainText().getText().toString().matches(""))
+        {
+            Toast.makeText(this, "Nothing to Encrypt!", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            EncryptEncodeComposeMessage();
+        }
+
+    }
+    private final TextWatcher ComposePlainTextWatcher = new TextWatcher() {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            String currentstring = viewcompose.getText_ComposePlainText().getText().toString();
+            if(currentstring.matches(""))
+            {
+                viewcompose.getText_ComposePlainTextSize().setText(getString(R.string.compose_plaintextsize0));
+            }
+            else
+            {
+                viewcompose.getText_ComposePlainTextSize().setText(String.format(getString(R.string.compose_plaintextsize), currentstring.getBytes().length));
+            }
+
+        }
+
+        public void afterTextChanged(Editable s) {
+        }
+    };
     //endregion
 
     private class GenerateRSAKeyAsync extends AsyncTask<KeyPair, KeyPair, KeyPair> {
         private Activity outer;
-        public GenerateRSAKeyAsync(Activity outer)
-        {
+
+        public GenerateRSAKeyAsync(Activity outer) {
             this.outer = outer;
         }
+
         @Override
         protected void onPreExecute() {
             viewprofile.getText_ProfileRSAPubKey().setText(outer.getString(R.string.rsakeypairregenload));
             viewprofile.getText_ProfileRSAPrivKey().setText(outer.getString(R.string.rsakeypairregenload));
         }
+
         @Override
         protected KeyPair doInBackground(KeyPair... arg) {
 
@@ -429,25 +733,24 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    private class GenerateProfileQRCodeAsync extends AsyncTask<TypeProfile, Bitmap, Bitmap>
-    {
-        private Activity outer;
+    private class GenerateProfileQRCodeAsync extends AsyncTask<TypeProfile, Bitmap, Bitmap> {
         private Bitmap bitmap;
         private int size;
-        public GenerateProfileQRCodeAsync(Activity outer, Bitmap bitmap, int size)
-        {
-            this.outer = outer;
+
+        public GenerateProfileQRCodeAsync(Bitmap bitmap, int size) {
             this.bitmap = bitmap;
             this.size = size;
         }
+
         @Override
         protected void onPreExecute() {
             viewprofile.getImageView_ProfileQRCode().setVisibility(View.GONE);
             viewprofile.getProgressBar_Refresh().setVisibility(View.VISIBLE);
         }
+
         @Override
         protected Bitmap doInBackground(TypeProfile... arg) {
-            bitmap = QRCodeHandler.GenerateProfileQRCode(outer, arg[0].getName_self(), arg[0].getPhone_number(), arg[0].getRsa_publickey(), size);
+            bitmap = QRCodeHandler.GenerateProfileQRCode(arg[0].getName_self(), arg[0].getPhone_number(), arg[0].getRsa_publickey(), size);
             return bitmap;
         }
 
@@ -458,4 +761,6 @@ public class ActivityMain extends AppCompatActivity {
             viewprofile.getProgressBar_Refresh().setVisibility(View.GONE);
         }
     }
+
+
 }
