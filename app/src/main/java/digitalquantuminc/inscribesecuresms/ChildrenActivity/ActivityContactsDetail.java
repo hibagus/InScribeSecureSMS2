@@ -51,13 +51,6 @@ public class ActivityContactsDetail extends AppCompatActivity {
         IntentProcessor();
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -116,7 +109,7 @@ public class ActivityContactsDetail extends AppCompatActivity {
         sessionRepository repo2 = new sessionRepository(this);
         repo.delete(PhoneNumber);
         repo2.delete(PhoneNumber);
-        IntentFeedback(Activity.RESULT_OK, IntentString.MainFeedbackCode_RefreshBothContactandSessionList);
+        IntentFeedback(Activity.RESULT_OK, IntentString.MainFeedBackCode_RefreshContactListSessionListCompose);
     }
 
 }
