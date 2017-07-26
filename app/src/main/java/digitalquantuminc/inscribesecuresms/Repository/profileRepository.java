@@ -21,6 +21,7 @@ public class profileRepository {
 
     //region Global Variable
     private profileDBHelper dbHelper;
+    private android.util.Log Log;
 
     //endregion
     //region Constructor
@@ -39,7 +40,7 @@ public class profileRepository {
         values.put(TypeProfile.KEY_date, profile.getGenerated_date());
         values.put(TypeProfile.KEY_rsapub, profile.getRsa_publickey());
         values.put(TypeProfile.KEY_rsapriv, profile.getRsa_privatekey());
-        values.put(TypeProfile.KEY_lastsync, profile.getRsa_privatekey());
+        values.put(TypeProfile.KEY_lastsync, profile.getLastsync());
         // Open connection to write the DB
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         // Inserting row

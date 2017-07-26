@@ -79,7 +79,7 @@
                 android:ems="10"
                 android:enabled="false"
                 android:gravity="start"
-                android:inputType="textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textNoSuggestions"
                 android:labelFor="@+id/text_ComposePlainText"
                 android:lines="10"
                 android:maxLines="10"
@@ -247,38 +247,6 @@
                 android:layout_height="16dp" />
 
             <TextView
-                android:id="@+id/textView40"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/compose_encodedtext" />
-
-            <EditText
-                android:id="@+id/text_ComposeEncodedMessage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="start"
-                android:inputType="textMultiLine"
-                android:labelFor="@+id/text_ComposeEncodedMessage"
-                android:lines="3"
-                android:maxLines="3"
-                android:minLines="3"
-                android:scrollbars="vertical"
-                android:text="@string/dev_dummy_emptystring"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/text_ComposeEncodedMessageSize"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/compose_encodedtextsize0"
-                android:textAlignment="textEnd" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="16dp" />
-
-            <TextView
                 android:id="@+id/textView36"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -311,6 +279,45 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/compose_completeencryptedsize0"
+                android:textAlignment="textEnd" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <TextView
+                android:id="@+id/textView40"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_encodedtext" />
+
+            <EditText
+                android:id="@+id/text_ComposeEncodedMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:gravity="start"
+                android:inputType="textMultiLine"
+                android:labelFor="@+id/text_ComposeEncodedMessage"
+                android:lines="3"
+                android:maxLines="3"
+                android:minLines="3"
+                android:scrollbars="vertical"
+                android:text="@string/dev_dummy_emptystring"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/text_ComposeEncodedMessageSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_encodedtextsize0"
+                android:textAlignment="textEnd" />
+
+            <TextView
+                android:id="@+id/text_ComposeNumberofMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/compose_numberofsms0"
                 android:textAlignment="textEnd" />
 
             <Space

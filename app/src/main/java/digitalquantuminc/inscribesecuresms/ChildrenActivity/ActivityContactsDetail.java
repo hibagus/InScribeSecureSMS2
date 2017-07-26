@@ -20,6 +20,7 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
 import digitalquantuminc.inscribesecuresms.Intent.IntentString;
 import digitalquantuminc.inscribesecuresms.R;
 import digitalquantuminc.inscribesecuresms.Repository.contactRepository;
+import digitalquantuminc.inscribesecuresms.Repository.messageRepository;
 import digitalquantuminc.inscribesecuresms.Repository.sessionRepository;
 import digitalquantuminc.inscribesecuresms.UserInterface.UserInterfaceColor;
 
@@ -107,8 +108,10 @@ public class ActivityContactsDetail extends AppCompatActivity {
         String PhoneNumber = text_PartnerNumber.getText().toString();
         contactRepository repo = new contactRepository(this);
         sessionRepository repo2 = new sessionRepository(this);
+        messageRepository repo3 = new messageRepository(this);
         repo.delete(PhoneNumber);
         repo2.delete(PhoneNumber);
+        repo3.delete(PhoneNumber);
         IntentFeedback(Activity.RESULT_OK, IntentString.MainFeedBackCode_RefreshContactListSessionListCompose);
     }
 

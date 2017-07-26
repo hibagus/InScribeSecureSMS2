@@ -2,6 +2,9 @@ package digitalquantuminc.inscribesecuresms.View;
 
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ListView;
+
+import digitalquantuminc.inscribesecuresms.R;
 
 /**
  * Created by Bagus Hanindhito on 30/06/2017.
@@ -10,9 +13,8 @@ import android.view.View;
 
 public class ViewConversationList extends Presenter {
 
-    //TODO: Create Binding to UX Element with their Getter (IT IS STILL UNIMPLEMENTED)
     //region Global Variable
-
+    private ListView list_conversation;
     //endregion
     //region Constructor
     public ViewConversationList(AppCompatActivity activity, View view) {
@@ -23,9 +25,12 @@ public class ViewConversationList extends Presenter {
     //region Override Method
     @Override
     public void onCreateView() {
-
+        list_conversation = (ListView) view.findViewById(R.id.list_conversation);
     }
     //endregion
     //region Getter
+    public ListView getList_conversation() {
+        return list_conversation;
+    }
     //endregion
 }

@@ -19,9 +19,8 @@ public class TypeSession {
     public static final int StatusRoleUnknown = 10;
     //region SQL Table Key
     public static final String TABLE = "session";
-    public static final String KEY_ID = "id";
-    public static final String KEY_phone = "phonenum";
-    public static final String KEY_name = "name";
+    public static final String KEY_ID = "sessionid";
+    public static final String KEY_phone = "sessionphonenum";
     public static final String KEY_valid = "sessionvalid";
     public static final String KEY_date = "sessiondate";
     public static final String KEY_role = "sessionrole";
@@ -37,7 +36,6 @@ public class TypeSession {
     //endregion
     //region Global Variable
     private String phone_number;
-    private String name;
     private int session_validity;
     private long session_handshake_date;
     private int session_role;
@@ -57,9 +55,8 @@ public class TypeSession {
 
     }
 
-    public TypeSession(String phone_number, String name) {
+    public TypeSession(String phone_number) {
         this.phone_number = phone_number;
-        this.name = name;
         this.session_validity = StatusNotValid;
         this.session_handshake_date = 0;
         this.session_role = StatusRoleUnknown;
@@ -74,9 +71,8 @@ public class TypeSession {
         this.session_num_message = 0;
     }
 
-    public TypeSession(String phone_number, String name, int session_validity, long session_handshake_date, int session_role, String session_ecdh_private_key, String session_ecdh_public_key, String session_ecdh_partner_public_key, String session_ecdh_partner_digital_signature, String session_ecdh_partner_computed_digital_signature, int session_ecdh_partner_validity, String session_ecdh_shared_secret, String session_ecdh_aes_key, int session_num_message) {
+    public TypeSession(String phone_number, int session_validity, long session_handshake_date, int session_role, String session_ecdh_private_key, String session_ecdh_public_key, String session_ecdh_partner_public_key, String session_ecdh_partner_digital_signature, String session_ecdh_partner_computed_digital_signature, int session_ecdh_partner_validity, String session_ecdh_shared_secret, String session_ecdh_aes_key, int session_num_message) {
         this.phone_number = phone_number;
-        this.name = name;
         this.session_validity = session_validity;
         this.session_handshake_date = session_handshake_date;
         this.session_role = session_role;
@@ -95,10 +91,6 @@ public class TypeSession {
     //region Setter
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setSession_validity(int session_validity) {
@@ -153,10 +145,6 @@ public class TypeSession {
     //region Getter
     public String getPhone_number() {
         return this.phone_number;
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     public int getSession_validity() {

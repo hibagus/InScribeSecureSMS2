@@ -148,12 +148,12 @@ public class CompressionDecompression {
             bytearrayinStream = new ByteArrayInputStream(compressedcontent);
             inStream = new BlockLZ4CompressorInputStream(bytearrayinStream);
             IOUtils.copy(inStream,bytearrayoutStream);
+            return bytearrayoutStream.toByteArray();
 
         }
-        catch (IOException e) {
-
+        catch (Exception  e) {
+            return compressedcontent;
         }
-        return bytearrayoutStream.toByteArray();
     }
 
     public static byte[] SnappyCompress (byte[] content) {
@@ -205,12 +205,13 @@ public class CompressionDecompression {
             bytearrayinStream = new ByteArrayInputStream(compressedcontent);
             inStream = new DeflateCompressorInputStream(bytearrayinStream);
             IOUtils.copy(inStream,bytearrayoutStream);
+            return bytearrayoutStream.toByteArray();
 
         }
-        catch (IOException e) {
-
+        catch (Exception e) {
+            return compressedcontent;
         }
-        return bytearrayoutStream.toByteArray();
+
     }
 
     public static byte[] XZCompress (byte[] content) {

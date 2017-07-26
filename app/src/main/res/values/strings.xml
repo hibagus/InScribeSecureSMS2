@@ -74,28 +74,30 @@
     <string name="compose_compressedtextsize">Compressed Message Size is %1$d byte(s)</string>
     <string name="compose_compressedtextalgorithm">Compression Algorithm is %1$s</string>
     <string name="compose_aesivtextsize">AES CBC Initialization Vector Size is %1$d byte(s)</string>
-    <string name="compose_aesctextsize">AES Cipher Text Size is %1$d byte(s)</string>
-    <string name="compose_encryptedtextsize">Encrypted Text Message Size is %1$d byte(s)</string>
+    <string name="compose_aesctextsize">AES Cipher Size is %1$d byte(s)</string>
+    <string name="compose_encryptedtextsize">Encrypted Message Size is %1$d byte(s)</string>
     <string name="compose_metadatasize">Metadata Size is %1$d byte(s)</string>
     <string name="compose_completeencryptedsize">Final Message Size is %1$d byte(s)</string>
-    <string name="compose_encodedtextsize">Encoded Message Size is %1$d byte(s)</string>
+    <string name="compose_numberofsms">Encoded Message will be sent using %1$d SMS Message(s)</string>
+    <string name="compose_encodedtextsize">Encoded Message Size is %1$d byte(s) or %2$d character(s)</string>
 
     <string name="compose_plaintextsize0">Message Size is 0 byte(s)</string>
     <string name="compose_compressedtextsize0">Compressed Message Size is 0 byte(s)</string>
     <string name="compose_compressedtextalgorithm0">Compression Algorithm is UNCOMPRESSED</string>
     <string name="compose_aesivtextsize0">AES CBC Initialization Vector Size is 0 byte(s)</string>
-    <string name="compose_aesctextsize0">AES Cipher Text Size is 0 byte(s)</string>
-    <string name="compose_encryptedtextsize0">Encrypted Text Message Size is 0 byte(s)</string>
+    <string name="compose_aesctextsize0">AES Cipher Size is 0 byte(s)</string>
+    <string name="compose_encryptedtextsize0">Encrypted Message Size is 0 byte(s)</string>
     <string name="compose_metadatasize0">Metadata Size is 0 byte(s)</string>
     <string name="compose_completeencryptedsize0">Final Message Size is 0 byte(s)</string>
-    <string name="compose_encodedtextsize0">Encoded Message Size is 0 byte(s)</string>
+    <string name="compose_numberofsms0">Encoded Message will be sent using 0 SMS Message(s)</string>
+    <string name="compose_encodedtextsize0">Encoded Message Size is 0 byte(s) or 0 character(s)</string>
 
     <string name="compose_plaintext">Plain Text Message:</string>
     <string name="compose_compressedtext">Compressed Text Message:</string>
     <string name="compose_aesivtext">AES CBC Generated Initialization Vector:</string>
     <string name="compose_aescttext">AES Cipher Text:</string>
     <string name="compose_encryptedtext">Encrypted Text Message:</string>
-    <string name="compose_completeencryptedtext">Final Message:</string>
+    <string name="compose_completeencryptedtext">Final Text Message:</string>
     <string name="compose_encodedtext">Encoded Text Message:</string>
 
     <string name="compose_encryptmessage">Compress and Encrypt Message</string>
@@ -112,5 +114,32 @@
     <string name="dev_dummy_emptystring"> </string>
     <string name="dev_dummy_longtext">Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text </string>
     <string name="title_activity_valid_session_list">ActivityValidSessionList</string>
+    <string name="title_activity_conversation_list_detail">ActivityConversationListDetail</string>
+    <string name="title_activity_message_detail">ActivityMessageDetail</string>
+
+    <string name="message_partner_name">Partner Name:</string>
+    <string name="message_partner_number">Partner Number:</string>
+    <string name="message_type">Message Type:</string>
+    <string name="message_datetimestamp">Message Timestamp:</string>
+    <string name="message_ecdh_receivedpubkey">Partner ECDH Public Key:</string>
+    <string name="message_ecdh_receivedds">Received Digital Signature:</string>
+    <string name="message_ecdh_calculatedds">Calculated Digital Signature:</string>
+    <string name="message_dsvalidity">Digital Signature Validity</string>
+    <string name="message_acceptsecure">Accept Secure Session</string>
+    <string name="message_activatesecure">Activate Secure Session</string>
+    <string name="message_rejectsecure">Reject Secure Session</string>
+    <string name="message_closebutton">Back</string>
+    <string name="message_decodedtextmessage">Decoded Text Message</string>
+    <string name="message_AESCT">AES Cipher Text:</string>
+    <string name="message_AESIV">AES CBC Received Initialization Vector:</string>
+    <string name="message_decryptedtext">Decrypted Text Message:</string>
+    <string name="message_plaintext">Plain Text Message</string>
+    <string name="message_saveplain">Save Plain Text Message</string>
+    <string name="message_content">Encoded Message Content:</string>
+    <string name="message_decryptemessage">Decode and Decrypt Message</string>
+    <string name="message_deletemessage">Delete Message</string>
+    <string name="message_clearplaintext">Clear Plain Text Message</string>
+    <string name="title_activity_about">ActivityAbout</string>
+
 
 </resources>

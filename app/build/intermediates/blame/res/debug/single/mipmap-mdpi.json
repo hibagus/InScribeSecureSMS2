@@ -1,5 +1,13 @@
 [
     {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\ic_launcher2.png",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher2.png"
+    },
+    {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\ic_launcher3.png",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher3.png"
+    },
+    {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\ic_launcher_round.png",
         "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.png"
     },

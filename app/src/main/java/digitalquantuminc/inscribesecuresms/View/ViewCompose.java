@@ -35,6 +35,7 @@ public class ViewCompose extends Presenter {
     private EditText text_ComposeFinalMessage;
     private TextView text_ComposeMetadataSize;
     private TextView text_ComposeFinalMessageSize;
+    private TextView text_ComposeNumberofMessage;
     private Button btn_ComposeSendMessage;
 
 
@@ -68,7 +69,9 @@ public class ViewCompose extends Presenter {
         text_ComposeFinalMessage = (EditText) view.findViewById(R.id.text_ComposeFinalMessage);
         text_ComposeMetadataSize = (TextView) view.findViewById(R.id.text_ComposeMetadataSize);
         text_ComposeFinalMessageSize = (TextView) view.findViewById(R.id.text_ComposeFinalMessageSize);
+        text_ComposeNumberofMessage = (TextView) view.findViewById(R.id.text_ComposeNumberofMessage);
         btn_ComposeSendMessage = (Button) view.findViewById(R.id.btn_ComposeSendMessage);
+
     }
 
 
@@ -157,6 +160,10 @@ public class ViewCompose extends Presenter {
 
     public TextView getText_ComposePlainTextSize() {
         return text_ComposePlainTextSize;
+    }
+
+    public TextView getText_ComposeNumberofMessage() {
+        return text_ComposeNumberofMessage;
     }
 
     //endregion

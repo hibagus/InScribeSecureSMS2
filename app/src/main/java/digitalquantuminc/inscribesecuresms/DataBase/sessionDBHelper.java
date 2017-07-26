@@ -26,23 +26,23 @@ public class sessionDBHelper extends SQLiteOpenHelper {
     //region Override Method
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_TABLE_PROFILE = "CREATE TABLE " + TypeSession.TABLE + "("
+        String CREATE_TABLE_SESSION = "CREATE TABLE " + TypeSession.TABLE + "("
                 + TypeSession.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + TypeSession.KEY_phone + " TEXT, "
                 + TypeSession.KEY_valid + " INTEGER, "
                 + TypeSession.KEY_date + " INTEGER, "
                 + TypeSession.KEY_role + " INTEGER, "
-                + TypeSession.KEY_ecdhpub + "TEXT,"
-                + TypeSession.KEY_ecdhpriv + "TEXT, "
-                + TypeSession.KEY_ecdhpubpart + "TEXT, "
-                + TypeSession.KEY_ecdhds + "TEXT, "
-                + TypeSession.KEY_ecdhcomds + "TEXT, "
-                + TypeSession.KEY_ecdhvalid + "TEXT, "
-                + TypeSession.KEY_ecdhsecret + "TEXT, "
-                + TypeSession.KEY_aeskey + "TEXT, "
-                + TypeSession.KEY_nummessage + "INTEGER)";
+                + TypeSession.KEY_ecdhpub + " TEXT,"
+                + TypeSession.KEY_ecdhpriv + " TEXT, "
+                + TypeSession.KEY_ecdhpubpart + " TEXT, "
+                + TypeSession.KEY_ecdhds + " TEXT, "
+                + TypeSession.KEY_ecdhcomds + " TEXT, "
+                + TypeSession.KEY_ecdhvalid + " TEXT, "
+                + TypeSession.KEY_ecdhsecret + " TEXT, "
+                + TypeSession.KEY_aeskey + " TEXT, "
+                + TypeSession.KEY_nummessage + " INTEGER)";
 
-        db.execSQL(CREATE_TABLE_PROFILE);
+        db.execSQL(CREATE_TABLE_SESSION);
     }
 
     @Override

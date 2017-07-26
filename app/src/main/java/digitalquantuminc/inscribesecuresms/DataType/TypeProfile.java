@@ -19,8 +19,8 @@ public class TypeProfile {
 
     //region SQL Table Key
     public static final String TABLE = "profile";
-    public static final String KEY_ID = "id";
-    public static final String KEY_phone = "phonenum";
+    public static final String KEY_ID = "profileid";
+    public static final String KEY_phone = "profilephonenum";
     public static final String KEY_name = "selfname";
     public static final String KEY_date = "generateddate";
     public static final String KEY_rsapub = "rsapubkey";
@@ -99,7 +99,7 @@ public class TypeProfile {
     }
 
     public long getLastsync() {
-        return lastsync;
+        return this.lastsync;
     }
 
     //endregion
