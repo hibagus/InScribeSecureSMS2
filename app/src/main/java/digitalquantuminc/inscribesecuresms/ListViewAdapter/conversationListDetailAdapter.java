@@ -15,6 +15,7 @@ import java.util.HashMap;
 
 import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
 import digitalquantuminc.inscribesecuresms.DataType.TypeMessage;
+import digitalquantuminc.inscribesecuresms.DataType.TypeMetaMessage;
 import digitalquantuminc.inscribesecuresms.DataType.TypeProfile;
 import digitalquantuminc.inscribesecuresms.ListViewHolder.conversationListDetailViewHolder;
 import digitalquantuminc.inscribesecuresms.ListViewHolder.conversationListViewHolder;
@@ -87,10 +88,10 @@ public class conversationListDetailAdapter extends BaseAdapter {
         holder.getTextlist_TimeStamp().setText(String.valueOf(message.getTimestamp()));
         holder.getTextlist_PartnerNumber().setText(message.getAddress());
 
-
         // Decide Message Direction
         if(message.getDirection()==TypeMessage.MESSAGEDIRECTIONINBOX)
         {
+            holder.getTextlist_Direction().setText(String.valueOf(TypeMessage.MESSAGEDIRECTIONINBOX));
             holder.getLinearLayout_Partner().setVisibility(View.VISIBLE);
             holder.getLinearLayout_Your().setVisibility(View.GONE);
             contactRepository repo = new contactRepository(outer);
@@ -103,6 +104,7 @@ public class conversationListDetailAdapter extends BaseAdapter {
         }
         else if (message.getDirection()==TypeMessage.MESSAGEDIRECTIONOUTBOX)
         {
+            holder.getTextlist_Direction().setText(String.valueOf(TypeMessage.MESSAGEDIRECTIONOUTBOX));
             holder.getLinearLayout_Partner().setVisibility(View.GONE);
             holder.getLinearLayout_Your().setVisibility(View.VISIBLE);
             profileRepository repo = new profileRepository(outer);

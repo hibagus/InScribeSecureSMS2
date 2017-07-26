@@ -15,6 +15,7 @@ public class IntentString {
     public static final String MainToConversationListDetails_Timestamp = "TimeStamp";
     public static final String ConversationListDetailstoMessageDetails_PhoneNum = "PartnerNum";
     public static final String ConversationListDetailstoMessageDetails_Timestamp = "TimeStamp";
+    public static final String ConversationListDetailstoMessageDetails_Direction = "Direction";
 
     public static final String MainFeedBackCode = "MainFeedbackCode";
     public static final String ConversationListDetailsFeedbackCode = "ConversationListDetailsFeedbackCode";

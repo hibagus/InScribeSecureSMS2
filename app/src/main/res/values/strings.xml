@@ -123,6 +123,8 @@
     <string name="message_datetimestamp">Message Timestamp:</string>
     <string name="message_ecdh_receivedpubkey">Partner ECDH Public Key:</string>
     <string name="message_ecdh_receivedds">Received Digital Signature:</string>
+    <string name="message_ecdh_sendpubkey">Your ECDH Public Key:</string>
+    <string name="message_ecdh_sendds">Computed Digital Signature:</string>
     <string name="message_ecdh_calculatedds">Calculated Digital Signature:</string>
     <string name="message_dsvalidity">Digital Signature Validity</string>
     <string name="message_acceptsecure">Accept Secure Session</string>
@@ -131,7 +133,7 @@
     <string name="message_closebutton">Back</string>
     <string name="message_decodedtextmessage">Decoded Text Message</string>
     <string name="message_AESCT">AES Cipher Text:</string>
-    <string name="message_AESIV">AES CBC Received Initialization Vector:</string>
+    <string name="message_AESIV">AES CBC Initialization Vector:</string>
     <string name="message_decryptedtext">Decrypted Text Message:</string>
     <string name="message_plaintext">Plain Text Message</string>
     <string name="message_saveplain">Save Plain Text Message</string>

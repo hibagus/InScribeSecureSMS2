@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,6 +24,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,8 +51,6 @@ import digitalquantuminc.inscribesecuresms.UserInterface.UserInterfaceColor;
 
 public class ActivityConversationListDetail extends AppCompatActivity {
 
-    private static final int READ_SMS_PERMISSIONS_REQUEST = 1;
-
     private static final String SMS_URI_INBOX = "content://sms/inbox";
     private static final String SMS_URI_SENT = "content://sms/sent";
     // UI Components
@@ -67,7 +67,7 @@ public class ActivityConversationListDetail extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Binding UI Component to Code
         UIComponentBinding();
@@ -81,14 +81,34 @@ public class ActivityConversationListDetail extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_activity_main, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
         if (item.getItemId() == android.R.id.home) {
             IntentFeedback(RESULT_OK, IntentString.MainFeedBackCode_RefreshConversationList);
             return true;
+        } else if (id == R.id.action_settings) {
+            return true;
+        }
+        else if (id == R.id.action_refresh)
+        {
+            SyncMessage();
+            UpdateSMSLastSync();
+            LoadConversationList(list_conversation_list_detail,PartnerPhoneNumber);
         }
         return super.onOptionsItemSelected(item);
     }
-
     protected void UIComponentBinding() {
         list_conversation_list_detail = (ListView) findViewById(R.id.list_conversation_list_detail);
 
@@ -141,17 +161,6 @@ public class ActivityConversationListDetail extends AppCompatActivity {
         finish();
     }
 
-    public void getPermissionToReadSMS() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (shouldShowRequestPermissionRationale(
-                    Manifest.permission.READ_SMS)) {
-                Toast.makeText(this, "Please allow permission!", Toast.LENGTH_SHORT).show();
-            }
-            requestPermissions(new String[]{Manifest.permission.READ_SMS},
-                    READ_SMS_PERMISSIONS_REQUEST);
-        }
-    }
 
     public long GetSMSLastSync() {
         profileRepository repo2 = new profileRepository(this);
@@ -160,97 +169,98 @@ public class ActivityConversationListDetail extends AppCompatActivity {
     }
 
     public void SyncMessage() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            getPermissionToReadSMS();
-        } else {
-            // To load all message in inbox and sent item (if any)
-            profileRepository repo = new profileRepository(this);
-            long lastsmssync = GetSMSLastSync();
+        // To load all message in inbox and sent item (if any)
+        profileRepository repo = new profileRepository(this);
+        long lastsmssync = GetSMSLastSync();
 
-            Uri uriInbox = Uri.parse(SMS_URI_INBOX);
-            Uri uriSent = Uri.parse(SMS_URI_SENT);
-            String[] projection = new String[]{"_id", "address", "body", "date"};
-            String filter = "date>=" + String.valueOf(lastsmssync);
+        Uri uriInbox = Uri.parse(SMS_URI_INBOX);
+        Uri uriSent = Uri.parse(SMS_URI_SENT);
+        String[] projection = new String[]{"_id", "address", "body", "date"};
+        String filter = "date>=" + String.valueOf(lastsmssync);
 
-            messageRepository repo2 = new messageRepository(this);
-            int inboxcounter = 0;
-            int sentcounter = 0;
+        messageRepository repo2 = new messageRepository(this);
+        int inboxcounter = 0;
+        int sentcounter = 0;
 
-            ActivityMain inst = ActivityMain.instance();
-            contactRepository repo3 = new contactRepository(this);
-            // read from inbox first
-            Cursor curInbox = getContentResolver().query(uriInbox, projection, filter, null, null);
-            if (curInbox.moveToFirst()) {
-                int index_Address = curInbox.getColumnIndex("address");
-                int index_Body = curInbox.getColumnIndex("body");
-                int index_Date = curInbox.getColumnIndex("date");
+        contactRepository repo3 = new contactRepository(this);
+        // read from inbox first
+        Log.v("REQUEST!", "REQUEST");
+        Cursor curInbox = getContentResolver().query(uriInbox, projection, filter, null, null);
+        if (curInbox.moveToFirst()) {
+            int index_Address = curInbox.getColumnIndex("address");
+            int index_Body = curInbox.getColumnIndex("body");
+            int index_Date = curInbox.getColumnIndex("date");
 
-                do {
-                    String strAddress = curInbox.getString(index_Address);
-                    String strbody = curInbox.getString(index_Body);
-
-                    // Check if the message address is avaliable
-                    if (repo3.isContactExist(strAddress))
-                    {
-                        long longDate = curInbox.getLong(index_Date);
+            do {
+                String strAddress = curInbox.getString(index_Address);
+                String strbody = curInbox.getString(index_Body);
+                String longDate = curInbox.getString(index_Date);
+                Long timestamp = Long.parseLong(longDate);
+                Log.v("LongDate: ", String.valueOf(timestamp));
+                // Check if the message address is avaliable
+                if (repo3.isContactExist(strAddress)) {
+                    if (!repo2.isMessageExist(timestamp)) {
                         byte[] decodedmessage = GSMEncoderDecoder.Decode(strbody);
                         if (decodedmessage.length >= 8) // metadata MAY present
                         {
                             TypeMetaMessage meta = TypeMetaMessage.ExtractMetaData(decodedmessage);
                             // Check whether the message is compatible with apps
                             if (meta.getMessageHeadID() == TypeMetaMessage.MessageHeadIDVersion0 && meta.getMessageTailID() == TypeMetaMessage.MessageTailIDVersion0) {
-                                TypeMessage message = new TypeMessage(TypeMessage.MESSAGEDIRECTIONINBOX, meta.getMessageType(), strAddress, longDate, strbody, "");
+                                TypeMessage message = new TypeMessage(TypeMessage.MESSAGEDIRECTIONINBOX, meta.getMessageType(), strAddress, timestamp, strbody, "");
                                 repo2.insert(message);
                                 inboxcounter++;
                             }
                         }
                     }
-                } while (curInbox.moveToNext());
-                if (!curInbox.isClosed()) {
-                    curInbox.close();
+
                 }
-                Toast.makeText(this, String.valueOf(inboxcounter) + " inbox message(s) have been synced.", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "No New Inbox Message", Toast.LENGTH_SHORT).show();
+            } while (curInbox.moveToNext());
+            if (!curInbox.isClosed()) {
+                curInbox.close();
             }
+            Toast.makeText(this, String.valueOf(inboxcounter) + " inbox message(s) have been synced.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "No New Inbox Message", Toast.LENGTH_SHORT).show();
+        }
 
-            // read from sent then
-            Cursor curSent = getContentResolver().query(uriSent, projection, filter, null, null);
-            if (curSent.moveToFirst()) {
-                int index_Address = curSent.getColumnIndex("address");
-                int index_Body = curSent.getColumnIndex("body");
-                int index_Date = curSent.getColumnIndex("date");
+        // read from sent then
+        Cursor curSent = getContentResolver().query(uriSent, projection, filter, null, null);
+        if (curSent.moveToFirst()) {
+            int index_Address = curSent.getColumnIndex("address");
+            int index_Body = curSent.getColumnIndex("body");
+            int index_Date = curSent.getColumnIndex("date");
 
-                do {
-                    String strAddress = curSent.getString(index_Address);
-                    String strbody = curSent.getString(index_Body);
+            do {
+                String strAddress = curSent.getString(index_Address);
+                String strbody = curSent.getString(index_Body);
+                String longDate = curSent.getString(index_Date);
+                Long timestamp = Long.parseLong(longDate);
+                Log.v("LongDate: ", String.valueOf(timestamp));
+                // Check if the message address is avaliable
+                if (repo3.isContactExist(strAddress)) {
 
-                    // Check if the message address is avaliable
-                    if (repo3.isContactExist(strAddress))
-                    {
-                        long longDate = curSent.getLong(index_Date);
+                    if (!repo2.isMessageExist(timestamp)) {
                         byte[] decodedmessage = GSMEncoderDecoder.Decode(strbody);
                         if (decodedmessage.length >= 8) // metadata MAY present
                         {
                             TypeMetaMessage meta = TypeMetaMessage.ExtractMetaData(decodedmessage);
                             // Check whether the message is compatible with apps
                             if (meta.getMessageHeadID() == TypeMetaMessage.MessageHeadIDVersion0 && meta.getMessageTailID() == TypeMetaMessage.MessageTailIDVersion0) {
-                                TypeMessage message = new TypeMessage(TypeMessage.MESSAGEDIRECTIONOUTBOX, meta.getMessageType(), strAddress, longDate, strbody, "");
+                                TypeMessage message = new TypeMessage(TypeMessage.MESSAGEDIRECTIONOUTBOX, meta.getMessageType(), strAddress, timestamp, strbody, "");
                                 repo2.insert(message);
                                 sentcounter++;
                             }
                         }
                     }
-                } while (curSent.moveToNext());
-                if (!curSent.isClosed()) {
-                    curSent.close();
+
                 }
-                Toast.makeText(this, String.valueOf(sentcounter) + " sent message(s) have been synced.", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "No New Sent Message", Toast.LENGTH_SHORT).show();
+            } while (curSent.moveToNext());
+            if (!curSent.isClosed()) {
+                curSent.close();
             }
-            UpdateSMSLastSync();
+            Toast.makeText(this, String.valueOf(sentcounter) + " sent message(s) have been synced.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "No New Sent Message", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -291,15 +301,17 @@ public class ActivityConversationListDetail extends AppCompatActivity {
         // First, we need to bind the UX Component into variable to access it easily.
         TextView textlist_TimeStamp = (TextView) view.findViewById(R.id.textlist_TimeStamp);
         TextView textlist_PartnerNumber = (TextView) view.findViewById(R.id.textlist_PartnerNumber);
-
+        TextView textlist_Direction = (TextView) view.findViewById(R.id.textlist_Direction);
         // Extract the Phone Number as a unique identity for database query.
         String PartnerNumber = textlist_PartnerNumber.getText().toString();
         String Timestamp = textlist_TimeStamp.getText().toString();
+        String Direction = textlist_Direction.getText().toString();
 
         // Preparing intent to be passed to ActivitySessionDetail as child activity.
         Intent objIntent = new Intent(getApplicationContext(), ActivityMessageDetail.class);
         objIntent.putExtra(IntentString.ConversationListDetailstoMessageDetails_PhoneNum, PartnerNumber);
         objIntent.putExtra(IntentString.ConversationListDetailstoMessageDetails_Timestamp, Timestamp);
+        objIntent.putExtra(IntentString.ConversationListDetailstoMessageDetails_Direction, Integer.valueOf(Direction));
 
         // Start the ActivitySessionDetail by passing the intent and the code for feedback request.
         startActivityForResult(objIntent, IntentString.ConversationListDetailsFeedbackCode_RefreshList);

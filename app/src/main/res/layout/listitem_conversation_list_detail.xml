@@ -19,6 +19,13 @@
     android:paddingTop="0dp">
 
     <TextView
+        android:id="@+id/textlist_Direction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:visibility="gone" />
+
+    <TextView
         android:id="@+id/textlist_TimeStamp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,6 +78,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:contentDescription="@string/contact_photo" />
+
         </FrameLayout>
 
         <LinearLayout
@@ -106,7 +114,7 @@
 
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/LinearLayout_Your"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

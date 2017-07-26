@@ -33,42 +33,44 @@ public class IncomingSMSListener extends BroadcastReceiver {
             if (!(sms == null))
             {
                 final SmsMessage[] smsMessage = new SmsMessage[sms.length];
-                String format = intentExtras.getString("format");
                 for (int i = 0; i < sms.length; i++) {
-                    smsMessage[i] = SmsMessage.createFromPdu((byte[]) sms[i], format);
-                }
-
-                StringBuffer content = new StringBuffer();
-
-                for (int i = 0; i<sms.length; i++)
-                {
-                    content.append(smsMessage[i].getMessageBody().toString());
-                }
-
-                // Check if Contact Exist!
-                // Check if Number Exist
-                ActivityMain inst = ActivityMain.instance();
-                contactRepository repo = new contactRepository(inst);
-                if (repo.isContactExist(smsMessage[0].getOriginatingAddress()))
-                {
-                    byte[] decodedmessage = GSMEncoderDecoder.Decode(content.toString());
-                    if(decodedmessage.length>=8) // metadata MAY present
-                    {
-                        TypeMetaMessage meta = TypeMetaMessage.ExtractMetaData(decodedmessage);
-                        Log.v("SMSNumber", smsMessage[0].getOriginatingAddress());
-                        // Check whether the message is compatible with apps
-                        if(meta.getMessageHeadID()==TypeMetaMessage.MessageHeadIDVersion0 && meta.getMessageTailID()==TypeMetaMessage.MessageTailIDVersion0)
-                        {
-                            TypeMessage message = new TypeMessage(TypeMessage.MESSAGEDIRECTIONINBOX, meta.getMessageType(),smsMessage[0].getOriginatingAddress(),smsMessage[0].getTimestampMillis(),content.toString(),"");
-                            if(ActivityMain.active())
-                            {
-                                inst = ActivityMain.instance();
-                                inst.ReceiveNewMessage(message);
+                    smsMessage[i] = SmsMessage.createFromPdu((byte[]) sms[i]);
                             }
-                            else
+
+                            StringBuffer content = new StringBuffer();
+
+                            for (int i = 0; i<sms.length; i++)
                             {
-                                Intent i = new Intent(context, ActivityMain.class);
-                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                content.append(smsMessage[i].getMessageBody().toString());
+                            }
+
+                            // Check if Contact Exist!
+                            // Check if Number Exist
+                            ActivityMain inst = ActivityMain.instance();
+                            contactRepository repo = new contactRepository(inst);
+                            //Log.v("SMSNumber", smsMessage[0].getOriginatingAddress());
+                            //Log.v("SMSContent", content.toString());
+                            if (repo.isContactExist(smsMessage[0].getOriginatingAddress()))
+                            {
+                                byte[] decodedmessage = GSMEncoderDecoder.Decode(content.toString());
+                                int smspartnumber = smsMessage.length;
+                                if(decodedmessage.length>=8) // metadata MAY present
+                                {
+                                    TypeMetaMessage meta = TypeMetaMessage.ExtractMetaData(decodedmessage);
+                                    // Check whether the message is compatible with apps
+                                    if(meta.getMessageHeadID()==TypeMetaMessage.MessageHeadIDVersion0 && meta.getMessageTailID()==TypeMetaMessage.MessageTailIDVersion0)
+                                    {
+                                        TypeMessage message = new TypeMessage(TypeMessage.MESSAGEDIRECTIONINBOX, meta.getMessageType(),smsMessage[0].getOriginatingAddress(),smsMessage[smspartnumber-1].getTimestampMillis(),content.toString(),"");
+                                        Log.v("LongDateViaListner: ", String.valueOf(message.getTimestamp()));
+                                        if(ActivityMain.active())
+                                        {
+                                            inst = ActivityMain.instance();
+                                            inst.ReceiveNewMessage(message);
+                                        }
+                                        else
+                                        {
+                                            Intent i = new Intent(context, ActivityMain.class);
+                                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 context.startActivity(i);
                             }
                         }
@@ -78,7 +80,7 @@ public class IncomingSMSListener extends BroadcastReceiver {
                             //TypeMessage message = new TypeMessage(TypeMessage.MESSAGEDIRECTIONINBOX, 0,smsMessage[0].getOriginatingAddress(),smsMessage[0].getTimestampMillis(),content.toString(),"");
                             //ActivityMain inst = ActivityMain.instance();
                             //inst.ReceiveNewMessage(message);
-                            Log.v("SMSNumber", smsMessage[0].getOriginatingAddress());
+                            //Log.v("SMSNumber", smsMessage[0].getOriginatingAddress());
                         }
                     }
                 }

@@ -68,6 +68,7 @@ import digitalquantuminc.inscribesecuresms.UserInterface.CompressionDecompressio
 import digitalquantuminc.inscribesecuresms.UserInterface.Cryptography;
 import digitalquantuminc.inscribesecuresms.UserInterface.GSMEncoderDecoder;
 import digitalquantuminc.inscribesecuresms.UserInterface.QRCodeHandler;
+import digitalquantuminc.inscribesecuresms.UserInterface.UserInterfaceColor;
 import digitalquantuminc.inscribesecuresms.View.ViewAbout;
 import digitalquantuminc.inscribesecuresms.View.ViewCompose;
 import digitalquantuminc.inscribesecuresms.View.ViewContactsList;
@@ -96,16 +97,10 @@ public class ActivityMain extends AppCompatActivity {
     private static boolean active = false;
     private static final int DEPLOYMENT_MODE = 0;
     private static final int DEVELOPMENT_MODE = 1;
-
     private static final int RUNTIME_MODE = DEVELOPMENT_MODE;
-
-    private static final int READ_SMS_PERMISSIONS_REQUEST = 1;
-    private static final int RECEIVE_SMS_PERMISSIONS_REQUEST = 2;
-    private static final int SEND_SMS_PERMISSIONS_REQUEST = 3;
-    private static final int CAMERA_PERMISSIONS_REQUEST = 4;
-
     private static final String SMS_URI_INBOX = "content://sms/inbox";
     private static final String SMS_URI_SENT = "content://sms/sent";
+    private static int CurrentViewPagerPosition;
     // Global Variable for UX Binding
     // Variable for ViewPager that has been modified to inflate standard activity layout (not fragment)
     private ViewPager mViewPager;
@@ -134,8 +129,7 @@ public class ActivityMain extends AppCompatActivity {
         return inst;
     }
 
-    public static boolean active()
-    {
+    public static boolean active() {
         return active;
     }
 
@@ -176,7 +170,7 @@ public class ActivityMain extends AppCompatActivity {
         LoadProfile();
 
         SyncMessage();
-        //UpdateSMSLastSync();
+        UpdateSMSLastSync();
         // Conversation List
         LoadConversationList(viewconversationlist.getList_conversation());
 
@@ -186,33 +180,6 @@ public class ActivityMain extends AppCompatActivity {
         // QR Code Scanner
         qrScan = new IntentIntegrator(this);
         qrScan.setOrientationLocked(false);
-
-        // Check Permission
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            getPermissionToReadSMS();
-        } else {
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            getPermissionToReceiveSMS();
-        } else {
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            getPermissionToSendSMS();
-        } else {
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            getPermissionToCamera();
-        } else {
-        }
-
-
     }
 
     @Override
@@ -237,7 +204,6 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO: Plan what kind of menu that should be included in MenuItem and Their respective action
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -247,7 +213,43 @@ public class ActivityMain extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
+        else if (id == R.id.action_refresh)
+        {
+            switch(CurrentViewPagerPosition)
+            {
+                case 0:
+                {
+                    SyncMessage();
+                    UpdateSMSLastSync();
+                    LoadConversationList(viewconversationlist.getList_conversation());
+                    break;
+                }
+                case 1:
+                {
+                    break;
+                }
+                case 2:
+                {
+                    LoadContactList(viewcontactslist.getList_contacts());
+                    break;
+                }
+                case 3:
+                {
+                    LoadSessionList(viewsessionlist.getList_session());
+                    break;
+                }
+                case 4:
+                {
+                    LoadProfile();
+                    break;
+                }
+                case 5:
+                {
+                    LoadAbout();
+                    break;
+                }
+            }
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -338,8 +340,7 @@ public class ActivityMain extends AppCompatActivity {
                         LoadSessionList(viewsessionlist.getList_session());
                         ClearComposeMessageForm();
                     }
-                    case IntentString.MainFeedBackCode_RefreshConversationList:
-                    {
+                    case IntentString.MainFeedBackCode_RefreshConversationList: {
                         SyncMessage();
                         LoadConversationList(viewconversationlist.getList_conversation());
                         break;
@@ -395,8 +396,8 @@ public class ActivityMain extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
-
     //endregion
+
     //region Method
     public void LoadContactList(ListView listcontact) {
         // Access the database and load all of its content to ArrayList
@@ -415,8 +416,7 @@ public class ActivityMain extends AppCompatActivity {
             });
         } else {
             contactListAdapter adapter = (contactListAdapter) listcontact.getAdapter();
-            if(adapter!=null)
-            {
+            if (adapter != null) {
                 listcontact.setAdapter(null);
             }
             Toast.makeText(this, "No Contact List", Toast.LENGTH_SHORT).show();
@@ -446,8 +446,7 @@ public class ActivityMain extends AppCompatActivity {
             });
         } else {
             sessionListAdapter adapter = (sessionListAdapter) listsession.getAdapter();
-            if(adapter!=null)
-            {
+            if (adapter != null) {
                 listsession.setAdapter(null);
             }
             Toast.makeText(this, "No Session List", Toast.LENGTH_SHORT).show();
@@ -470,18 +469,15 @@ public class ActivityMain extends AppCompatActivity {
 
         } else {
             conversationListAdapter adapter = (conversationListAdapter) listconversation.getAdapter();
-            if(adapter!=null)
-            {
+            if (adapter != null) {
                 listconversation.setAdapter(null);
             }
             Toast.makeText(this, "No Conversation Available at This Moment!", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void LoadAbout()
-    {
-        if (RUNTIME_MODE == DEVELOPMENT_MODE)
-        {
+    public void LoadAbout() {
+        if (RUNTIME_MODE == DEVELOPMENT_MODE) {
             viewabout.getBtn_load1().setEnabled(true);
             viewabout.getBtn_load1().setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -505,8 +501,6 @@ public class ActivityMain extends AppCompatActivity {
             });
         }
     }
-
-
 
     public void LoadProfile() {
         profileRepository repo = new profileRepository(this);
@@ -535,7 +529,6 @@ public class ActivityMain extends AppCompatActivity {
         });
     }
 
-
     public void RefreshProfile() {
         profileRepository repo = new profileRepository(this);
         TypeProfile profile = repo.getProfile(TypeProfile.DEFAULTID);
@@ -548,7 +541,6 @@ public class ActivityMain extends AppCompatActivity {
         viewprofile.getText_ProfileRSAPrivKey().setText(profile.getRsa_privatekey());
         viewprofile.getText_ProfileRSAPrivKey().setTextIsSelectable(true);
         viewprofile.getText_ProfileRSAPrivKey().setKeyListener(null);
-        Log.v("CURRENTLASTSYNC", String.valueOf(profile.getLastsync()));
         GenerateProfileQRCode();
     }
 
@@ -657,13 +649,14 @@ public class ActivityMain extends AppCompatActivity {
         PlainByte = PlainText.getBytes();
 
         // Get the AES Session Key
-        //sessionRepository repo = new sessionRepository(this);
-        //TypeSession session = repo.getSession(PhoneNum);
-        //AESKeyText = session.getSession_ecdh_aes_key();
-        //AESKey = Cryptography.BytetoKeyAES(Cryptography.Base64StringtoByte(AESKeyText));
+        sessionRepository repo = new sessionRepository(this);
+        TypeSession session = repo.getSession(PhoneNum);
+        AESKeyText = session.getSession_ecdh_aes_key();
+        AESKey = Cryptography.BytetoKeyAES(Cryptography.Base64StringtoByte(AESKeyText));
 
         //DEVELOPMENT ONLY
-        AESKey = Cryptography.GenerateAESKey(QRCodeHandler.ProfileQRCodeAESKey, Cryptography.PBKDF2ITERATION, Cryptography.AESKEYSIZE);
+        // TODO: REMOVE WHEN NOT IN DEVELOPMENT
+        //AESKey = Cryptography.GenerateAESKey(QRCodeHandler.ProfileQRCodeAESKey, Cryptography.PBKDF2ITERATION, Cryptography.AESKEYSIZE);
 
         // Compress the PlainByte
         CompressedByteBLZ4 = CompressionDecompression.BlockLZ4Compress(PlainByte);
@@ -721,6 +714,13 @@ public class ActivityMain extends AppCompatActivity {
         // Encoding
         EncodedText = GSMEncoderDecoder.Encode(FinalByte);
         EncodedByte = EncodedText.getBytes(); //Charset.forName("ISO-8859-1")
+
+//        Log.v("Decoded Byte META : ", Cryptography.BytetoBase64String(FinalByte));
+//        Log.v("Message Only Byte : ", Cryptography.BytetoBase64String(EncryptedByte));
+//        Log.v("AES IV : ", Cryptography.BytetoBase64String(AESIV));
+//        Log.v("AES CT : ", Cryptography.BytetoBase64String(AESCT));
+//        Log.v("Generated AES Key: ", Cryptography.BytetoBase64String(AESKey.getEncoded()));
+
         // Update View
         viewcompose.getText_ComposeCompressedText().setText(Cryptography.BytetoBase64String(CompressedByte));
         viewcompose.getText_ComposeAESIV().setText(Cryptography.BytetoBase64String(AESIV));
@@ -780,36 +780,34 @@ public class ActivityMain extends AppCompatActivity {
         }
 
         // DEBUG TEST
-        String receivedtext = viewcompose.getText_ComposeEncodedMessage().getText().toString();
-        byte[] decodedbyte = GSMEncoderDecoder.Decode(receivedtext);
-        //Log.v("encodedbyte:", Cryptography.BytetoBase64String(EncodedByte));
-        //Log.v("decodedbyte:", Cryptography.BytetoBase64String(decodedbyte));
-        TypeMetaMessage receivedmeta = TypeMetaMessage.ExtractMetaData(decodedbyte);
-        byte[] receivedbytenonmeta = TypeMetaMessage.ExtractOriginalMessage(decodedbyte);
-        Log.v("NONMETARECEIVED:", Cryptography.BytetoBase64String(receivedbytenonmeta));
-        byte[] decryptedbyte = Cryptography.DecryptMessageAES(AESKey, receivedbytenonmeta);
-        byte[] decompressedbyte;
-        switch (receivedmeta.getMessageType()) {
-            case TypeMetaMessage.MessageTypeNormalEncryptedUncompressed: {
-                decompressedbyte = decryptedbyte;
-                break;
-            }
-            case TypeMetaMessage.MessageTypeNormalEncryptedCompressedDeflate: {
-                decompressedbyte = CompressionDecompression.DeflateDecompress(decryptedbyte);
-                break;
-            }
-            case TypeMetaMessage.MessageTypeNormalEncryptedCompressedBLZ4: {
-                decompressedbyte = CompressionDecompression.BlockLZ4Decompress(decryptedbyte);
-                break;
-            }
-            default: {
-                decompressedbyte = decryptedbyte;
-                break;
-            }
-        }
-        Log.v("PLAINTEXTRECOVERED:", new String(decompressedbyte));
-
-
+//        String receivedtext = viewcompose.getText_ComposeEncodedMessage().getText().toString();
+//        byte[] decodedbyte = GSMEncoderDecoder.Decode(receivedtext);
+//        Log.v("encodedbyte:", Cryptography.BytetoBase64String(EncodedByte));
+//        Log.v("decodedbyte:", Cryptography.BytetoBase64String(decodedbyte));
+//        TypeMetaMessage receivedmeta = TypeMetaMessage.ExtractMetaData(decodedbyte);
+//        byte[] receivedbytenonmeta = TypeMetaMessage.ExtractOriginalMessage(decodedbyte);
+//        Log.v("NONMETARECEIVED:", Cryptography.BytetoBase64String(receivedbytenonmeta));
+//        byte[] decryptedbyte = Cryptography.DecryptMessageAES(AESKey, receivedbytenonmeta);
+//        byte[] decompressedbyte;
+//        switch (receivedmeta.getMessageType()) {
+//            case TypeMetaMessage.MessageTypeNormalEncryptedUncompressed: {
+//                decompressedbyte = decryptedbyte;
+//                break;
+//            }
+//            case TypeMetaMessage.MessageTypeNormalEncryptedCompressedDeflate: {
+//                decompressedbyte = CompressionDecompression.DeflateDecompress(decryptedbyte);
+//                break;
+//            }
+//            case TypeMetaMessage.MessageTypeNormalEncryptedCompressedBLZ4: {
+//                decompressedbyte = CompressionDecompression.BlockLZ4Decompress(decryptedbyte);
+//                break;
+//            }
+//            default: {
+//                decompressedbyte = decryptedbyte;
+//                break;
+//            }
+//        }
+//        Log.v("PLAINTEXTRECOVERED:", new String(decompressedbyte));
     }
 
     public void ReceiveNewMessage(TypeMessage message) {
@@ -822,110 +820,117 @@ public class ActivityMain extends AppCompatActivity {
         TypeContact contact = repocontact.getContact(phonenumber);
         TypeSession session = reposession.getSession(phonenumber);
         String name = contact.getContact_name();
-
+        Long TimeStamp = message.getTimestamp();
         // Process automatic message that requires no user intervention
-        int messagetype = message.getMessagetype();
-        switch(messagetype)
-        {
-            case TypeMetaMessage.MessageTypeNormalEncryptedUncompressed : {
-                if(session.getSession_validity()==TypeSession.StatusValid)
-                {
-                    int nummessageprocessed =session.getSession_num_message() + 1;
-                    session.setSession_num_message(nummessageprocessed);
-                    Toast.makeText(this, "You have a new secure message from " + name, Toast.LENGTH_SHORT).show();
+        if (!repomessage.isMessageExist(TimeStamp)) {
+            int messagetype = message.getMessagetype();
+            switch (messagetype) {
+                case TypeMetaMessage.MessageTypeNormalEncryptedUncompressed: {
+                    if (session.getSession_validity() == TypeSession.StatusValid) {
+                        int nummessageprocessed = session.getSession_num_message() + 1;
+                        session.setSession_num_message(nummessageprocessed);
+                        Toast.makeText(this, "You have a new secure message from " + name, Toast.LENGTH_SHORT).show();
+                    } else // session not active!
+                    {
+                        sender.SendErrorNoSecureSessionActive(phonenumber);
+                        Toast.makeText(this, "You have a new invalid secure message from " + name + ". Error message sent back!", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
                 }
-                else // session not active!
-                {
-                    sender.SendErrorNoSecureSessionActive(phonenumber);
-                    Toast.makeText(this, "You have a new invalid secure message from " + name + ". Error message sent back!", Toast.LENGTH_SHORT).show();
+                case TypeMetaMessage.MessageTypeNormalEncryptedCompressedBLZ4: {
+                    if (session.getSession_validity() == TypeSession.StatusValid) {
+                        int nummessageprocessed = session.getSession_num_message() + 1;
+                        session.setSession_num_message(nummessageprocessed);
+                        Toast.makeText(this, "You have a new secure message from " + name, Toast.LENGTH_SHORT).show();
+                    } else // session not active!
+                    {
+                        sender.SendErrorNoSecureSessionActive(phonenumber);
+                        Toast.makeText(this, "You have a new invalid secure message from " + name + ". Error message sent back!", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
                 }
-                break;
-            }
-            case TypeMetaMessage.MessageTypeNormalEncryptedCompressedBLZ4 : {
-                if(session.getSession_validity()==TypeSession.StatusValid)
-                {
-                    int nummessageprocessed =session.getSession_num_message() + 1;
-                    session.setSession_num_message(nummessageprocessed);
-                    Toast.makeText(this, "You have a new secure message from " + name, Toast.LENGTH_SHORT).show();
+                case TypeMetaMessage.MessageTypeNormalEncryptedCompressedDeflate: {
+                    if (session.getSession_validity() == TypeSession.StatusValid) {
+                        int nummessageprocessed = session.getSession_num_message() + 1;
+                        session.setSession_num_message(nummessageprocessed);
+                        Toast.makeText(this, "You have a new secure message from " + name, Toast.LENGTH_SHORT).show();
+                    } else // session not active!
+                    {
+                        sender.SendErrorNoSecureSessionActive(phonenumber);
+                        Toast.makeText(this, "You have a new invalid secure message from " + name + ". Error message sent back!", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
                 }
-                else // session not active!
-                {
-                    sender.SendErrorNoSecureSessionActive(phonenumber);
-                    Toast.makeText(this, "You have a new invalid secure message from " + name + ". Error message sent back!", Toast.LENGTH_SHORT).show();
+                case TypeMetaMessage.MessageTypeHandshakeRequestDS: {
+                    Toast.makeText(this, "You have a new secure session request from " + name, Toast.LENGTH_SHORT).show();
+                    break;
                 }
-                break;
-            }
-            case TypeMetaMessage.MessageTypeNormalEncryptedCompressedDeflate : {
-                if(session.getSession_validity()==TypeSession.StatusValid)
-                {
-                    int nummessageprocessed =session.getSession_num_message() + 1;
-                    session.setSession_num_message(nummessageprocessed);
-                    Toast.makeText(this, "You have a new secure message from " + name, Toast.LENGTH_SHORT).show();
+                case TypeMetaMessage.MessageTypeHandshakeReplyDS: {
+                    Toast.makeText(this, "You have a new secure session reply from " + name, Toast.LENGTH_SHORT).show();
+                    break;
                 }
-                else // session not active!
-                {
-                    sender.SendErrorNoSecureSessionActive(phonenumber);
-                    Toast.makeText(this, "You have a new invalid secure message from " + name + ". Error message sent back!", Toast.LENGTH_SHORT).show();
+                case TypeMetaMessage.MessageTypeHandshakeSuccessDS: {
+                    Toast.makeText(this, "You have a new secure session confirmation from " + name, Toast.LENGTH_SHORT).show();
+                    break;
                 }
-                break;
+                case TypeMetaMessage.MessageTypeEndSessionRequest: {
+                    Toast.makeText(this, "You have reguest to end secure session with " + name, Toast.LENGTH_SHORT).show();
+                    session.setSession_validity(TypeSession.StatusNotValid);
+                    session.setSession_ecdh_aes_key("");
+                    session.setSession_ecdh_partner_public_key("");
+                    session.setSession_ecdh_shared_secret("");
+                    session.setSession_ecdh_partner_digital_signature("");
+                    session.setSession_ecdh_public_key("");
+                    session.setSession_ecdh_private_key("");
+                    break;
+                }
+                case TypeMetaMessage.MessageTypeEndSessionSuccess: {
+                    // Only informational, no further process required!
+                    Toast.makeText(this, "Secure session with " + name + " has been ended.", Toast.LENGTH_SHORT).show();
+                    session.setSession_validity(TypeSession.StatusNotValid);
+                    session.setSession_ecdh_aes_key("");
+                    session.setSession_ecdh_partner_public_key("");
+                    session.setSession_ecdh_shared_secret("");
+                    session.setSession_ecdh_partner_digital_signature("");
+                    session.setSession_ecdh_public_key("");
+                    session.setSession_ecdh_private_key("");
+                    break;
+                }
+                case TypeMetaMessage.MessageTypeErrorHandshakeRequestDSNotValid: {
+                    Toast.makeText(this, "Secure session with " + name + " cannot be started because invalid digital signature.", Toast.LENGTH_SHORT).show();
+                    session.setSession_validity(TypeSession.StatusNotValid);
+                    break;
+                }
+                case TypeMetaMessage.MessageTypeErrorHandshakeReplyDSNotValid: {
+                    Toast.makeText(this, "Secure session with " + name + " cannot be started because invalid digital signature.", Toast.LENGTH_SHORT).show();
+                    session.setSession_validity(TypeSession.StatusNotValid);
+                    break;
+                }
+                case TypeMetaMessage.MessageTypeErrorHandshakeSuccessDSNotValid: {
+                    Toast.makeText(this, "Secure session with " + name + " cannot be started because invalid digital signature.", Toast.LENGTH_SHORT).show();
+                    session.setSession_validity(TypeSession.StatusNotValid);
+                    break;
+                }
+                case TypeMetaMessage.MessageTypeErrorNoSecureSessionActive: {
+                    Toast.makeText(this, "No Secure session active with " + name, Toast.LENGTH_SHORT).show();
+                    session.setSession_validity(TypeSession.StatusNotValid);
+                    break;
+                }
+                case TypeMetaMessage.MessageTypeErrorHandshakeDeclined: {
+                    Toast.makeText(this, "Secure session handshake with " + name + " is declined.", Toast.LENGTH_SHORT).show();
+                    session.setSession_validity(TypeSession.StatusNotValid);
+                    break;
+                }
+                default: {
+                    Toast.makeText(this, "Message Unknown", Toast.LENGTH_SHORT).show();
+                    break;
+                }
             }
-            case TypeMetaMessage.MessageTypeHandshakeRequestDS : {
-                Toast.makeText(this, "You have a new secure session request from " + name, Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case TypeMetaMessage.MessageTypeHandshakeReplyDS : {
-                Toast.makeText(this, "You have a new secure session reply from " + name, Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case TypeMetaMessage.MessageTypeHandshakeSuccessDS : {
-                Toast.makeText(this, "You have a new secure session confirmation from " + name, Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case TypeMetaMessage.MessageTypeEndSessionRequest : {
-                Toast.makeText(this, "You have reguest to end secure session with " + name, Toast.LENGTH_SHORT).show();
-                session.setSession_validity(TypeSession.StatusNotValid);
-                break;
-            }
-            case TypeMetaMessage.MessageTypeEndSessionSuccess : {
-                // Only informational, no further process required!
-                Toast.makeText(this, "Secure session with " + name + " has been ended.", Toast.LENGTH_SHORT).show();
-                session.setSession_validity(TypeSession.StatusNotValid);
-                break;
-            }
-            case TypeMetaMessage.MessageTypeErrorHandshakeRequestDSNotValid : {
-                Toast.makeText(this, "Secure session with " + name + " cannot be started because invalid digital signature.", Toast.LENGTH_SHORT).show();
-                session.setSession_validity(TypeSession.StatusNotValid);
-                break;
-            }
-            case TypeMetaMessage.MessageTypeErrorHandshakeReplyDSNotValid : {
-                Toast.makeText(this, "Secure session with " + name + " cannot be started because invalid digital signature.", Toast.LENGTH_SHORT).show();
-                session.setSession_validity(TypeSession.StatusNotValid);
-                break;
-            }
-            case TypeMetaMessage.MessageTypeErrorHandshakeSuccessDSNotValid : {
-                Toast.makeText(this, "Secure session with " + name + " cannot be started because invalid digital signature.", Toast.LENGTH_SHORT).show();
-                session.setSession_validity(TypeSession.StatusNotValid);
-                break;
-            }
-            case TypeMetaMessage.MessageTypeErrorNoSecureSessionActive: {
-                Toast.makeText(this, "No Secure session active with " + name, Toast.LENGTH_SHORT).show();
-                session.setSession_validity(TypeSession.StatusNotValid);
-                break;
-            }
-            case TypeMetaMessage.MessageTypeErrorHandshakeDeclined: {
-                Toast.makeText(this, "Secure session handshake with " + name +" is declined.", Toast.LENGTH_SHORT).show();
-                session.setSession_validity(TypeSession.StatusNotValid);
-                break;
-            }
-            default : {
-                Toast.makeText(this, "Message Unknown", Toast.LENGTH_SHORT).show();
-                break;
-            }
+            repomessage.insert(message);
+            reposession.update(session, phonenumber);
+            LoadConversationList(viewconversationlist.getList_conversation());
+            LoadSessionList(viewsessionlist.getList_session());
         }
-        repomessage.insert(message);
-        reposession.update(session, phonenumber);
-        LoadConversationList(viewconversationlist.getList_conversation());
-        LoadSessionList(viewsessionlist.getList_session());
         UpdateSMSLastSync();
     }
 
@@ -943,105 +948,103 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     public void SyncMessage() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            getPermissionToReadSMS();
-        } else {
-            // To load all message in inbox and sent item (if any)
-            profileRepository repo = new profileRepository(this);
-            long lastsmssync = GetSMSLastSync();
+        // To load all message in inbox and sent item (if any)
+        profileRepository repo = new profileRepository(this);
+        long lastsmssync = GetSMSLastSync();
 
-            Uri uriInbox = Uri.parse(SMS_URI_INBOX);
-            Uri uriSent = Uri.parse(SMS_URI_SENT);
-            String[] projection = new String[]{"_id", "address", "body", "date"};
-            String filter = "date>=" + String.valueOf(lastsmssync);
+        Uri uriInbox = Uri.parse(SMS_URI_INBOX);
+        Uri uriSent = Uri.parse(SMS_URI_SENT);
+        String[] projection = new String[]{"_id", "address", "body", "date"};
+        String filter = "date>=" + String.valueOf(lastsmssync);
 
-            messageRepository repo2 = new messageRepository(this);
-            int inboxcounter = 0;
-            int sentcounter = 0;
+        messageRepository repo2 = new messageRepository(this);
+        int inboxcounter = 0;
+        int sentcounter = 0;
 
-            ActivityMain inst = ActivityMain.instance();
-            contactRepository repo3 = new contactRepository(this);
-            // read from inbox first
-            Cursor curInbox = getContentResolver().query(uriInbox, projection, filter, null, null);
-            if (curInbox.moveToFirst()) {
-                int index_Address = curInbox.getColumnIndex("address");
-                int index_Body = curInbox.getColumnIndex("body");
-                int index_Date = curInbox.getColumnIndex("date");
+        contactRepository repo3 = new contactRepository(this);
+        // read from inbox first
+        Log.v("REQUEST!", "REQUEST");
+        Cursor curInbox = getContentResolver().query(uriInbox, projection, filter, null, null);
+        if (curInbox.moveToFirst()) {
+            int index_Address = curInbox.getColumnIndex("address");
+            int index_Body = curInbox.getColumnIndex("body");
+            int index_Date = curInbox.getColumnIndex("date");
 
-                do {
-                    String strAddress = curInbox.getString(index_Address);
-                    String strbody = curInbox.getString(index_Body);
-
-                    // Check if the message address is avaliable
-                    if (repo3.isContactExist(strAddress))
-                    {
-                        long longDate = curInbox.getLong(index_Date);
+            do {
+                String strAddress = curInbox.getString(index_Address);
+                String strbody = curInbox.getString(index_Body);
+                String longDate = curInbox.getString(index_Date);
+                Long timestamp = Long.parseLong(longDate);
+                Log.v("LongDate: ", String.valueOf(timestamp));
+                // Check if the message address is avaliable
+                if (repo3.isContactExist(strAddress)) {
+                    if (!repo2.isMessageExist(timestamp)) {
                         byte[] decodedmessage = GSMEncoderDecoder.Decode(strbody);
                         if (decodedmessage.length >= 8) // metadata MAY present
                         {
                             TypeMetaMessage meta = TypeMetaMessage.ExtractMetaData(decodedmessage);
                             // Check whether the message is compatible with apps
                             if (meta.getMessageHeadID() == TypeMetaMessage.MessageHeadIDVersion0 && meta.getMessageTailID() == TypeMetaMessage.MessageTailIDVersion0) {
-                                TypeMessage message = new TypeMessage(TypeMessage.MESSAGEDIRECTIONINBOX, meta.getMessageType(), strAddress, longDate, strbody, "");
+                                TypeMessage message = new TypeMessage(TypeMessage.MESSAGEDIRECTIONINBOX, meta.getMessageType(), strAddress, timestamp, strbody, "");
                                 repo2.insert(message);
                                 inboxcounter++;
                             }
                         }
                     }
-                } while (curInbox.moveToNext());
-                if (!curInbox.isClosed()) {
-                    curInbox.close();
+
                 }
-                Toast.makeText(this, String.valueOf(inboxcounter) + " inbox message(s) have been synced.", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "No New Inbox Message", Toast.LENGTH_SHORT).show();
+            } while (curInbox.moveToNext());
+            if (!curInbox.isClosed()) {
+                curInbox.close();
             }
+            Toast.makeText(this, String.valueOf(inboxcounter) + " inbox message(s) have been synced.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "No New Inbox Message", Toast.LENGTH_SHORT).show();
+        }
 
-            // read from sent then
-            Cursor curSent = getContentResolver().query(uriSent, projection, filter, null, null);
-            if (curSent.moveToFirst()) {
-                int index_Address = curSent.getColumnIndex("address");
-                int index_Body = curSent.getColumnIndex("body");
-                int index_Date = curSent.getColumnIndex("date");
+        // read from sent then
+        Cursor curSent = getContentResolver().query(uriSent, projection, filter, null, null);
+        if (curSent.moveToFirst()) {
+            int index_Address = curSent.getColumnIndex("address");
+            int index_Body = curSent.getColumnIndex("body");
+            int index_Date = curSent.getColumnIndex("date");
 
-                do {
-                    String strAddress = curSent.getString(index_Address);
-                    String strbody = curSent.getString(index_Body);
+            do {
+                String strAddress = curSent.getString(index_Address);
+                String strbody = curSent.getString(index_Body);
+                String longDate = curSent.getString(index_Date);
+                Long timestamp = Long.parseLong(longDate);
+                Log.v("LongDate: ", String.valueOf(timestamp));
+                // Check if the message address is avaliable
+                if (repo3.isContactExist(strAddress)) {
 
-                    // Check if the message address is avaliable
-                    if (repo3.isContactExist(strAddress))
-                    {
-                        long longDate = curSent.getLong(index_Date);
+                    if (!repo2.isMessageExist(timestamp)) {
                         byte[] decodedmessage = GSMEncoderDecoder.Decode(strbody);
                         if (decodedmessage.length >= 8) // metadata MAY present
                         {
                             TypeMetaMessage meta = TypeMetaMessage.ExtractMetaData(decodedmessage);
                             // Check whether the message is compatible with apps
                             if (meta.getMessageHeadID() == TypeMetaMessage.MessageHeadIDVersion0 && meta.getMessageTailID() == TypeMetaMessage.MessageTailIDVersion0) {
-                                TypeMessage message = new TypeMessage(TypeMessage.MESSAGEDIRECTIONOUTBOX, meta.getMessageType(), strAddress, longDate, strbody, "");
+                                TypeMessage message = new TypeMessage(TypeMessage.MESSAGEDIRECTIONOUTBOX, meta.getMessageType(), strAddress, timestamp, strbody, "");
                                 repo2.insert(message);
                                 sentcounter++;
                             }
                         }
                     }
-                } while (curSent.moveToNext());
-                if (!curSent.isClosed()) {
-                    curSent.close();
+
                 }
-                Toast.makeText(this, String.valueOf(sentcounter) + " sent message(s) have been synced.", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "No New Sent Message", Toast.LENGTH_SHORT).show();
+            } while (curSent.moveToNext());
+            if (!curSent.isClosed()) {
+                curSent.close();
             }
-            UpdateSMSLastSync();
+            Toast.makeText(this, String.valueOf(sentcounter) + " sent message(s) have been synced.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "No New Sent Message", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void PrintShortToast(String Message)
-    {
-        Toast.makeText(this, Message, Toast.LENGTH_SHORT).show();
-    }
     //endregion
+
     //region UX EventHandler Method
     private void listview_contactList_onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // Method that handle action when the item in ContactList listview is clicked.
@@ -1103,32 +1106,39 @@ public class ActivityMain extends AppCompatActivity {
         startActivityForResult(objIntent, IntentString.MainFeedBackCode_RefreshConversationList);
     }
 
-
     private void mViewPager_onPageChanged(int position) {
         // Method to be executed each time the ViewPager Tab is Changed
+       CurrentViewPagerPosition = position;
         switch (position) {
             case 0: {
-                LoadConversationList(viewconversationlist.getList_conversation());
+
                 break;
             }
             case 1: {
 
+                //UserInterfaceColor.setStatusBarColor(ContextCompat.getColor(this, R.color.colorDarkCyan), this);
+                //UserInterfaceColor.setTitleBackgroundColor(ContextCompat.getColor(this, R.color.colorDarkCyan), this);
                 break;
             }
             case 2: {
+
                 LoadContactList(viewcontactslist.getList_contacts());
                 break;
             }
             case 3: {
+
                 LoadSessionList(viewsessionlist.getList_session());
                 break;
             }
             case 4: {
-                LoadProfile();
+
+                //UserInterfaceColor.setStatusBarColor(ContextCompat.getColor(this, R.color.colorMediumSeaGreen), this);
+                //UserInterfaceColor.setTitleBackgroundColor(ContextCompat.getColor(this, R.color.colorMediumSeaGreen), this);
                 break;
             }
             case 5: {
-                LoadAbout();
+                //UserInterfaceColor.setStatusBarColor(ContextCompat.getColor(this, R.color.colorTeal), this);
+                //UserInterfaceColor.setTitleBackgroundColor(ContextCompat.getColor(this, R.color.colorTeal), this);
                 break;
             }
             default: {
@@ -1177,6 +1187,7 @@ public class ActivityMain extends AppCompatActivity {
         }
 
     }
+
     private void btn_ComposeSendMessage_onClick(View v) {
         String phonenum = viewcompose.getText_ComposePartnerNumber().getText().toString();
         String content = viewcompose.getText_ComposeEncodedMessage().getText().toString();
@@ -1187,6 +1198,7 @@ public class ActivityMain extends AppCompatActivity {
         repo.update(session, phonenum);
         MessageSender messagesend = new MessageSender(this);
         messagesend.SendNormalMessage(phonenum, content);
+        ClearComposeMessageForm();
 
     }
 
@@ -1222,7 +1234,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void btn_load2_onClick(View v) {
         ProfileDummyData.InsertProfile(this, "Fariz Azmi Pratama", "15555215556",
-               "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwV3G508XV1ngOreOHpmIehz9hHbaijbmXxzD+QjC8jlP4W2P3IJbBTaKRHWkwk3GrqexSpQkmhBa4xaOOxld7vfn/yZNc0liVr4lnlaI9iTkQ9jarUnLlg0DKvmrgSUOslbSAtSZ2tszmIPeVZjIsuq//G+kWPCHXxo+bdEMGqiFraW7621polCwwTWzV11pmg+/fopHT6Jy1FYBH4RFrSNltCPIgAd2RmixwRWVEB9UNvx7f7eSY94bZptJar/khy+JGDHKgO3An2gMoXlUDLZ3RzE0iJ51yo0h8nGi8d2B0e72WWTNrRIb9IPIzgv8UOLtEU44OekLOMvj46TNgQIDAQAB",
+                "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwV3G508XV1ngOreOHpmIehz9hHbaijbmXxzD+QjC8jlP4W2P3IJbBTaKRHWkwk3GrqexSpQkmhBa4xaOOxld7vfn/yZNc0liVr4lnlaI9iTkQ9jarUnLlg0DKvmrgSUOslbSAtSZ2tszmIPeVZjIsuq//G+kWPCHXxo+bdEMGqiFraW7621polCwwTWzV11pmg+/fopHT6Jy1FYBH4RFrSNltCPIgAd2RmixwRWVEB9UNvx7f7eSY94bZptJar/khy+JGDHKgO3An2gMoXlUDLZ3RzE0iJ51yo0h8nGi8d2B0e72WWTNrRIb9IPIzgv8UOLtEU44OekLOMvj46TNgQIDAQAB",
                 "MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDBXcbnTxdXWeA6t44emYh6HP2EdtqKNuZfHMP5CMLyOU/hbY/cglsFNopEdaTCTcaup7FKlCSaEFrjFo47GV3u9+f/Jk1zSWJWviWeVoj2JORD2NqtScuWDQMq+auBJQ6yVtIC1Jna2zOYg95VmMiy6r/8b6RY8IdfGj5t0QwaqIWtpbvrbWmiULDBNbNXXWmaD79+ikdPonLUVgEfhEWtI2W0I8iAB3ZGaLHBFZUQH1Q2/Ht/t5Jj3htmm0lqv+SHL4kYMcqA7cCfaAyheVQMtndHMTSInnXKjSHycaLx3YHR7vZZZM2tEhv0g8jOC/xQ4u0RTjg56Qs4y+PjpM2BAgMBAAECggEAEYytTLkE6Uyi6TFXmLdeh5ax+5+93eV1qxQ1RRjieJFzCoajE+RQ1nxIuEXlGi1s5tUZZidj2we49/tIFV0MBXBCggm75ca3QiAn0eMQsyZOAUphLnEQJSIxM2lNg38VgmIW1WLuQ8q5OBJfz2z6aiKcIhEP3XKXFq6PE/BxJMoWUvLdvRaR7nDDyX1Oqu/mjpctpU0cSX8X90+CfRTMMRsMsQ+MEIljwZ51SHCBF4ZJ3zcBZWYiIR9+7IA5j5AXZBmAivBc8vu7cZxIhi8fyb1YTlq1xv91pUagaMXNMcrFsjEfoei89j+1YhnAiuJAzsiZBCpdDyDmdoZzbsWbQQKBgQDi+53FnMt93bX3MJOMS2Vx0RF0I9s4ut+u608tapI/lSCt3DlPBfIuanhwlBUOk6OA7Ss63hrPGr58M1qcOp56HeMRn/8Tt1j+TKdq02XTNMPXUt9W5/Neyp4CzAAi5hgKUStedHWD+XLzdpbAxSjrh8Cg/pH6jmYt/hkCivwYbQKBgQDaFgEL1DbhZRzH7eV1tnelNsGDHO6v9CnTTRLM95n+9A/logUcVd4BURVQ48H3P70DbZaxNKf5NAzaxGtIe/s90GIhixi5DboDV2mZm3oGZspsfeq8q/pBUbKfFwatV1m3rTtWV+u4nY55gDOAsMsmFreRP4X1TJFBy3HkZH5E5QKBgQDGh+HleFEcVBHWlWxYp5GhTYYAmWQjaIBBVJu6U557copUx2xwy/iZ1JJnlX4dc9Ds8YSARsgYIYI+zAQS5cq7cOys+851hkaWlqFQdHp5k4tACMJEFzjszjgKpjfwTmT0kS5nvWET/9klTbJqBYjXCbPYnRE9n9OLotZpPPtmuQKBgQC00OOjLBsoe84GEb9a/qNqjuCY1acsqbL354I8ANpkYXTAvrmgCa2cx951h7DtT6JmMjlryS2v17EEvS/6FBl14c1K5GnmHHRqitIaMqdUoWsZ0riKH8jI2XTQpKW7mJ3hRTbaWuEs2y0ineGVxH9aoCEow1NM02Pn+kb+xzdN5QKBgQCOgNeYYbbS0BL8kVfUCkV/oT9MWlQp+u1ketzsrUgQQIMsCXDT9Ph3HTQmIeSWB9FeXKUJwWA8YWHm7+yaUq1KCjn3+v9j1N7NNgn7/1nE/cudzxMhDGqvkdsPDjuBIuBUiX5CFxzXkrZUmV9ucSKQAG6HcIk3vrqxA3EI6wjifQ==");
         LoadProfile();
         ContactDummyData.LoadSingleDummyData(this, 1);
@@ -1242,106 +1254,6 @@ public class ActivityMain extends AppCompatActivity {
         SessionDummyData.LoadSingleDummyData(this, 2);
     }
 
-    //endregion
-
-    //region Permission Handler
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[],
-                                           @NonNull int[] grantResults) {
-        // Make sure it's our original READ_CONTACTS request
-        switch (requestCode) {
-            case READ_SMS_PERMISSIONS_REQUEST: {
-                if (grantResults.length == 1 &&
-                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Thank you! You have granted permission to read SMS", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Apps cannot read your SMS", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            }
-            case RECEIVE_SMS_PERMISSIONS_REQUEST: {
-                if (grantResults.length == 1 &&
-                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Thank you! You have granted permission to receive SMS", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Apps cannot receive SMS so you will need to refresh it manually", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            }
-            case SEND_SMS_PERMISSIONS_REQUEST: {
-                if (grantResults.length == 1 &&
-                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Thank you! You have granted permission to send SMS", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Apps cannot send your SMS because permission is not granted", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            }
-            case CAMERA_PERMISSIONS_REQUEST: {
-                if (grantResults.length == 1 &&
-                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Thank you! You have granted permission to scan QR Code", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Apps cannot scan QR Code because it does not have access to camera", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            }
-            default: {
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-                break;
-            }
-        }
-    }
-
-    public void getPermissionToReadSMS() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (shouldShowRequestPermissionRationale(
-                    Manifest.permission.READ_SMS)) {
-                Toast.makeText(this, "Please allow permission!", Toast.LENGTH_SHORT).show();
-            }
-            requestPermissions(new String[]{Manifest.permission.READ_SMS},
-                    READ_SMS_PERMISSIONS_REQUEST);
-        }
-    }
-
-    public void getPermissionToReceiveSMS() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (shouldShowRequestPermissionRationale(
-                    Manifest.permission.RECEIVE_SMS)) {
-                Toast.makeText(this, "This apps needs permission to receive message automatically otherwise you need to refresh it by yourself.", Toast.LENGTH_SHORT).show();
-            }
-            requestPermissions(new String[]{Manifest.permission.RECEIVE_SMS},
-                    RECEIVE_SMS_PERMISSIONS_REQUEST);
-        }
-    }
-
-    public void getPermissionToSendSMS() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (shouldShowRequestPermissionRationale(
-                    Manifest.permission.SEND_SMS)) {
-                Toast.makeText(this, "This apps needs permission to send your message", Toast.LENGTH_SHORT).show();
-            }
-            requestPermissions(new String[]{Manifest.permission.SEND_SMS},
-                    SEND_SMS_PERMISSIONS_REQUEST);
-        }
-    }
-
-    public void getPermissionToCamera() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (shouldShowRequestPermissionRationale(
-                    Manifest.permission.CAMERA)) {
-                Toast.makeText(this, "This apps needs access to camera to scan QRCode", Toast.LENGTH_SHORT).show();
-            }
-            requestPermissions(new String[]{Manifest.permission.CAMERA},
-                    CAMERA_PERMISSIONS_REQUEST);
-        }
-    }
     //endregion
 
     private class GenerateRSAKeyAsync extends AsyncTask<KeyPair, KeyPair, KeyPair> {
@@ -1398,6 +1310,5 @@ public class ActivityMain extends AppCompatActivity {
             viewprofile.getProgressBar_Refresh().setVisibility(View.GONE);
         }
     }
-
 
 }

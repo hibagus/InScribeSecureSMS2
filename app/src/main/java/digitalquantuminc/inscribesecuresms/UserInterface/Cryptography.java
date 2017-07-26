@@ -31,6 +31,7 @@ import java.security.spec.KeySpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.RSAKeyGenParameterSpec;
 import java.security.spec.X509EncodedKeySpec;
+
 import android.util.Base64;
 import android.util.Log;
 
@@ -196,7 +197,7 @@ public class Cryptography {
             params = cipher.getParameters();
             IV = params.getParameterSpec(IvParameterSpec.class).getIV();
             CT = cipher.doFinal(plaintext);
-            EncryptedText = new byte[AESBLOCKBYTE+CT.length];
+            EncryptedText = new byte[AESBLOCKBYTE + CT.length];
             System.arraycopy(IV, 0, EncryptedText, 0, AESBLOCKBYTE);    // Add iv
             System.arraycopy(CT, 0, EncryptedText, AESBLOCKBYTE, CT.length);    // Then the encrypted data
 
@@ -250,7 +251,7 @@ public class Cryptography {
         AlgorithmParameters params;
         byte[] plaintext = null;
         byte[] IV = new byte[AESBLOCKBYTE];
-        byte[] CT = new byte[EncryptedMessage.length-AESBLOCKBYTE];
+        byte[] CT = new byte[EncryptedMessage.length - AESBLOCKBYTE];
 
         System.arraycopy(EncryptedMessage, 0, IV, 0, AESBLOCKBYTE); // Get iv from data
         System.arraycopy(EncryptedMessage, AESBLOCKBYTE, CT, 0, EncryptedMessage.length - AESBLOCKBYTE);
@@ -260,7 +261,8 @@ public class Cryptography {
             cipher.init(Cipher.DECRYPT_MODE, AESKey, new IvParameterSpec(IV));
             plaintext = cipher.doFinal(CT);
         } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException | InvalidKeyException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException e) {
-
+            plaintext = new byte[EncryptedMessage.length];
+            System.arraycopy(EncryptedMessage, 0, plaintext, 0, EncryptedMessage.length);
         }
         return plaintext;
     }
@@ -285,15 +287,13 @@ public class Cryptography {
         return null;
     }
 
-    public static byte[] GetAESIV(byte [] cipherText)
-    {
+    public static byte[] GetAESIV(byte[] cipherText) {
         byte[] AESIV = new byte[AESBLOCKBYTE];
         System.arraycopy(cipherText, 0, AESIV, 0, AESIV.length);
         return AESIV;
     }
 
-    public static byte[] GetAESContent(byte [] cipherText)
-    {
+    public static byte[] GetAESContent(byte[] cipherText) {
         byte[] AESCT = new byte[cipherText.length - AESBLOCKBYTE];
         System.arraycopy(cipherText, AESBLOCKBYTE, AESCT, 0, cipherText.length - AESBLOCKBYTE);
         return AESCT;
@@ -317,25 +317,22 @@ public class Cryptography {
         return calculatedsignature;
     }
 
-    public static byte[] EmbedDigitalSignaturewithMessage(byte[] data, byte[] digitalsignature)
-    {
-        byte[] dsembedded = new byte[data.length+digitalsignature.length];
-        System.arraycopy(digitalsignature,0,dsembedded,0,DIGITALSIGNATURESIZE);
-        System.arraycopy(data,0,dsembedded,DIGITALSIGNATURESIZE,data.length);
+    public static byte[] EmbedDigitalSignaturewithMessage(byte[] data, byte[] digitalsignature) {
+        byte[] dsembedded = new byte[data.length + digitalsignature.length];
+        System.arraycopy(digitalsignature, 0, dsembedded, 0, DIGITALSIGNATURESIZE);
+        System.arraycopy(data, 0, dsembedded, DIGITALSIGNATURESIZE, data.length);
         return dsembedded;
     }
 
-    public static byte[] ExtractDigitalSignature(byte[] dsembedded)
-    {
+    public static byte[] ExtractDigitalSignature(byte[] dsembedded) {
         byte[] digitalsignatureonly = new byte[DIGITALSIGNATURESIZE];
-        System.arraycopy(dsembedded,0,digitalsignatureonly,0,DIGITALSIGNATURESIZE);
+        System.arraycopy(dsembedded, 0, digitalsignatureonly, 0, DIGITALSIGNATURESIZE);
         return digitalsignatureonly;
     }
 
-    public static byte[] ExtractContentfromDS(byte[] dsembedded)
-    {
-        byte[] contentonly = new byte[dsembedded.length-DIGITALSIGNATURESIZE];
-        System.arraycopy(dsembedded,DIGITALSIGNATURESIZE,contentonly,0,dsembedded.length-DIGITALSIGNATURESIZE);
+    public static byte[] ExtractContentfromDS(byte[] dsembedded) {
+        byte[] contentonly = new byte[dsembedded.length - DIGITALSIGNATURESIZE];
+        System.arraycopy(dsembedded, DIGITALSIGNATURESIZE, contentonly, 0, dsembedded.length - DIGITALSIGNATURESIZE);
         return contentonly;
     }
 
@@ -393,15 +390,14 @@ public class Cryptography {
         return privatekey;
     }
 
-    public static PublicKey BytetoPubKeyECDH (byte[] pubkey) {
+    public static PublicKey BytetoPubKeyECDH(byte[] pubkey) {
         KeyFactory kf;
-        ECPublicKey ecpubkey;
         PublicKey publickey = null;
         try {
             kf = KeyFactory.getInstance("ECDH", "SC");
             publickey = kf.generatePublic(new X509EncodedKeySpec(pubkey));
         } catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeySpecException e) {
-            Log.v("ERROR:", "ERROR KEY");
+
         }
         return publickey;
     }
@@ -418,19 +414,15 @@ public class Cryptography {
         return privatekey;
     }
 
-    public static SecretKey BytetoKeyAES(byte[] KeyAES)
-    {
+    public static SecretKey BytetoKeyAES(byte[] KeyAES) {
         return new SecretKeySpec(KeyAES, 0, KeyAES.length, "AES");
     }
 
 
     public static byte[] Base64StringtoByte(String Base64String) {
-        try
-        {
+        try {
             return Base64.decode(Base64String, Base64.DEFAULT);
-        }
-        catch(IllegalArgumentException e)
-        {
+        } catch (IllegalArgumentException e) {
             return new byte[0];
         }
 
@@ -439,12 +431,9 @@ public class Cryptography {
 
     public static String BytetoBase64String(byte[] bytearray) {
 
-        try
-        {
+        try {
             return Base64.encodeToString(bytearray, Base64.DEFAULT);
-        }
-        catch(IllegalArgumentException e)
-        {
+        } catch (IllegalArgumentException e) {
             String Ret = "";
             return Ret;
         }

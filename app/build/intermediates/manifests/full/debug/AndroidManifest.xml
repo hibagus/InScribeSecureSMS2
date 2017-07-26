@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="23"
+        android:minSdkVersion="22"
         android:targetSdkVersion="25" />
 
     <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
@@ -14,13 +14,17 @@
     <uses-permission-sdk-23 android:name="android.permission.RECEIVE_SMS" />
     <uses-permission-sdk-23 android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <action android:name="android.intent.action.BOOT_COMPLETED" />
 
     <meta-data
         android:name="android.support.VERSION"
-        android:value="25.3.1" />
-
-    <uses-permission android:name="android.permission.CAMERA" /> <!-- Don't require camera, as this requires a rear camera. This allows it to work on the Nexus 7 -->
+        android:value="25.3.1" /> <!-- Don't require camera, as this requires a rear camera. This allows it to work on the Nexus 7 -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -81,6 +85,14 @@
             android:name="digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityValidSessionList"
             android:label="@string/title_activity_valid_session_list"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityConversationListDetail"
+            android:label="@string/title_activity_conversation_list_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityMessageDetail"
+            android:label="@string/title_activity_message_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver
             android:name="digitalquantuminc.inscribesecuresms.Message.IncomingSMSListener"
@@ -91,14 +103,6 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name="digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityConversationListDetail"
-            android:label="@string/title_activity_conversation_list_detail"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="digitalquantuminc.inscribesecuresms.ChildrenActivity.ActivityMessageDetail"
-            android:label="@string/title_activity_message_detail"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:clearTaskOnLaunch="true"

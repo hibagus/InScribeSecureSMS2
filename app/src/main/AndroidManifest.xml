@@ -8,6 +8,12 @@
     <uses-permission-sdk-23 android:name="android.permission.RECEIVE_SMS" />
     <uses-permission-sdk-23 android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <action android:name="android.intent.action.BOOT_COMPLETED" />
 
     <application
@@ -51,14 +57,6 @@
             android:label="@string/title_activity_valid_session_list"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <receiver
-            android:name=".Message.IncomingSMSListener"
-            android:exported="true">
-            <intent-filter android:priority="999">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
 
         <activity
             android:name=".ChildrenActivity.ActivityConversationListDetail"
@@ -68,6 +66,16 @@
             android:name=".ChildrenActivity.ActivityMessageDetail"
             android:label="@string/title_activity_message_detail"
             android:theme="@style/AppTheme.NoActionBar" />
+        <receiver
+            android:name=".Message.IncomingSMSListener"
+            android:exported="true">
+            <intent-filter android:priority="999">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
     </application>
+
 
 </manifest>

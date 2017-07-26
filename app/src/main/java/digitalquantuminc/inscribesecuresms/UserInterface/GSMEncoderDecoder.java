@@ -138,8 +138,8 @@ public class GSMEncoderDecoder {
         DictionaryEncode.put(122, "ß");
         DictionaryEncode.put(123, "É");
         DictionaryEncode.put(124, " ");
-        DictionaryEncode.put(125, "\r");
-        DictionaryEncode.put(126, "\n");
+        DictionaryEncode.put(125, "[");  // \r
+        DictionaryEncode.put(126, "]");  // \n
         DictionaryEncode.put(127, "\\"); // consume 2 byte
         //DictionaryEncode.put(127, "\\u001B"); // consume 2 byte
 
@@ -269,8 +269,8 @@ public class GSMEncoderDecoder {
         DictionaryDecode.put("ß" ,122);
         DictionaryDecode.put("É" ,123);
         DictionaryDecode.put(" " ,124);
-        DictionaryDecode.put("\r" ,125); // consume 2 byte
-        DictionaryDecode.put("\n" ,126); // consume 2 byte
+        DictionaryDecode.put("[" ,125); // consume 2 byte
+        DictionaryDecode.put("]" ,126); // consume 2 byte
         DictionaryDecode.put("\\",127); // consume 2 byte
         //DictionaryEncode.put(127, "\\u001B");
     }
@@ -360,53 +360,58 @@ public class GSMEncoderDecoder {
     {
         //TODO: DEBUGGING ONLY
 
-        return Cryptography.BytetoBase64String(bytes);
-//        String binarystring = toBinaryRadix(bytes, 7);
-//        int binarystringlength = binarystring.length();
-//        int numofcharacter = binarystringlength/7;
-//        StringBuilder sb = new StringBuilder(numofcharacter);
-//        int idx = 0;
-//        for(int i = 0; i<numofcharacter; i++)
-//        {
-//            String sub = binarystring.substring(idx, idx+7);
-//            String subreverse = new StringBuilder(sub).reverse().toString();
-//            int intfrombit = Integer.parseInt(subreverse, 2);
-//            String mapping = DictionaryEncode.get(intfrombit);
-//            //System.out.println("Sub: " + sub + " SubReverse: " + subreverse + " Integer: " + intfrombit + " Mapping: " + mapping);
-//            sb.append(mapping);
-//            idx=idx+7;
-//        }
-//        String encoded = sb.toString();
-//        String formatted = encoded.replace("/","//");
-//        String formatted2 = formatted.replace("\\","/?");
-//        return formatted2;
+        //return Cryptography.BytetoBase64String(bytes);
+        String binarystring = toBinaryRadix(bytes, 7);
+        int binarystringlength = binarystring.length();
+        int numofcharacter = binarystringlength/7;
+        StringBuilder sb = new StringBuilder(numofcharacter);
+        int idx = 0;
+        for(int i = 0; i<numofcharacter; i++)
+        {
+            String sub = binarystring.substring(idx, idx+7);
+            String subreverse = new StringBuilder(sub).reverse().toString();
+            int intfrombit = Integer.parseInt(subreverse, 2);
+            String mapping = DictionaryEncode.get(intfrombit);
+            //System.out.println("Sub: " + sub + " SubReverse: " + subreverse + " Integer: " + intfrombit + " Mapping: " + mapping);
+            sb.append(mapping);
+            idx=idx+7;
+        }
+        String encoded = sb.toString();
+        String formatted = encoded.replace("/","//");
+        String formatted2 = formatted.replace("\\","/?");
+        String formatted3 = formatted2.replace("[","/(");
+        String formatted4 = formatted3.replace("]","/)");
+        return formatted4;
     }
 
     public static byte[] Decode (String text)
     {
         //TODO: DEBUGGING ONLY
-        return Cryptography.Base64StringtoByte(text);
-//        String removeformatted = text.replace("/?","\\");
-//        String removeformatted2 = removeformatted.replace("//","/");
-//
-//        int stringlength = removeformatted2.length();
-//        StringBuilder sb = new StringBuilder(stringlength*7);
-//        for(int i=0;i<stringlength;i++)
-//        {
-//            String sub = "" + removeformatted2.charAt(i);
-//            if(DictionaryDecode.containsKey(sub)) // Check whether the character is on table or not
-//            {
-//                int mapping = DictionaryDecode.get(sub);
-//                String binarystring = String.format("%7s", Integer.toBinaryString(mapping)).replace(' ', '0');
-//                //System.out.println("SubDecode: " + sub + " Mapping: " + mapping + " Binary: " + binarystring);
-//                String reversebinarystring = new StringBuilder(binarystring).reverse().toString();
-//                sb.append(reversebinarystring);
-//            }
-//            //System.out.println("SubDecode: " + sub);
-//
-//        }
-//        String result = sb.toString();
-//        return fromBinaryRadix(result,8);
+        //return Cryptography.Base64StringtoByte(text);
+
+        String PreProcess1 = text.replace("/)","]");
+        String PreProcess2 = PreProcess1.replace("/(","[");
+        String PreProcess3 = PreProcess2.replace("/?","\\");
+        String PreProcess4 = PreProcess3.replace("//","/");
+
+        int stringlength = PreProcess4.length();
+        StringBuilder sb = new StringBuilder(stringlength*7);
+        for(int i=0;i<stringlength;i++)
+        {
+            String sub = "" + PreProcess4.charAt(i);
+            if(DictionaryDecode.containsKey(sub)) // Check whether the character is on table or not
+            {
+                int mapping = DictionaryDecode.get(sub);
+                String binarystring = String.format("%7s", Integer.toBinaryString(mapping)).replace(' ', '0');
+                //System.out.println("SubDecode: " + sub + " Mapping: " + mapping + " Binary: " + binarystring);
+                String reversebinarystring = new StringBuilder(binarystring).reverse().toString();
+                sb.append(reversebinarystring);
+            }
+            //System.out.println("SubDecode: " + sub);
+
+        }
+        String result = sb.toString();
+        return fromBinaryRadix(result,8);
     }
 
 

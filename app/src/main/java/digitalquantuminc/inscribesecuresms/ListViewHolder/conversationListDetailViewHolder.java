@@ -23,6 +23,7 @@ public class conversationListDetailViewHolder {
     private TextView textlist_MessageTimeStampYour;
     private TextView textlist_PartnerNumber;
     private TextView textlist_TimeStamp;
+    private TextView textlist_Direction;
     private ImageView imageView_YourView;
 
     //endregion
@@ -40,6 +41,7 @@ public class conversationListDetailViewHolder {
         this.imageView_YourView = (ImageView) view.findViewById(R.id.imageView_YourView);
         this.textlist_PartnerNumber = (TextView) view.findViewById(R.id.textlist_PartnerNumber);
         this.textlist_TimeStamp = (TextView) view.findViewById(R.id.textlist_TimeStamp);
+        this.textlist_Direction = (TextView) view.findViewById(R.id.textlist_Direction);
     }
     //endregion
 
@@ -82,5 +84,9 @@ public class conversationListDetailViewHolder {
 
     public TextView getTextlist_TimeStamp() {
         return textlist_TimeStamp;
+    }
+
+    public TextView getTextlist_Direction() {
+        return textlist_Direction;
     }
 }

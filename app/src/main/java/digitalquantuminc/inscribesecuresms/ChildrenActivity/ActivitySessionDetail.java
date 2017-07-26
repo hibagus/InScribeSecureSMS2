@@ -54,7 +54,6 @@ public class ActivitySessionDetail extends AppCompatActivity {
     EditText text_ECDHSessionPublicKey;
     EditText text_PartnerECDHSessionPublicKey;
     EditText text_PartnerDigitalSignature;
-    EditText text_PartnerComputedDigitalSignature;
     EditText text_SharedSecret;
     EditText text_SessionAESKey;
     Button btn_InitiateSession;
@@ -103,7 +102,6 @@ public class ActivitySessionDetail extends AppCompatActivity {
         text_ECDHSessionPublicKey = (EditText) findViewById(R.id.text_ECDHSessionPublicKey);
         text_PartnerECDHSessionPublicKey = (EditText) findViewById(R.id.text_PartnerECDHSessionPublicKey);
         text_PartnerDigitalSignature = (EditText) findViewById(R.id.text_PartnerDigitalSignature);
-        text_PartnerComputedDigitalSignature = (EditText) findViewById(R.id.text_PartnerComputedDigitalSignature);
         text_SharedSecret = (EditText) findViewById(R.id.text_SharedSecret);
         text_SessionAESKey = (EditText) findViewById(R.id.text_SessionAESKey);
         btn_InitiateSession = (Button) findViewById(R.id.btn_InitiateSession);
@@ -215,10 +213,6 @@ public class ActivitySessionDetail extends AppCompatActivity {
         text_PartnerDigitalSignature.setText(session.getSession_ecdh_partner_digital_signature());
         text_PartnerDigitalSignature.setTextIsSelectable(true);
         text_PartnerDigitalSignature.setKeyListener(null);
-
-        text_PartnerComputedDigitalSignature.setText(session.getSession_ecdh_partner_computed_digital_signature());
-        text_PartnerComputedDigitalSignature.setTextIsSelectable(true);
-        text_PartnerComputedDigitalSignature.setKeyListener(null);
 
         text_SharedSecret.setText(session.getSession_ecdh_shared_secret());
         text_SharedSecret.setTextIsSelectable(true);

@@ -155,6 +155,27 @@ public class messageRepository {
         return message;
     }
 
+    public boolean isMessageExist(Long TimeStamp) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT "
+                + TypeMessage.KEY_ID + ", "
+                + TypeMessage.KEY_direction + ", "
+                + TypeMessage.KEY_messagetype + ", "
+                + TypeMessage.KEY_address + ", "
+                + TypeMessage.KEY_timestamp + ", "
+                + TypeMessage.KEY_encodedcontent + ", "
+                + TypeMessage.KEY_plaincontent + " FROM "
+                + TypeMessage.TABLE + " WHERE "
+                + TypeMessage.KEY_timestamp + " = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(TimeStamp)});
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
+    }
+
     public TypeMessage getMessagebyAddressSorted(String address) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String selectQuery = "SELECT "

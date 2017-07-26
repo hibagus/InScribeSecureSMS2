@@ -81,11 +81,25 @@ public class ActivityMessageDetail extends AppCompatActivity {
     // Intent Variable
     private String PartnerPhoneNumber = "";
     private String TimeStamp = "";
+    private int Direction = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_message_detail);
+        // Get Intent from Main Activity
+        Intent intent = getIntent();
+        PartnerPhoneNumber = intent.getStringExtra(IntentString.ConversationListDetailstoMessageDetails_PhoneNum);
+        TimeStamp = intent.getStringExtra(IntentString.ConversationListDetailstoMessageDetails_Timestamp);
+        Direction = intent.getIntExtra(IntentString.ConversationListDetailstoMessageDetails_Direction, 0);
+        if(Direction == TypeMessage.MESSAGEDIRECTIONOUTBOX)
+        {
+            setContentView(R.layout.activity_message_detail2);
+        }
+        else
+        {
+            setContentView(R.layout.activity_message_detail);
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -227,10 +241,6 @@ public class ActivityMessageDetail extends AppCompatActivity {
         final int ColorDarkRed = ContextCompat.getColor(this, R.color.colorDarkRed);
         final int ColorAmber = ContextCompat.getColor(this, R.color.colorAmber);
         final int ColorDarkGrey = ContextCompat.getColor(this, R.color.colorDarkGrey);
-        // Get Intent from Main Activity
-        Intent intent = getIntent();
-        PartnerPhoneNumber = intent.getStringExtra(IntentString.ConversationListDetailstoMessageDetails_PhoneNum);
-        TimeStamp = intent.getStringExtra(IntentString.ConversationListDetailstoMessageDetails_Timestamp);
 
         messageRepository repo = new messageRepository(this);
         TypeMessage message = repo.getMessagebyTimeStamp(Long.valueOf(TimeStamp));
@@ -496,53 +506,64 @@ public class ActivityMessageDetail extends AppCompatActivity {
         int messagetype = message.getMessagetype();
 
         // Extract Content and AES IV
-        String EncodedMessage = message.getEncodedcontent();
-        byte[] DecodedByte = GSMEncoderDecoder.Decode(EncodedMessage);
-        byte[] MessageByte = TypeMetaMessage.ExtractOriginalMessage(DecodedByte);
-
-        byte[] AESIV = Cryptography.GetAESIV(MessageByte);
-        byte[] AESCT = Cryptography.GetAESContent(MessageByte);
-        byte[] AESKey = Cryptography.Base64StringtoByte(session.getSession_ecdh_aes_key());
-        SecretKey AESSecret = Cryptography.BytetoKeyAES(AESKey);
-        Log.v("Generated AES Key: ", Cryptography.BytetoBase64String(AESSecret.getEncoded()));
-        byte[] decryptedbyte = Cryptography.DecryptMessageAES(AESSecret, MessageByte);
-
-        // Decompress
-        byte[] plaintext = null;
-        if(messagetype==TypeMetaMessage.MessageTypeNormalEncryptedUncompressed)
+        if(session.getSession_ecdh_aes_key().matches(""))
         {
-            plaintext = decryptedbyte;
-        }
-        else if (messagetype==TypeMetaMessage.MessageTypeNormalEncryptedCompressedBLZ4)
-        {
-            plaintext = CompressionDecompression.BlockLZ4Decompress(decryptedbyte);
-        }
-        else if (messagetype==TypeMetaMessage.MessageTypeNormalEncryptedCompressedDeflate)
-        {
-            plaintext = CompressionDecompression.DeflateDecompress(decryptedbyte);
+            btn_DecryptMessage.setEnabled(false);
+            btn_ClearPlainMessage.setEnabled(false);
+            btn_SavePlainMessage.setEnabled(false);
+            Toast.makeText(this, "Error! AES Key Not Found! Cannot Decrypt.", Toast.LENGTH_SHORT).show();
         }
         else
         {
-            plaintext = decryptedbyte;
+            String EncodedMessage = message.getEncodedcontent();
+            byte[] DecodedByte = GSMEncoderDecoder.Decode(EncodedMessage);
+            byte[] MessageByte = TypeMetaMessage.ExtractOriginalMessage(DecodedByte);
+
+            byte[] AESIV = Cryptography.GetAESIV(MessageByte);
+            byte[] AESCT = Cryptography.GetAESContent(MessageByte);
+            byte[] AESKey = Cryptography.Base64StringtoByte(session.getSession_ecdh_aes_key());
+            SecretKey AESSecret = Cryptography.BytetoKeyAES(AESKey);
+
+            byte[] decryptedbyte = Cryptography.DecryptMessageAES(AESSecret, MessageByte);
+
+            // Decompress
+            byte[] plaintext = null;
+            if(messagetype==TypeMetaMessage.MessageTypeNormalEncryptedUncompressed)
+            {
+                plaintext = decryptedbyte;
+            }
+            else if (messagetype==TypeMetaMessage.MessageTypeNormalEncryptedCompressedBLZ4)
+            {
+                plaintext = CompressionDecompression.BlockLZ4Decompress(decryptedbyte);
+            }
+            else if (messagetype==TypeMetaMessage.MessageTypeNormalEncryptedCompressedDeflate)
+            {
+                plaintext = CompressionDecompression.DeflateDecompress(decryptedbyte);
+            }
+            else
+            {
+                plaintext = decryptedbyte;
+            }
+
+            // Update UI
+            btn_DecryptMessage.setEnabled(false);
+            btn_ClearPlainMessage.setEnabled(false);
+            btn_SavePlainMessage.setEnabled(true);
+
+            if (plaintext != null && !plaintext.equals("")) {
+                text_PlainText.setText(new String(plaintext));
+            }
+            else
+            {
+                text_PlainText.setText("");
+            }
+
+            text_DecodedTextMessage.setText(Cryptography.BytetoBase64String(DecodedByte));
+            text_AESCTText.setText(Cryptography.BytetoBase64String(AESCT));
+            text_AESIVText.setText(Cryptography.BytetoBase64String(AESIV));
+            text_DecryptedTextMessage.setText(Cryptography.BytetoBase64String(decryptedbyte));
         }
 
-        // Update UI
-        btn_DecryptMessage.setEnabled(false);
-        btn_ClearPlainMessage.setEnabled(false);
-        btn_SavePlainMessage.setEnabled(true);
-
-        if (plaintext != null && !plaintext.equals("")) {
-            text_PlainText.setText(new String(plaintext));
-        }
-        else
-        {
-            text_PlainText.setText("");
-        }
-
-        text_DecodedTextMessage.setText(Cryptography.BytetoBase64String(decryptedbyte));
-        text_AESCTText.setText(Cryptography.BytetoBase64String(AESCT));
-        text_AESIVText.setText(Cryptography.BytetoBase64String(AESIV));
-        text_DecryptedTextMessage.setText(Cryptography.BytetoBase64String(decryptedbyte));
     }
 
     private void btn_SavePlainMessage_onClick(View v)
@@ -614,7 +635,9 @@ public class ActivityMessageDetail extends AppCompatActivity {
         MessageSender sender = new MessageSender(this);
         sender.SendSessionHandshakeReplyMessage(Phonenumber,contentds);
         Toast.makeText(this, "Secure Session Reply has been sent", Toast.LENGTH_SHORT).show();
+        repoMessage.delete(TimeStamp);
         IntentFeedback(RESULT_OK, IntentString.ConversationListDetailsFeedbackCode_RefreshList);
+
     }
 
     private void btn_ActivateSecureSession_onClick(View v) {
@@ -680,6 +703,7 @@ public class ActivityMessageDetail extends AppCompatActivity {
             session.setSession_role(TypeSession.StatusRoleSlave);
         }
         repoSession.update(session, Phonenumber);
+        repoMessage.delete(TimeStamp);
         IntentFeedback(RESULT_OK, IntentString.ConversationListDetailsFeedbackCode_RefreshList);
 
     }
@@ -718,6 +742,7 @@ public class ActivityMessageDetail extends AppCompatActivity {
                 sender.SendErrorHandshakeSuccessMessage(Phonenumber);
             }
         }
+        repoMessage.delete(TimeStamp);
         IntentFeedback(RESULT_OK, IntentString.ConversationListDetailsFeedbackCode_RefreshList);
 
     }

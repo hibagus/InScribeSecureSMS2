@@ -112,6 +112,10 @@
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\layout\\abc_action_menu_layout.xml"
     },
     {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\content_activity_message_detail2.xml",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\content_activity_message_detail2.xml"
+    },
+    {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_separator.xml",
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\370a42e7d6ca7c3a003db3c70c59e14b020e8811\\output\\res\\layout\\design_navigation_item_separator.xml"
     },
@@ -178,6 +182,10 @@
     {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media.xml",
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\layout\\notification_template_media.xml"
+    },
+    {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_message_detail2.xml",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\activity_message_detail2.xml"
     },
     {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_item_material.xml",
