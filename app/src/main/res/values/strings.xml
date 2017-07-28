@@ -143,5 +143,23 @@
     <string name="message_clearplaintext">Clear Plain Text Message</string>
     <string name="title_activity_about">ActivityAbout</string>
 
+    <string name="messagetype_1">Normal Uncompressed Encrypted Message</string>
+    <string name="messagetype_2">Normal Encrypted Message with Block LZ4 Compression</string>
+    <string name="messagetype_3">Normal Encrypted Message with Deflate Compression</string>
+    <string name="messagetype_4">Handshake Request Message with Digital Signature</string>
+    <string name="messagetype_5">Handshake Reply Message with Digital Signature</string>
+    <string name="messagetype_6">Handshake Success Message with Digital Signature</string>
+    <string name="messagetype_7">End Session Request Message</string>
+    <string name="messagetype_8">End Session Success Message</string>
+    <string name="messagetype_9">Error Message on Handshake Request, Digital Signature Invalid</string>
+    <string name="messagetype_10">Error Message on Handshake Reply, Digital Signature Invalid</string>
+    <string name="messagetype_11">Error Message on Handshake Success, Digital Signature Invalid</string>
+    <string name="messagetype_12">Error Message on Handshake Reply, No Secure Session Active</string>
+    <string name="messagetype_13">Error Message on Handshake: Handshake Declined</string>
+    <string name="messagetype_14">Unknown</string>
+
+    <string name="messagetype_group1">Normal Encrypted Message</string>
+    <string name="messagetype_group2">Handshake Request/Reply/Success Message</string>
+    <string name="messagetype_group3">Error Message</string>
 
 </resources>

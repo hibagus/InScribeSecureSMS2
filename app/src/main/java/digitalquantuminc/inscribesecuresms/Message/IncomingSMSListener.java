@@ -48,8 +48,6 @@ public class IncomingSMSListener extends BroadcastReceiver {
                             // Check if Number Exist
                             ActivityMain inst = ActivityMain.instance();
                             contactRepository repo = new contactRepository(inst);
-                            //Log.v("SMSNumber", smsMessage[0].getOriginatingAddress());
-                            //Log.v("SMSContent", content.toString());
                             if (repo.isContactExist(smsMessage[0].getOriginatingAddress()))
                             {
                                 byte[] decodedmessage = GSMEncoderDecoder.Decode(content.toString());
@@ -61,7 +59,6 @@ public class IncomingSMSListener extends BroadcastReceiver {
                                     if(meta.getMessageHeadID()==TypeMetaMessage.MessageHeadIDVersion0 && meta.getMessageTailID()==TypeMetaMessage.MessageTailIDVersion0)
                                     {
                                         TypeMessage message = new TypeMessage(TypeMessage.MESSAGEDIRECTIONINBOX, meta.getMessageType(),smsMessage[0].getOriginatingAddress(),smsMessage[smspartnumber-1].getTimestampMillis(),content.toString(),"");
-                                        Log.v("LongDateViaListner: ", String.valueOf(message.getTimestamp()));
                                         if(ActivityMain.active())
                                         {
                                             inst = ActivityMain.instance();

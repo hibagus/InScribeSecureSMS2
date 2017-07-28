@@ -25,6 +25,12 @@ public class conversationListDetailViewHolder {
     private TextView textlist_TimeStamp;
     private TextView textlist_Direction;
     private ImageView imageView_YourView;
+    private ImageView imageView_RightYour;
+    private ImageView imageView_LeftYour;
+    private ImageView imageView_RightPartner;
+    private ImageView imageView_LeftPartner;
+    private TextView textlist_MessageTypePartner;
+    private TextView textlist_MessageTypeYour;
 
     //endregion
 
@@ -42,6 +48,12 @@ public class conversationListDetailViewHolder {
         this.textlist_PartnerNumber = (TextView) view.findViewById(R.id.textlist_PartnerNumber);
         this.textlist_TimeStamp = (TextView) view.findViewById(R.id.textlist_TimeStamp);
         this.textlist_Direction = (TextView) view.findViewById(R.id.textlist_Direction);
+        this.imageView_RightYour = (ImageView) view.findViewById(R.id.imageView_RightYour);
+        this.imageView_LeftYour = (ImageView) view.findViewById(R.id.imageView_LeftYour);
+        this.imageView_RightPartner = (ImageView) view.findViewById(R.id.imageView_RightPartner);
+        this.imageView_LeftPartner = (ImageView) view.findViewById(R.id.imageView_LeftPartner);
+        this.textlist_MessageTypePartner = (TextView) view.findViewById(R.id.textlist_MessageTypePartner);
+        this.textlist_MessageTypeYour = (TextView) view.findViewById(R.id.textlist_MessageTypeYour);
     }
     //endregion
 
@@ -88,5 +100,29 @@ public class conversationListDetailViewHolder {
 
     public TextView getTextlist_Direction() {
         return textlist_Direction;
+    }
+
+    public ImageView getImageView_LeftPartner() {
+        return imageView_LeftPartner;
+    }
+
+    public ImageView getImageView_LeftYour() {
+        return imageView_LeftYour;
+    }
+
+    public ImageView getImageView_RightPartner() {
+        return imageView_RightPartner;
+    }
+
+    public ImageView getImageView_RightYour() {
+        return imageView_RightYour;
+    }
+
+    public TextView getTextlist_MessageTypePartner() {
+        return textlist_MessageTypePartner;
+    }
+
+    public TextView getTextlist_MessageTypeYour() {
+        return textlist_MessageTypeYour;
     }
 }

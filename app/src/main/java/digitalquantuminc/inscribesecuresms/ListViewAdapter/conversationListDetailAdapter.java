@@ -1,6 +1,7 @@
 package digitalquantuminc.inscribesecuresms.ListViewAdapter;
 
 import android.app.Activity;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -84,11 +85,94 @@ public class conversationListDetailAdapter extends BaseAdapter {
                 item.get(TypeMessage.KEY_encodedcontent),
                 item.get(TypeMessage.KEY_plaincontent)
         );
+
         // Access the name
         holder.getTextlist_TimeStamp().setText(String.valueOf(message.getTimestamp()));
         holder.getTextlist_PartnerNumber().setText(message.getAddress());
 
+        // Decide Message Type
+        int messagegroup = 0;
+        String messagedesc;
+        switch(message.getMessagetype())
+        {
+            case TypeMetaMessage.MessageTypeNormalEncryptedUncompressed : {
+                messagegroup=1;
+                messagedesc = outer.getString(R.string.messagetype_1);
+                break;
+            }
+            case TypeMetaMessage.MessageTypeNormalEncryptedCompressedBLZ4 : {
+                messagegroup=1;
+                messagedesc = outer.getString(R.string.messagetype_2
+                );
+                break;
+            }
+            case TypeMetaMessage.MessageTypeNormalEncryptedCompressedDeflate : {
+                messagegroup=1;
+                messagedesc = outer.getString(R.string.messagetype_3
+                );
+                break;
+            }
+            case TypeMetaMessage.MessageTypeHandshakeRequestDS : {
+                messagegroup=2;
+                messagedesc = outer.getString(R.string.messagetype_4
+                );
+                break;
+            }
+            case TypeMetaMessage.MessageTypeHandshakeReplyDS : {
+                messagegroup=2;
+                messagedesc = outer.getString(R.string.messagetype_5);
+                break;
+            }
+            case TypeMetaMessage.MessageTypeHandshakeSuccessDS : {
+                messagegroup=2;
+                messagedesc = outer.getString(R.string.messagetype_6);
+                break;
+            }
+            case TypeMetaMessage.MessageTypeEndSessionRequest : {
+                messagegroup=3;
+                messagedesc = outer.getString(R.string.messagetype_7);
+                break;
+            }
+            case TypeMetaMessage.MessageTypeEndSessionSuccess : {
+                messagegroup=3;
+                messagedesc = outer.getString(R.string.messagetype_8);
+                break;
+            }
+            case TypeMetaMessage.MessageTypeErrorHandshakeRequestDSNotValid : {
+                messagegroup=3;
+                messagedesc = outer.getString(R.string.messagetype_9);
+                break;
+            }
+            case TypeMetaMessage.MessageTypeErrorHandshakeReplyDSNotValid : {
+                messagegroup=3;
+                messagedesc = outer.getString(R.string.messagetype_10);
+                break;
+            }
+            case TypeMetaMessage.MessageTypeErrorHandshakeSuccessDSNotValid : {
+                messagegroup=3;
+                messagedesc = outer.getString(R.string.messagetype_11);
+                break;
+            }
+            case TypeMetaMessage.MessageTypeErrorNoSecureSessionActive: {
+                messagegroup=3;
+                messagedesc = outer.getString(R.string.messagetype_12);
+                break;
+            }
+            case TypeMetaMessage.MessageTypeErrorHandshakeDeclined: {
+                messagegroup=3;
+                messagedesc = outer.getString(R.string.messagetype_13);
+                break;
+            }
+            default : {
+                messagegroup=4;
+                messagedesc = outer.getString(R.string.messagetype_14);
+                break;
+            }
+        }
+
+
         // Decide Message Direction
+
         if(message.getDirection()==TypeMessage.MESSAGEDIRECTIONINBOX)
         {
             holder.getTextlist_Direction().setText(String.valueOf(TypeMessage.MESSAGEDIRECTIONINBOX));
@@ -99,8 +183,38 @@ public class conversationListDetailAdapter extends BaseAdapter {
             int color = mColorGenerator.getColor(contact.getContact_name());
             TextDrawable drawable = mDrawableBuilder.build(String.valueOf(contact.getContact_name().charAt(0)), color);
             holder.getImageView_PartnerView().setImageDrawable(drawable);
-            holder.getTextlist_MessageContentPartner().setText(message.getEncodedcontent());
             holder.getTextlist_MessageTimeStampPartner().setText(new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z").format(new Date(message.getTimestamp())));
+            holder.getTextlist_MessageContentPartner().setText(message.getEncodedcontent());
+            holder.getTextlist_MessageTypePartner().setText(messagedesc);
+            if(messagegroup==1)
+            {
+                holder.getImageView_LeftPartner().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkGreen));
+                holder.getImageView_RightPartner().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkGreen));
+                holder.getTextlist_MessageTypePartner().setTextColor(ContextCompat.getColor(outer, R.color.colorDarkGreen));
+            }
+            else if (messagegroup==2)
+            {
+                holder.getImageView_LeftPartner().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorAmber));
+                holder.getImageView_RightPartner().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorAmber));
+                holder.getTextlist_MessageTypePartner().setTextColor(ContextCompat.getColor(outer, R.color.colorAmber));
+                holder.getTextlist_MessageContentPartner().setVisibility(View.GONE);
+            }
+            else if(messagegroup==3)
+            {
+                holder.getImageView_LeftPartner().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkRed));
+                holder.getImageView_RightPartner().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkRed));
+                holder.getTextlist_MessageTypePartner().setTextColor(ContextCompat.getColor(outer, R.color.colorDarkRed));
+                holder.getTextlist_MessageContentPartner().setVisibility(View.GONE);
+            }
+            else
+            {
+                holder.getImageView_LeftPartner().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkRed));
+                holder.getImageView_RightPartner().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkRed));
+                holder.getTextlist_MessageTypePartner().setTextColor(ContextCompat.getColor(outer, R.color.colorDarkRed));
+                holder.getTextlist_MessageContentPartner().setVisibility(View.GONE);
+            }
+
+
         }
         else if (message.getDirection()==TypeMessage.MESSAGEDIRECTIONOUTBOX)
         {
@@ -112,8 +226,37 @@ public class conversationListDetailAdapter extends BaseAdapter {
             int color = mColorGenerator.getColor(profile.getName_self());
             TextDrawable drawable = mDrawableBuilder.build(String.valueOf(profile.getName_self().charAt(0)), color);
             holder.getImageView_YourView().setImageDrawable(drawable);
-            holder.getTextlist_MessageContentYour().setText(message.getEncodedcontent());
             holder.getTextlist_MessageTimeStampYour().setText(new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z").format(new Date(message.getTimestamp())));
+            holder.getTextlist_MessageContentYour().setText(message.getEncodedcontent());
+            holder.getTextlist_MessageTypeYour().setText(messagedesc);
+            if(messagegroup==1)
+            {
+                holder.getImageView_LeftYour().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkGreen));
+                holder.getImageView_RightYour().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkGreen));
+                holder.getTextlist_MessageTypeYour().setTextColor(ContextCompat.getColor(outer, R.color.colorDarkGreen));
+            }
+            else if (messagegroup==2)
+            {
+                holder.getImageView_LeftYour().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorAmber));
+                holder.getImageView_RightYour().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorAmber));
+                holder.getTextlist_MessageTypeYour().setTextColor(ContextCompat.getColor(outer, R.color.colorAmber));
+                holder.getTextlist_MessageContentYour().setVisibility(View.GONE);
+            }
+            else if(messagegroup==3)
+            {
+                holder.getImageView_LeftYour().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkRed));
+                holder.getImageView_RightYour().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkRed));
+                holder.getTextlist_MessageTypeYour().setTextColor(ContextCompat.getColor(outer, R.color.colorDarkRed));
+                holder.getTextlist_MessageContentYour().setVisibility(View.GONE);
+            }
+            else
+            {
+                holder.getImageView_LeftYour().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkRed));
+                holder.getImageView_RightYour().setBackgroundColor(ContextCompat.getColor(outer, R.color.colorDarkRed));
+                holder.getTextlist_MessageTypeYour().setTextColor(ContextCompat.getColor(outer, R.color.colorDarkRed));
+                holder.getTextlist_MessageContentYour().setVisibility(View.GONE);
+            }
+
         }
         // return the view
         return convertView;

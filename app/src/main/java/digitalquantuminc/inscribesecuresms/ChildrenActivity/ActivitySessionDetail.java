@@ -264,12 +264,6 @@ public class ActivitySessionDetail extends AppCompatActivity {
         PublicKey ECDHPartnerPublicKey = Cryptography.BytetoPubKeyECDH(ecdhpubkey);
         PrivateKey ECDHSelfPrivateKey = Cryptography.BytetoPrivKeyECDH(ecdhprivkey);
 
-        Log.v("CONVERTEDPUBLICKEY: ", Cryptography.BytetoBase64String(ECDHPartnerPublicKey.getEncoded()));
-        Log.v("CONVERTEDPRIVATEKEY: ", Cryptography.BytetoBase64String(ECDHSelfPrivateKey.getEncoded()));
-        Log.v("GENERATEDECDH: ", Cryptography.BytetoBase64String(ecdhpubkey));
-        Log.v("GENERATEDRSAPRIVKEY", Cryptography.BytetoBase64String(rsaprivkey.getEncoded()));
-        Log.v("GENERATEDS: ", Cryptography.BytetoBase64String(digitalsignature));
-        Log.v("GENERATEEMBED: ", Cryptography.BytetoBase64String(contentds));
         //update database
         session.setSession_ecdh_private_key(Cryptography.BytetoBase64String(ecdhprivkey));
         session.setSession_ecdh_public_key(Cryptography.BytetoBase64String(ecdhpubkey));

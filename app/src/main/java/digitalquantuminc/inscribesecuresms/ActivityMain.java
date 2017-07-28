@@ -210,10 +210,7 @@ public class ActivityMain extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else if (id == R.id.action_refresh)
+        if (id == R.id.action_refresh)
         {
             switch(CurrentViewPagerPosition)
             {
@@ -875,50 +872,93 @@ public class ActivityMain extends AppCompatActivity {
                 }
                 case TypeMetaMessage.MessageTypeEndSessionRequest: {
                     Toast.makeText(this, "You have reguest to end secure session with " + name, Toast.LENGTH_SHORT).show();
+                    session.setSession_num_message(0);
                     session.setSession_validity(TypeSession.StatusNotValid);
                     session.setSession_ecdh_aes_key("");
-                    session.setSession_ecdh_partner_public_key("");
-                    session.setSession_ecdh_shared_secret("");
                     session.setSession_ecdh_partner_digital_signature("");
-                    session.setSession_ecdh_public_key("");
-                    session.setSession_ecdh_private_key("");
+                    session.setSession_ecdh_partner_validity(TypeSession.StatusDSNotValid);
+                    session.setSession_ecdh_shared_secret("");
+                    session.setSession_ecdh_partner_public_key("");
+                    Log.v("EndedSecureSession:", "ENDED!");
+                    try{
+                        Thread.sleep(1000L);
+                    }
+                    catch(InterruptedException e){
+
+                    }
+                    sender.SendSessionEndSuccessMessage(phonenumber);
                     break;
                 }
                 case TypeMetaMessage.MessageTypeEndSessionSuccess: {
+                    Log.v("EndedSecureSession:", "ENDEDENDEDENDED!");
                     // Only informational, no further process required!
                     Toast.makeText(this, "Secure session with " + name + " has been ended.", Toast.LENGTH_SHORT).show();
+                    session.setSession_num_message(0);
                     session.setSession_validity(TypeSession.StatusNotValid);
                     session.setSession_ecdh_aes_key("");
-                    session.setSession_ecdh_partner_public_key("");
-                    session.setSession_ecdh_shared_secret("");
                     session.setSession_ecdh_partner_digital_signature("");
-                    session.setSession_ecdh_public_key("");
-                    session.setSession_ecdh_private_key("");
+                    session.setSession_ecdh_partner_validity(TypeSession.StatusDSNotValid);
+                    session.setSession_ecdh_shared_secret("");
+                    session.setSession_ecdh_partner_public_key("");
                     break;
                 }
                 case TypeMetaMessage.MessageTypeErrorHandshakeRequestDSNotValid: {
                     Toast.makeText(this, "Secure session with " + name + " cannot be started because invalid digital signature.", Toast.LENGTH_SHORT).show();
+                    session.setSession_num_message(0);
                     session.setSession_validity(TypeSession.StatusNotValid);
+                    session.setSession_ecdh_aes_key("");
+                    session.setSession_ecdh_partner_digital_signature("");
+                    session.setSession_ecdh_partner_validity(TypeSession.StatusDSNotValid);
+                    session.setSession_ecdh_shared_secret("");
+                    session.setSession_ecdh_partner_public_key("");
                     break;
                 }
                 case TypeMetaMessage.MessageTypeErrorHandshakeReplyDSNotValid: {
                     Toast.makeText(this, "Secure session with " + name + " cannot be started because invalid digital signature.", Toast.LENGTH_SHORT).show();
+                    session.setSession_num_message(0);
                     session.setSession_validity(TypeSession.StatusNotValid);
+                    session.setSession_ecdh_aes_key("");
+                    session.setSession_ecdh_partner_digital_signature("");
+                    session.setSession_ecdh_partner_validity(TypeSession.StatusDSNotValid);
+                    session.setSession_ecdh_shared_secret("");
+                    session.setSession_ecdh_partner_public_key("");
                     break;
                 }
                 case TypeMetaMessage.MessageTypeErrorHandshakeSuccessDSNotValid: {
                     Toast.makeText(this, "Secure session with " + name + " cannot be started because invalid digital signature.", Toast.LENGTH_SHORT).show();
                     session.setSession_validity(TypeSession.StatusNotValid);
+                    session.setSession_num_message(0);
+                    session.setSession_validity(TypeSession.StatusNotValid);
+                    session.setSession_ecdh_aes_key("");
+                    session.setSession_ecdh_partner_digital_signature("");
+                    session.setSession_ecdh_partner_validity(TypeSession.StatusDSNotValid);
+                    session.setSession_ecdh_shared_secret("");
+                    session.setSession_ecdh_partner_public_key("");
                     break;
                 }
                 case TypeMetaMessage.MessageTypeErrorNoSecureSessionActive: {
                     Toast.makeText(this, "No Secure session active with " + name, Toast.LENGTH_SHORT).show();
                     session.setSession_validity(TypeSession.StatusNotValid);
+                    session.setSession_num_message(0);
+                    session.setSession_validity(TypeSession.StatusNotValid);
+                    session.setSession_ecdh_aes_key("");
+                    session.setSession_ecdh_partner_digital_signature("");
+                    session.setSession_ecdh_partner_validity(TypeSession.StatusDSNotValid);
+                    session.setSession_ecdh_shared_secret("");
+                    session.setSession_ecdh_partner_public_key("");
+                    sender.SendSessionEndRequestMessage(phonenumber);
                     break;
                 }
                 case TypeMetaMessage.MessageTypeErrorHandshakeDeclined: {
                     Toast.makeText(this, "Secure session handshake with " + name + " is declined.", Toast.LENGTH_SHORT).show();
+                    session.setSession_num_message(0);
                     session.setSession_validity(TypeSession.StatusNotValid);
+                    session.setSession_ecdh_aes_key("");
+                    session.setSession_ecdh_partner_digital_signature("");
+                    session.setSession_ecdh_partner_validity(TypeSession.StatusDSNotValid);
+                    session.setSession_ecdh_shared_secret("");
+                    session.setSession_ecdh_partner_public_key("");
+                    Log.v("Harus", "masuksini");
                     break;
                 }
                 default: {
@@ -963,7 +1003,6 @@ public class ActivityMain extends AppCompatActivity {
 
         contactRepository repo3 = new contactRepository(this);
         // read from inbox first
-        Log.v("REQUEST!", "REQUEST");
         Cursor curInbox = getContentResolver().query(uriInbox, projection, filter, null, null);
         if (curInbox.moveToFirst()) {
             int index_Address = curInbox.getColumnIndex("address");
@@ -975,7 +1014,6 @@ public class ActivityMain extends AppCompatActivity {
                 String strbody = curInbox.getString(index_Body);
                 String longDate = curInbox.getString(index_Date);
                 Long timestamp = Long.parseLong(longDate);
-                Log.v("LongDate: ", String.valueOf(timestamp));
                 // Check if the message address is avaliable
                 if (repo3.isContactExist(strAddress)) {
                     if (!repo2.isMessageExist(timestamp)) {
@@ -1014,7 +1052,6 @@ public class ActivityMain extends AppCompatActivity {
                 String strbody = curSent.getString(index_Body);
                 String longDate = curSent.getString(index_Date);
                 Long timestamp = Long.parseLong(longDate);
-                Log.v("LongDate: ", String.valueOf(timestamp));
                 // Check if the message address is avaliable
                 if (repo3.isContactExist(strAddress)) {
 

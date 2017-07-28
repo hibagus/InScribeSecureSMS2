@@ -56,8 +56,6 @@ public class MessageSender {
         TypeMetaMessage meta = new TypeMetaMessage(TypeMetaMessage.MessageTypeHandshakeRequestDS, TypeMetaMessage.MessageHeadIDVersion0, TypeMetaMessage.MessageTailIDVersion0);
         byte[] finalbyte = TypeMetaMessage.EmbedMetaData(meta, Content);
         String encodedmessage = GSMEncoderDecoder.Encode(finalbyte);
-        Log.v("SENDDECODEDMESSAGE:", Cryptography.BytetoBase64String(finalbyte));
-        Log.v("SENDENCODEDMESSAGE:", encodedmessage);
         SendNormalMessage(phonenum,encodedmessage);
     }
 

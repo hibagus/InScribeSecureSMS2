@@ -55,7 +55,7 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeAESByte;
 public class Cryptography {
     public static final int RSAKEYSIZE = 2048;
     public static final int DIGITALSIGNATURESIZE = 256;
-    public static final int AESKEYSIZE = 256; //128?
+    public static final int AESKEYSIZE = 128; //128?
     public static final int AESIVLENGTH = 16;
     public static final int PBKDF2ITERATION = 16384;
     public static final String ELIPTICCURVENAME = "secp256k1"; //secp256k1 secp224k1
@@ -82,7 +82,7 @@ public class Cryptography {
         } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException | NoSuchProviderException e) {
 
         }
-        return keypair;
+       return keypair;
     }
 
     public static KeyPair GenerateECDHKeyPair(String ElipticCurve) {
@@ -138,6 +138,7 @@ public class Cryptography {
         } catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidKeySpecException e) {
 
         }
+        //Log.v("AES Secret Length: ", String.valueOf(AESKey.getEncoded().length));
         return AESKey;
     }
 
@@ -187,13 +188,15 @@ public class Cryptography {
     public static byte[] EncryptMessageAES(SecretKey AESKey, byte[] plaintext) {
         Cipher cipher;
         AlgorithmParameters params;
+        SecureRandom random;
         byte[] IV;
         byte[] CT;
         byte[] EncryptedText = null;
 
+        random = new SecureRandom();
         try {
             cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, AESKey);
+            cipher.init(Cipher.ENCRYPT_MODE, AESKey, random);
             params = cipher.getParameters();
             IV = params.getParameterSpec(IvParameterSpec.class).getIV();
             CT = cipher.doFinal(plaintext);

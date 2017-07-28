@@ -98,8 +98,6 @@ public class ActivityConversationListDetail extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             IntentFeedback(RESULT_OK, IntentString.MainFeedBackCode_RefreshConversationList);
             return true;
-        } else if (id == R.id.action_settings) {
-            return true;
         }
         else if (id == R.id.action_refresh)
         {
@@ -184,7 +182,6 @@ public class ActivityConversationListDetail extends AppCompatActivity {
 
         contactRepository repo3 = new contactRepository(this);
         // read from inbox first
-        Log.v("REQUEST!", "REQUEST");
         Cursor curInbox = getContentResolver().query(uriInbox, projection, filter, null, null);
         if (curInbox.moveToFirst()) {
             int index_Address = curInbox.getColumnIndex("address");
@@ -196,8 +193,7 @@ public class ActivityConversationListDetail extends AppCompatActivity {
                 String strbody = curInbox.getString(index_Body);
                 String longDate = curInbox.getString(index_Date);
                 Long timestamp = Long.parseLong(longDate);
-                Log.v("LongDate: ", String.valueOf(timestamp));
-                // Check if the message address is avaliable
+                 // Check if the message address is avaliable
                 if (repo3.isContactExist(strAddress)) {
                     if (!repo2.isMessageExist(timestamp)) {
                         byte[] decodedmessage = GSMEncoderDecoder.Decode(strbody);
@@ -235,7 +231,6 @@ public class ActivityConversationListDetail extends AppCompatActivity {
                 String strbody = curSent.getString(index_Body);
                 String longDate = curSent.getString(index_Date);
                 Long timestamp = Long.parseLong(longDate);
-                Log.v("LongDate: ", String.valueOf(timestamp));
                 // Check if the message address is avaliable
                 if (repo3.isContactExist(strAddress)) {
 

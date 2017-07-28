@@ -19,6 +19,7 @@ import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.crypto.SecretKey;
@@ -285,79 +286,81 @@ public class ActivityMessageDetail extends AppCompatActivity {
         {
             case TypeMetaMessage.MessageTypeNormalEncryptedUncompressed : {
                 messagegroup=1;
-                text_MessageType.setText("Normal Uncompressed Encrypted Message");
+                text_MessageType.setText(this.getString(R.string.messagetype_1));
                 break;
             }
             case TypeMetaMessage.MessageTypeNormalEncryptedCompressedBLZ4 : {
                 messagegroup=1;
-                text_MessageType.setText("Normal Encrypted Message with Block LZ4 Compression");
+                text_MessageType.setText(this.getString(R.string.messagetype_2
+                ));
                 break;
             }
             case TypeMetaMessage.MessageTypeNormalEncryptedCompressedDeflate : {
                 messagegroup=1;
-                text_MessageType.setText("Normal Encrypted Message with Deflate Compression");
+                text_MessageType.setText(this.getString(R.string.messagetype_3
+                ));
                 break;
             }
             case TypeMetaMessage.MessageTypeHandshakeRequestDS : {
                 messagegroup=2;
-                text_MessageType.setText("Handshake Request Message with Digital Signature");
+                text_MessageType.setText(this.getString(R.string.messagetype_4
+                ));
                 break;
             }
             case TypeMetaMessage.MessageTypeHandshakeReplyDS : {
                 messagegroup=2;
-                text_MessageType.setText("Handshake Reply Message with Digital Signature");
+                text_MessageType.setText(this.getString(R.string.messagetype_5));
                 break;
             }
             case TypeMetaMessage.MessageTypeHandshakeSuccessDS : {
                 messagegroup=2;
-                text_MessageType.setText("Handshake Success Message with Digital Signature");
+                text_MessageType.setText(this.getString(R.string.messagetype_6));
                 break;
             }
             case TypeMetaMessage.MessageTypeEndSessionRequest : {
                 messagegroup=3;
-                text_MessageType.setText("End Session Request Message");
+                text_MessageType.setText(this.getString(R.string.messagetype_7));
                 break;
             }
             case TypeMetaMessage.MessageTypeEndSessionSuccess : {
                 messagegroup=3;
-                text_MessageType.setText("End Session Success Message");
+                text_MessageType.setText(this.getString(R.string.messagetype_8));
                 break;
             }
             case TypeMetaMessage.MessageTypeErrorHandshakeRequestDSNotValid : {
                 messagegroup=3;
-                text_MessageType.setText("Error Message on Handshake Request, Digital Signature Invalid");
+                text_MessageType.setText(this.getString(R.string.messagetype_9));
                 break;
             }
             case TypeMetaMessage.MessageTypeErrorHandshakeReplyDSNotValid : {
                 messagegroup=3;
-                text_MessageType.setText("Error Message on Handshake Reply, Digital Signature Invalid");
+                text_MessageType.setText(this.getString(R.string.messagetype_10));
                 break;
             }
             case TypeMetaMessage.MessageTypeErrorHandshakeSuccessDSNotValid : {
                 messagegroup=3;
-                text_MessageType.setText("Error Message on Handshake Success, Digital Signature Invalid");
+                text_MessageType.setText(this.getString(R.string.messagetype_11));
                 break;
             }
             case TypeMetaMessage.MessageTypeErrorNoSecureSessionActive: {
                 messagegroup=3;
-                text_MessageType.setText("Error Message on Handshake Reply, No Secure Session Active");
+                text_MessageType.setText(this.getString(R.string.messagetype_12));
                 break;
             }
             case TypeMetaMessage.MessageTypeErrorHandshakeDeclined: {
                 messagegroup=3;
-                text_MessageType.setText("Error Message on Handshake: Handshake Declined");
+                text_MessageType.setText(this.getString(R.string.messagetype_13));
                 break;
             }
             default : {
                 messagegroup=4;
-                text_MessageType.setText("Unknown");
+                text_MessageType.setText(this.getString(R.string.messagetype_14));
                 break;
             }
         }
         // Decide which one to process
         if(messagegroup==1)
         {
-            Log.v("MessageGroup: ", "NORMAL");
             LinearLayout_NormalMessage.setVisibility(View.VISIBLE);
             LinearLayout_ErrorMessage.setVisibility(View.GONE);
             LinearLayout_Handshake.setVisibility(View.GONE);
@@ -383,7 +386,6 @@ public class ActivityMessageDetail extends AppCompatActivity {
         }
         else if(messagegroup==2)
         {   // Handshake
-            Log.v("MessageGroup: ", "HANDSHAKE");
             LinearLayout_NormalMessage.setVisibility(View.GONE);
             LinearLayout_ErrorMessage.setVisibility(View.GONE);
             LinearLayout_Handshake.setVisibility(View.VISIBLE);
@@ -393,7 +395,6 @@ public class ActivityMessageDetail extends AppCompatActivity {
 
             if(message.getDirection()==TypeMessage.MESSAGEDIRECTIONINBOX)
             {
-                Log.v("MessageDirection: ", "INBOX");
                 contactRepository repo2 = new contactRepository(this);
                 TypeContact contact = repo2.getContact(PartnerPhoneNumber);
 
@@ -408,6 +409,7 @@ public class ActivityMessageDetail extends AppCompatActivity {
                 // Update UI
                 text_PartnerECDHSessionPublicKey.setText(Cryptography.BytetoBase64String(ECDHPublicKey));
                 text_PartnerDigitalSignature.setText(Cryptography.BytetoBase64String(ECDHReceivedDS));
+                btn_DeleteMessage.setEnabled(false);
 
                 if (DSVerify) {
                     text_PartnerValidity.setText(R.string.session_ds_valid);
@@ -416,16 +418,19 @@ public class ActivityMessageDetail extends AppCompatActivity {
                     {
                         btn_AcceptSecureSession.setEnabled(true);
                         btn_ActivateSecureSession.setEnabled(false);
+                        btn_RejectSecureSession.setEnabled(true);
                     }
                     else if (messagetype == TypeMetaMessage.MessageTypeHandshakeReplyDS)
                     {
                         btn_AcceptSecureSession.setEnabled(false);
                         btn_ActivateSecureSession.setEnabled(true);
+                        btn_RejectSecureSession.setEnabled(true);
                     }
                     else if(messagetype == TypeMetaMessage.MessageTypeHandshakeSuccessDS)
                     {
                         btn_AcceptSecureSession.setEnabled(false);
                         btn_ActivateSecureSession.setEnabled(true);
+                        btn_RejectSecureSession.setEnabled(true);
                     }
                 } else {
                     text_PartnerValidity.setText(R.string.session_ds_notvalid);
@@ -436,7 +441,6 @@ public class ActivityMessageDetail extends AppCompatActivity {
             }
             else if (message.getDirection()==TypeMessage.MESSAGEDIRECTIONOUTBOX)
             {
-                Log.v("MessageDirection: ", "OUTBOX");
                 profileRepository repo2 = new profileRepository(this);
                 TypeProfile profile = repo2.getProfile(TypeProfile.DEFAULTID);
 
@@ -610,6 +614,10 @@ public class ActivityMessageDetail extends AppCompatActivity {
         profileRepository repoProfile = new profileRepository(this);
         TypeProfile profile = repoProfile.getProfile(TypeProfile.DEFAULTID);
 
+        // Save received public key and digital signature for future verification
+        String ECDHPartnerDigitalSignature = text_PartnerDigitalSignature.getText().toString();
+        String ECDHPartnerPubKeyText = text_PartnerECDHSessionPublicKey.getText().toString();
+
         // Preparing Own ECDH Key before Sending Message
 
         // Generate Keypair
@@ -624,6 +632,8 @@ public class ActivityMessageDetail extends AppCompatActivity {
         byte[] contentds = EmbedDigitalSignaturewithMessage(ecdhpubkey, digitalsignature);
 
         //update database
+        session.setSession_ecdh_partner_digital_signature(ECDHPartnerDigitalSignature);
+        session.setSession_ecdh_partner_public_key(ECDHPartnerPubKeyText);
         session.setSession_ecdh_private_key(Cryptography.BytetoBase64String(ecdhprivkey));
         session.setSession_ecdh_public_key(Cryptography.BytetoBase64String(ecdhpubkey));
         session.setSession_num_message(0);
@@ -635,7 +645,8 @@ public class ActivityMessageDetail extends AppCompatActivity {
         MessageSender sender = new MessageSender(this);
         sender.SendSessionHandshakeReplyMessage(Phonenumber,contentds);
         Toast.makeText(this, "Secure Session Reply has been sent", Toast.LENGTH_SHORT).show();
-        repoMessage.delete(TimeStamp);
+        // TODO: UNCOMMENT FOR RELEASE
+        //repoMessage.delete(TimeStamp);
         IntentFeedback(RESULT_OK, IntentString.ConversationListDetailsFeedbackCode_RefreshList);
 
     }
@@ -657,53 +668,88 @@ public class ActivityMessageDetail extends AppCompatActivity {
         PublicKey ECDHPartnerPublicKey = Cryptography.BytetoPubKeyECDH(ECDHPartnerPubKey);
         PrivateKey ECDHSelfPrivateKey = Cryptography.BytetoPrivKeyECDH(ECDHSelfPrivKey);
 
-        Log.v("ECDHParterPub:", Cryptography.BytetoBase64String(ECDHPartnerPubKey));
-        Log.v("ECDHSelfPriv", Cryptography.BytetoBase64String(ECDHSelfPrivKey));
-
-        Log.v("ECDHParterPubfromByte:", Cryptography.BytetoBase64String(ECDHPartnerPublicKey.getEncoded()));
-        Log.v("ECDHSelfPrivfromByte", Cryptography.BytetoBase64String(ECDHSelfPrivateKey.getEncoded()));
-
-        SecretKey ECDHSharedSecretKey = Cryptography.GenerateECDHSharedSecret(ECDHPartnerPublicKey, ECDHSelfPrivateKey);
-        Log.v("ECDHSharedSecret:", Cryptography.BytetoBase64String(ECDHSharedSecretKey.getEncoded()));
-        SecretKey AESSharedKey = Cryptography.GenerateAESKey(ECDHSharedSecretKey, Cryptography.PBKDF2ITERATION, Cryptography.AESKEYSIZE);
-        byte[] ECDHSharedSecret = ECDHSharedSecretKey.getEncoded();
-        byte[] AESKey = AESSharedKey.getEncoded();
-
-        // Update Database
-        session.setSession_num_message(0);
-        session.setSession_handshake_date(System.currentTimeMillis());
-
-        session.setSession_validity(TypeSession.StatusValid);
-        session.setSession_ecdh_aes_key(Cryptography.BytetoBase64String(AESKey));
-        session.setSession_ecdh_partner_digital_signature(ECDHPartnerDigitalSignature);
-        session.setSession_ecdh_partner_validity(TypeSession.StatusDSValid);
-        session.setSession_ecdh_shared_secret(Cryptography.BytetoBase64String(ECDHSharedSecret));
-        session.setSession_ecdh_partner_public_key(ECDHPartnerPubKeyText);
-
-
-
         if (message.getMessagetype() == TypeMetaMessage.MessageTypeHandshakeReplyDS) {
             profileRepository repoProfile = new profileRepository(this);
             TypeProfile profile = repoProfile.getProfile(TypeProfile.DEFAULTID);
             String RSAPrivateKey = profile.getRsa_privatekey();
             PrivateKey rsaprivkey = BytetoPrivKeyRSA(Cryptography.Base64StringtoByte(RSAPrivateKey));
 
+            SecretKey ECDHSharedSecretKey = Cryptography.GenerateECDHSharedSecret(ECDHPartnerPublicKey, ECDHSelfPrivateKey);
+            SecretKey AESSharedKey = Cryptography.GenerateAESKey(ECDHSharedSecretKey, Cryptography.PBKDF2ITERATION, Cryptography.AESKEYSIZE);
+            byte[] ECDHSharedSecret = ECDHSharedSecretKey.getEncoded();
+            byte[] AESKey = AESSharedKey.getEncoded();
+
+            // Update Database
+            session.setSession_num_message(0);
+            session.setSession_handshake_date(System.currentTimeMillis());
+            session.setSession_validity(TypeSession.StatusValid);
+            session.setSession_ecdh_aes_key(Cryptography.BytetoBase64String(AESKey));
+            session.setSession_ecdh_partner_digital_signature(ECDHPartnerDigitalSignature);
+            session.setSession_ecdh_partner_validity(TypeSession.StatusDSValid);
+            session.setSession_ecdh_shared_secret(Cryptography.BytetoBase64String(ECDHSharedSecret));
+            session.setSession_ecdh_partner_public_key(ECDHPartnerPubKeyText);
+            session.setSession_role(TypeSession.StatusRoleMaster);
+
             String ECDHSelfPubKey = session.getSession_ecdh_public_key();
             byte[] ecdhpubkey = Cryptography.Base64StringtoByte(ECDHSelfPubKey);
             byte[] digitalsignature = CreateDigitalSignatureRSA(ecdhpubkey, rsaprivkey);
             byte[] contentds = EmbedDigitalSignaturewithMessage(ecdhpubkey, digitalsignature);
+
             // Send Success Message
             MessageSender sender = new MessageSender(this);
             sender.SendSessionHandshakeSuccessMessage(Phonenumber, contentds);
             Toast.makeText(this, "Secure Session Success has been sent", Toast.LENGTH_SHORT).show();
-            IntentFeedback(RESULT_OK, IntentString.MainFeedbackCode_RefreshSessionList);
-            session.setSession_role(TypeSession.StatusRoleMaster);
+
         } else if (message.getMessagetype() == TypeMetaMessage.MessageTypeHandshakeSuccessDS) {
+            // Check if this an original request?
+            String previoussendecdhpubkey = session.getSession_ecdh_partner_public_key();
+            String previoussendds = session.getSession_ecdh_partner_digital_signature();
+
+            byte[] OldECDHPub = Cryptography.Base64StringtoByte(previoussendecdhpubkey);
+            byte[] OldDS = Cryptography.Base64StringtoByte(previoussendds);
+            byte[] NewECDHPub = Cryptography.Base64StringtoByte(ECDHPartnerPubKeyText);
+            byte[] NewDS = Cryptography.Base64StringtoByte(ECDHPartnerDigitalSignature);
+
+            if(Arrays.equals(OldECDHPub, NewECDHPub) && Arrays.equals(OldDS, NewDS))
+            {
+                SecretKey ECDHSharedSecretKey = Cryptography.GenerateECDHSharedSecret(ECDHPartnerPublicKey, ECDHSelfPrivateKey);
+                SecretKey AESSharedKey = Cryptography.GenerateAESKey(ECDHSharedSecretKey, Cryptography.PBKDF2ITERATION, Cryptography.AESKEYSIZE);
+                byte[] ECDHSharedSecret = ECDHSharedSecretKey.getEncoded();
+                byte[] AESKey = AESSharedKey.getEncoded();
+                // Update Database
+                session.setSession_num_message(0);
+                session.setSession_handshake_date(System.currentTimeMillis());
+                session.setSession_validity(TypeSession.StatusValid);
+                session.setSession_ecdh_aes_key(Cryptography.BytetoBase64String(AESKey));
+                session.setSession_ecdh_partner_digital_signature(ECDHPartnerDigitalSignature);
+                session.setSession_ecdh_partner_validity(TypeSession.StatusDSValid);
+                session.setSession_ecdh_shared_secret(Cryptography.BytetoBase64String(ECDHSharedSecret));
+                session.setSession_ecdh_partner_public_key(ECDHPartnerPubKeyText);
+                session.setSession_role(TypeSession.StatusRoleSlave);
+                Toast.makeText(this, "Secure Session has been activated", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                // Error
+                session.setSession_num_message(0);
+                session.setSession_validity(TypeSession.StatusNotValid);
+                session.setSession_ecdh_aes_key("");
+                session.setSession_ecdh_partner_digital_signature("");
+                session.setSession_ecdh_partner_validity(TypeSession.StatusDSNotValid);
+                session.setSession_ecdh_shared_secret("");
+                session.setSession_ecdh_partner_public_key("");
+                session.setSession_role(TypeSession.StatusRoleSlave);
+
+                // Send Error Message
+                Toast.makeText(this, "Secure Session Handshake Error!", Toast.LENGTH_SHORT).show();
+                MessageSender sender = new MessageSender(this);
+                sender.SendErrorHandshakeDeclined(Phonenumber);
+            }
             // Store only
-            session.setSession_role(TypeSession.StatusRoleSlave);
         }
         repoSession.update(session, Phonenumber);
-        repoMessage.delete(TimeStamp);
+        // TODO: UNCOMMENT FOR RELEASE
+        //repoMessage.delete(TimeStamp);
         IntentFeedback(RESULT_OK, IntentString.ConversationListDetailsFeedbackCode_RefreshList);
 
     }
@@ -742,7 +788,8 @@ public class ActivityMessageDetail extends AppCompatActivity {
                 sender.SendErrorHandshakeSuccessMessage(Phonenumber);
             }
         }
-        repoMessage.delete(TimeStamp);
+        // TODO: UNCOMMENT FOR RELEASE
+        //repoMessage.delete(TimeStamp);
         IntentFeedback(RESULT_OK, IntentString.ConversationListDetailsFeedbackCode_RefreshList);
 
     }

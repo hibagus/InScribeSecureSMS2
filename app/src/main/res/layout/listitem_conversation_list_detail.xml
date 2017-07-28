@@ -42,7 +42,7 @@
         android:textStyle="bold"
         android:visibility="gone" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/LinearLayout_Partner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,6 +52,7 @@
         android:layout_marginRight="0dp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
+        android:background="@color/colorLightCyan"
         android:baselineAligned="false"
         android:gravity="center"
         android:orientation="horizontal"
@@ -61,6 +62,13 @@
         android:paddingRight="0dp"
         android:paddingStart="0dp"
         android:paddingTop="0dp">
+
+        <ImageView
+            android:id="@+id/imageView_LeftPartner"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:contentDescription="@string/color_container" />
 
         <FrameLayout
             android:layout_width="60dp"
@@ -104,13 +112,32 @@
                 android:text="@string/dev_dummy_date"
                 android:textSize="14sp" />
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <TextView
+                android:id="@+id/textlist_MessageTypePartner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dev_dummy_timestamp"
+                android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/textlist_MessageTimeStampPartner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/dev_dummy_timestamp"
                 android:textSize="12sp" />
+
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView_RightPartner"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:contentDescription="@string/color_container" />
 
     </LinearLayout>
 
@@ -124,6 +151,7 @@
         android:layout_marginRight="0dp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
+        android:background="@color/colorLightGreen"
         android:baselineAligned="false"
         android:gravity="center"
         android:orientation="horizontal"
@@ -133,6 +161,13 @@
         android:paddingRight="0dp"
         android:paddingStart="0dp"
         android:paddingTop="0dp">
+
+        <ImageView
+            android:id="@+id/imageView_LeftYour"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:contentDescription="@string/color_container" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -159,6 +194,19 @@
                 android:textAlignment="textEnd"
                 android:textSize="14sp" />
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <TextView
+                android:id="@+id/textlist_MessageTypeYour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/dev_dummy_timestamp"
+                android:textAlignment="textEnd"
+                android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/textlist_MessageTimeStampYour"
                 android:layout_width="match_parent"
@@ -167,6 +215,7 @@
                 android:text="@string/dev_dummy_timestamp"
                 android:textAlignment="textEnd"
                 android:textSize="12sp" />
+
         </LinearLayout>
 
         <FrameLayout
@@ -186,6 +235,13 @@
                 android:layout_height="60dp"
                 android:contentDescription="@string/contact_photo" />
         </FrameLayout>
+
+        <ImageView
+            android:id="@+id/imageView_RightYour"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:contentDescription="@string/color_container" />
 
     </LinearLayout>
 </LinearLayout>
