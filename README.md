@@ -13,5 +13,5 @@ This application is still under development. Since this is my first time buildin
 
 Any suggestion and improvement are highly appreciated.
 
-(C)2017 Bagus Hanindhito
+(C)2017 Bagus Hanindhito, Fariz Azmi Pratama, Ulfah Nadiya
 
