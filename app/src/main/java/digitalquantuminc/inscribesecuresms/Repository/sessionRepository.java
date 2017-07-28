@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import digitalquantuminc.inscribesecuresms.DataBase.sessionDBHelper;
+import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
 import digitalquantuminc.inscribesecuresms.DataType.TypeSession;
 
 /**
@@ -31,14 +32,14 @@ public class sessionRepository {
     //region INSERT Method
     public int insert(TypeSession session) {
         // Prepare Values to be inserted
+
         ContentValues values = new ContentValues();
         values.put(TypeSession.KEY_phone, session.getPhone_number());
-        values.put(TypeSession.KEY_name, session.getName());
         values.put(TypeSession.KEY_valid, session.getSession_validity());
         values.put(TypeSession.KEY_date, session.getSession_handshake_date());
         values.put(TypeSession.KEY_role, session.getSession_role());
-        values.put(TypeSession.KEY_ecdhpriv, session.getSession_ecdh_public_key());
-        values.put(TypeSession.KEY_ecdhpub, session.getSession_ecdh_private_key());
+        values.put(TypeSession.KEY_ecdhpriv, session.getSession_ecdh_private_key());
+        values.put(TypeSession.KEY_ecdhpub, session.getSession_ecdh_public_key());
         values.put(TypeSession.KEY_ecdhpubpart, session.getSession_ecdh_partner_public_key());
         values.put(TypeSession.KEY_ecdhds, session.getSession_ecdh_partner_digital_signature());
         values.put(TypeSession.KEY_ecdhcomds, session.getSession_ecdh_partner_computed_digital_signature());
@@ -83,12 +84,11 @@ public class sessionRepository {
         // Prepare Values to be inserted
         ContentValues values = new ContentValues();
         values.put(TypeSession.KEY_phone, session.getPhone_number());
-        values.put(TypeSession.KEY_name, session.getName());
         values.put(TypeSession.KEY_valid, session.getSession_validity());
         values.put(TypeSession.KEY_date, session.getSession_handshake_date());
         values.put(TypeSession.KEY_role, session.getSession_role());
-        values.put(TypeSession.KEY_ecdhpriv, session.getSession_ecdh_public_key());
-        values.put(TypeSession.KEY_ecdhpub, session.getSession_ecdh_private_key());
+        values.put(TypeSession.KEY_ecdhpriv, session.getSession_ecdh_private_key());
+        values.put(TypeSession.KEY_ecdhpub, session.getSession_ecdh_public_key());
         values.put(TypeSession.KEY_ecdhpubpart, session.getSession_ecdh_partner_public_key());
         values.put(TypeSession.KEY_ecdhds, session.getSession_ecdh_partner_digital_signature());
         values.put(TypeSession.KEY_ecdhcomds, session.getSession_ecdh_partner_computed_digital_signature());
@@ -112,7 +112,6 @@ public class sessionRepository {
         String selectQuery = "SELECT "
                 + TypeSession.KEY_ID + ", "
                 + TypeSession.KEY_phone + ", "
-                + TypeSession.KEY_name + ", "
                 + TypeSession.KEY_valid + ", "
                 + TypeSession.KEY_date + ", "
                 + TypeSession.KEY_role + ", "
@@ -132,7 +131,6 @@ public class sessionRepository {
         if (cursor.moveToFirst()) {
             do {
                 session.setPhone_number(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_phone)));
-                session.setName(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_name)));
                 session.setSession_validity(cursor.getInt(cursor.getColumnIndex(TypeSession.KEY_valid)));
                 session.setSession_handshake_date(cursor.getLong(cursor.getColumnIndex(TypeSession.KEY_date)));
                 session.setSession_role(cursor.getInt(cursor.getColumnIndex(TypeSession.KEY_role)));
@@ -157,7 +155,6 @@ public class sessionRepository {
         String selectQuery = "SELECT "
                 + TypeSession.KEY_ID + ", "
                 + TypeSession.KEY_phone + ", "
-                + TypeSession.KEY_name + ", "
                 + TypeSession.KEY_valid + ", "
                 + TypeSession.KEY_date + ", "
                 + TypeSession.KEY_role + ", "
@@ -177,7 +174,6 @@ public class sessionRepository {
         if (cursor.moveToFirst()) {
             do {
                 session.setPhone_number(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_phone)));
-                session.setName(cursor.getString(cursor.getColumnIndex(TypeSession.KEY_name)));
                 session.setSession_validity(cursor.getInt(cursor.getColumnIndex(TypeSession.KEY_valid)));
                 session.setSession_handshake_date(cursor.getLong(cursor.getColumnIndex(TypeSession.KEY_date)));
                 session.setSession_role(cursor.getInt(cursor.getColumnIndex(TypeSession.KEY_role)));
@@ -225,7 +221,6 @@ public class sessionRepository {
         String selectQuery = "SELECT "
                 + TypeSession.KEY_ID + ", "
                 + TypeSession.KEY_phone + ", "
-                + TypeSession.KEY_name + ", "
                 + TypeSession.KEY_valid + ", "
                 + TypeSession.KEY_date + ", "
                 + TypeSession.KEY_role + ", "
@@ -247,7 +242,6 @@ public class sessionRepository {
                 HashMap<String, String> session = new HashMap<>();
                 session.put(TypeSession.KEY_ID, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ID)));
                 session.put(TypeSession.KEY_phone, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_phone)));
-                session.put(TypeSession.KEY_name, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_name)));
                 session.put(TypeSession.KEY_valid, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_valid)));
                 session.put(TypeSession.KEY_date, String.valueOf(cursor.getLong(cursor.getColumnIndex(TypeSession.KEY_date))));
                 session.put(TypeSession.KEY_role, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_role)));
@@ -273,7 +267,6 @@ public class sessionRepository {
         String selectQuery = "SELECT "
                 + TypeSession.KEY_ID + ", "
                 + TypeSession.KEY_phone + ", "
-                + TypeSession.KEY_name + ", "
                 + TypeSession.KEY_valid + ", "
                 + TypeSession.KEY_date + ", "
                 + TypeSession.KEY_role + ", "
@@ -286,8 +279,11 @@ public class sessionRepository {
                 + TypeSession.KEY_ecdhsecret + ", "
                 + TypeSession.KEY_aeskey + ", "
                 + TypeSession.KEY_nummessage + " FROM "
-                + TypeSession.TABLE + " ORDER BY "
-                + TypeSession.KEY_name + " ASC ";
+                + TypeSession.TABLE + " AS SESSION JOIN "
+                + TypeContact.TABLE + " AS CONTACT on CONTACT."
+                + TypeContact.KEY_phone + " = SESSION."
+                + TypeSession.KEY_phone + " ORDER BY CONTACT."
+                + TypeContact.KEY_name + " ASC ";
 
         ArrayList<HashMap<String, String>> sessionList = new ArrayList<>();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -296,7 +292,56 @@ public class sessionRepository {
                 HashMap<String, String> session = new HashMap<>();
                 session.put(TypeSession.KEY_ID, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ID)));
                 session.put(TypeSession.KEY_phone, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_phone)));
-                session.put(TypeSession.KEY_name, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_name)));
+                session.put(TypeSession.KEY_valid, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_valid)));
+                session.put(TypeSession.KEY_date, String.valueOf(cursor.getLong(cursor.getColumnIndex(TypeSession.KEY_date))));
+                session.put(TypeSession.KEY_role, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_role)));
+                session.put(TypeSession.KEY_ecdhpriv, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhpriv)));
+                session.put(TypeSession.KEY_ecdhpub, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhpub)));
+                session.put(TypeSession.KEY_ecdhpubpart, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhpubpart)));
+                session.put(TypeSession.KEY_ecdhds, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhds)));
+                session.put(TypeSession.KEY_ecdhcomds, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhcomds)));
+                session.put(TypeSession.KEY_ecdhvalid, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhvalid)));
+                session.put(TypeSession.KEY_ecdhsecret, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ecdhsecret)));
+                session.put(TypeSession.KEY_aeskey, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_aeskey)));
+                session.put(TypeSession.KEY_nummessage, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_nummessage)));
+                sessionList.add(session);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return sessionList;
+    }
+
+    public ArrayList<HashMap<String, String>> getValidSessionListSorted() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT "
+                + TypeSession.KEY_ID + ", "
+                + TypeSession.KEY_phone + ", "
+                + TypeSession.KEY_valid + ", "
+                + TypeSession.KEY_date + ", "
+                + TypeSession.KEY_role + ", "
+                + TypeSession.KEY_ecdhpriv + ", "
+                + TypeSession.KEY_ecdhpub + ", "
+                + TypeSession.KEY_ecdhpubpart + ", "
+                + TypeSession.KEY_ecdhds + ", "
+                + TypeSession.KEY_ecdhcomds + ", "
+                + TypeSession.KEY_ecdhvalid + ", "
+                + TypeSession.KEY_ecdhsecret + ", "
+                + TypeSession.KEY_aeskey + ", "
+                + TypeSession.KEY_nummessage + " FROM "
+                + TypeSession.TABLE + " AS SESSION JOIN "
+                + TypeContact.TABLE + " AS CONTACT on CONTACT."
+                + TypeContact.KEY_phone + " = SESSION."
+                + TypeSession.KEY_phone + " WHERE "
+                + TypeSession.KEY_valid + " = ? ORDER BY CONTACT."
+                + TypeContact.KEY_name + " ASC ";
+        ArrayList<HashMap<String, String>> sessionList = new ArrayList<>();
+        Cursor cursor = db.rawQuery(selectQuery, new String[] {String.valueOf(TypeSession.StatusValid)});
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> session = new HashMap<>();
+                session.put(TypeSession.KEY_ID, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_ID)));
+                session.put(TypeSession.KEY_phone, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_phone)));
                 session.put(TypeSession.KEY_valid, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_valid)));
                 session.put(TypeSession.KEY_date, String.valueOf(cursor.getLong(cursor.getColumnIndex(TypeSession.KEY_date))));
                 session.put(TypeSession.KEY_role, cursor.getString(cursor.getColumnIndex(TypeSession.KEY_role)));
@@ -329,7 +374,6 @@ public class sessionRepository {
         String CREATE_TABLE_SESSION = "CREATE TABLE IF NOT EXISTS " + TypeSession.TABLE + "("
                 + TypeSession.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + TypeSession.KEY_phone + " TEXT, "
-                + TypeSession.KEY_name + " TEXT, "
                 + TypeSession.KEY_valid + " INTEGER, "
                 + TypeSession.KEY_date + " INTEGER, "
                 + TypeSession.KEY_role + " INTEGER, "

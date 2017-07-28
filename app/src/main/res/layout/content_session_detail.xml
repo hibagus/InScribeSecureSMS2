@@ -281,30 +281,6 @@
                 android:layout_height="8dp" />
 
             <TextView
-                android:id="@+id/textView11"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/ecdh_partner_computedigsign" />
-
-            <EditText
-                android:id="@+id/text_PartnerComputedDigitalSignature"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="start"
-                android:inputType="textMultiLine"
-                android:labelFor="@+id/text_PartnerDigitalSignature"
-                android:maxLines="3"
-                android:minLines="3"
-                android:scrollbars="vertical"
-                android:text="@string/dev_dummy_longtext"
-                android:textSize="18sp" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="8dp" />
-
-            <TextView
                 android:id="@+id/textView22"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

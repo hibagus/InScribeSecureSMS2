@@ -21,6 +21,7 @@ public class profileRepository {
 
     //region Global Variable
     private profileDBHelper dbHelper;
+    private android.util.Log Log;
 
     //endregion
     //region Constructor
@@ -39,7 +40,7 @@ public class profileRepository {
         values.put(TypeProfile.KEY_date, profile.getGenerated_date());
         values.put(TypeProfile.KEY_rsapub, profile.getRsa_publickey());
         values.put(TypeProfile.KEY_rsapriv, profile.getRsa_privatekey());
-        values.put(TypeProfile.KEY_lastsync, profile.getRsa_privatekey());
+        values.put(TypeProfile.KEY_lastsync, profile.getLastsync());
         // Open connection to write the DB
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         // Inserting row
@@ -92,6 +93,27 @@ public class profileRepository {
                 + TypeProfile.TABLE + " WHERE "
                 + TypeProfile.KEY_ID + " = ?";
         Cursor cursor = db.rawQuery(selectQuery, new String[]{String.valueOf(profile_id)});
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
+    }
+
+    public boolean isProfileExist(String phonenum) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT "
+                + TypeProfile.KEY_ID + ", "
+                + TypeProfile.KEY_phone + ", "
+                + TypeProfile.KEY_name + ", "
+                + TypeProfile.KEY_date + ", "
+                + TypeProfile.KEY_rsapub + ", "
+                + TypeProfile.KEY_rsapriv + ", "
+                + TypeProfile.KEY_lastsync + " FROM "
+                + TypeProfile.TABLE + " WHERE "
+                + TypeProfile.KEY_phone + " = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{phonenum});
         if(cursor.getCount() <= 0){
             cursor.close();
             return false;

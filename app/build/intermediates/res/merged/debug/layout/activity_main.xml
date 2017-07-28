@@ -53,6 +53,10 @@
             layout="@layout/view_conversation_list" />
 
         <include
+            android:id="@+id/view_compose"
+            layout="@layout/view_compose" />
+
+        <include
             android:id="@+id/view_contacts_list"
             layout="@layout/view_contacts_list" />
 
@@ -63,6 +67,9 @@
         <include
             android:id="@+id/view_profile"
             layout="@layout/view_profile" />
+        <include
+            android:id="@+id/view_about"
+            layout="@layout/view_about" />
     </android.support.v4.view.ViewPager>
 
 </android.support.design.widget.CoordinatorLayout>

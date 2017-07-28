@@ -36,6 +36,10 @@
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\drawable\\abc_ic_menu_overflow_material.xml"
     },
     {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\chat.png",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\drawable\\chat.png"
+    },
+    {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_tab_indicator_material.xml",
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\drawable\\abc_tab_indicator_material.xml"
     },
@@ -84,10 +88,6 @@
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\drawable\\notification_tile_bg.xml"
     },
     {
-        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\tooltip_frame_light.xml",
-        "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\f7948f500fb4942b77015392ce0a8c6f787a84d4\\output\\res\\drawable\\tooltip_frame_light.xml"
-    },
-    {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_text_cursor_material.xml",
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\drawable\\abc_text_cursor_material.xml"
     },
@@ -102,10 +102,6 @@
     {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_clear_material.xml",
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\drawable\\abc_ic_clear_material.xml"
-    },
-    {
-        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\tooltip_frame_dark.xml",
-        "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\f7948f500fb4942b77015392ce0a8c6f787a84d4\\output\\res\\drawable\\tooltip_frame_dark.xml"
     },
     {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_indicator_material.xml",

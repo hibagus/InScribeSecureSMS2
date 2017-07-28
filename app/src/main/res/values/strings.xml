@@ -66,6 +66,43 @@
     <string name="profile_regenRSA">Regenerate RSA Key Pair</string>
     <string name="profile_update">Update Profile</string>
 
+    <string name="compose_partnername">Partner Name:</string>
+    <string name="compose_partnernum">Partner Number:</string>
+    <string name="compose_selectpartner">Select Valid Secure Session</string>
+
+    <string name="compose_plaintextsize">Message Size is %1$d byte(s)</string>
+    <string name="compose_compressedtextsize">Compressed Message Size is %1$d byte(s)</string>
+    <string name="compose_compressedtextalgorithm">Compression Algorithm is %1$s</string>
+    <string name="compose_aesivtextsize">AES CBC Initialization Vector Size is %1$d byte(s)</string>
+    <string name="compose_aesctextsize">AES Cipher Size is %1$d byte(s)</string>
+    <string name="compose_encryptedtextsize">Encrypted Message Size is %1$d byte(s)</string>
+    <string name="compose_metadatasize">Metadata Size is %1$d byte(s)</string>
+    <string name="compose_completeencryptedsize">Final Message Size is %1$d byte(s)</string>
+    <string name="compose_numberofsms">Encoded Message will be sent using %1$d SMS Message(s)</string>
+    <string name="compose_encodedtextsize">Encoded Message Size is %1$d byte(s) or %2$d character(s)</string>
+
+    <string name="compose_plaintextsize0">Message Size is 0 byte(s)</string>
+    <string name="compose_compressedtextsize0">Compressed Message Size is 0 byte(s)</string>
+    <string name="compose_compressedtextalgorithm0">Compression Algorithm is UNCOMPRESSED</string>
+    <string name="compose_aesivtextsize0">AES CBC Initialization Vector Size is 0 byte(s)</string>
+    <string name="compose_aesctextsize0">AES Cipher Size is 0 byte(s)</string>
+    <string name="compose_encryptedtextsize0">Encrypted Message Size is 0 byte(s)</string>
+    <string name="compose_metadatasize0">Metadata Size is 0 byte(s)</string>
+    <string name="compose_completeencryptedsize0">Final Message Size is 0 byte(s)</string>
+    <string name="compose_numberofsms0">Encoded Message will be sent using 0 SMS Message(s)</string>
+    <string name="compose_encodedtextsize0">Encoded Message Size is 0 byte(s) or 0 character(s)</string>
+
+    <string name="compose_plaintext">Plain Text Message:</string>
+    <string name="compose_compressedtext">Compressed Text Message:</string>
+    <string name="compose_aesivtext">AES CBC Generated Initialization Vector:</string>
+    <string name="compose_aescttext">AES Cipher Text:</string>
+    <string name="compose_encryptedtext">Encrypted Text Message:</string>
+    <string name="compose_completeencryptedtext">Final Text Message:</string>
+    <string name="compose_encodedtext">Encoded Text Message:</string>
+
+    <string name="compose_encryptmessage">Compress and Encrypt Message</string>
+    <string name="compose_sendmessage">Send Message</string>
+
     <!-- For Use in Development View Only -->
     <string name="dev_dummy_name">Fulan Bin Abi Fulan</string>
     <string name="dev_dummy_number">+6281000000000</string>
@@ -74,6 +111,55 @@
     <string name="dev_dummy_shortdate">20170602–112432</string>
     <string name="dev_dummy_status">INVALID</string>
     <string name="dev_dummy_duration">22D 12h32m</string>
+    <string name="dev_dummy_emptystring"> </string>
     <string name="dev_dummy_longtext">Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text Some of The Long Text </string>
+    <string name="title_activity_valid_session_list">ActivityValidSessionList</string>
+    <string name="title_activity_conversation_list_detail">ActivityConversationListDetail</string>
+    <string name="title_activity_message_detail">ActivityMessageDetail</string>
+
+    <string name="message_partner_name">Partner Name:</string>
+    <string name="message_partner_number">Partner Number:</string>
+    <string name="message_type">Message Type:</string>
+    <string name="message_datetimestamp">Message Timestamp:</string>
+    <string name="message_ecdh_receivedpubkey">Partner ECDH Public Key:</string>
+    <string name="message_ecdh_receivedds">Received Digital Signature:</string>
+    <string name="message_ecdh_sendpubkey">Your ECDH Public Key:</string>
+    <string name="message_ecdh_sendds">Computed Digital Signature:</string>
+    <string name="message_ecdh_calculatedds">Calculated Digital Signature:</string>
+    <string name="message_dsvalidity">Digital Signature Validity</string>
+    <string name="message_acceptsecure">Accept Secure Session</string>
+    <string name="message_activatesecure">Activate Secure Session</string>
+    <string name="message_rejectsecure">Reject Secure Session</string>
+    <string name="message_closebutton">Back</string>
+    <string name="message_decodedtextmessage">Decoded Text Message</string>
+    <string name="message_AESCT">AES Cipher Text:</string>
+    <string name="message_AESIV">AES CBC Initialization Vector:</string>
+    <string name="message_decryptedtext">Decrypted Text Message:</string>
+    <string name="message_plaintext">Plain Text Message</string>
+    <string name="message_saveplain">Save Plain Text Message</string>
+    <string name="message_content">Encoded Message Content:</string>
+    <string name="message_decryptemessage">Decode and Decrypt Message</string>
+    <string name="message_deletemessage">Delete Message</string>
+    <string name="message_clearplaintext">Clear Plain Text Message</string>
+    <string name="title_activity_about">ActivityAbout</string>
+
+    <string name="messagetype_1">Normal Uncompressed Encrypted Message</string>
+    <string name="messagetype_2">Normal Encrypted Message with Block LZ4 Compression</string>
+    <string name="messagetype_3">Normal Encrypted Message with Deflate Compression</string>
+    <string name="messagetype_4">Handshake Request Message with Digital Signature</string>
+    <string name="messagetype_5">Handshake Reply Message with Digital Signature</string>
+    <string name="messagetype_6">Handshake Success Message with Digital Signature</string>
+    <string name="messagetype_7">End Session Request Message</string>
+    <string name="messagetype_8">End Session Success Message</string>
+    <string name="messagetype_9">Error Message on Handshake Request, Digital Signature Invalid</string>
+    <string name="messagetype_10">Error Message on Handshake Reply, Digital Signature Invalid</string>
+    <string name="messagetype_11">Error Message on Handshake Success, Digital Signature Invalid</string>
+    <string name="messagetype_12">Error Message on Handshake Reply, No Secure Session Active</string>
+    <string name="messagetype_13">Error Message on Handshake: Handshake Declined</string>
+    <string name="messagetype_14">Unknown</string>
+
+    <string name="messagetype_group1">Normal Encrypted Message</string>
+    <string name="messagetype_group2">Handshake Request/Reply/Success Message</string>
+    <string name="messagetype_group3">Error Message</string>
 
 </resources>

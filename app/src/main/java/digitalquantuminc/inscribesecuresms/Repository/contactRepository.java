@@ -156,6 +156,25 @@ public class contactRepository {
         return contact_id;
     }
 
+    public boolean isContactExist(String phonenum) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT "
+                + TypeContact.KEY_ID + ", "
+                + TypeContact.KEY_name + ", "
+                + TypeContact.KEY_phone + ", "
+                + TypeContact.KEY_date + ", "
+                + TypeContact.KEY_rsapub + " FROM "
+                + TypeContact.TABLE + " WHERE "
+                + TypeContact.KEY_phone + " = ?";
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{phonenum});
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
+    }
+
     //endregion
     //region GET LIST ITEM Method
     public ArrayList<HashMap<String, String>> getContactList() {

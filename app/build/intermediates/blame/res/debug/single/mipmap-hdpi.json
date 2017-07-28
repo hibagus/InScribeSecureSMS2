@@ -4,6 +4,14 @@
         "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
     },
     {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_launcher3.png",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher3.png"
+    },
+    {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_launcher2.png",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher2.png"
+    },
+    {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_launcher.png",
         "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
     }

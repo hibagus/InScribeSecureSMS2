@@ -4,16 +4,24 @@
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\layout\\abc_activity_chooser_view_list_item.xml"
     },
     {
-        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_conversation_detail.xml",
-        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\activity_conversation_detail.xml"
-    },
-    {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_snackbar_include.xml",
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\370a42e7d6ca7c3a003db3c70c59e14b020e8811\\output\\res\\layout\\design_layout_snackbar_include.xml"
     },
     {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\view_about.xml",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\view_about.xml"
+    },
+    {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_message_detail.xml",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\activity_message_detail.xml"
+    },
+    {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_bottom_sheet_dialog.xml",
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\370a42e7d6ca7c3a003db3c70c59e14b020e8811\\output\\res\\layout\\design_bottom_sheet_dialog.xml"
+    },
+    {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\content_activity_message_detail.xml",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\content_activity_message_detail.xml"
     },
     {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_menu_item_action_area.xml",
@@ -36,6 +44,10 @@
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\layout\\notification_template_part_chronometer.xml"
     },
     {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\content_valid_session_list.xml",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\content_valid_session_list.xml"
+    },
+    {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_singlechoice_material.xml",
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\layout\\select_dialog_singlechoice_material.xml"
     },
@@ -44,8 +56,16 @@
         "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\view_contacts_list.xml"
     },
     {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\view_compose.xml",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\view_compose.xml"
+    },
+    {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\view_session_list.xml",
         "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\view_session_list.xml"
+    },
+    {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\content_activity_about.xml",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\content_activity_about.xml"
     },
     {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_tab_icon.xml",
@@ -92,6 +112,10 @@
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\layout\\abc_action_menu_layout.xml"
     },
     {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\content_activity_message_detail2.xml",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\content_activity_message_detail2.xml"
+    },
+    {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_navigation_item_separator.xml",
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\370a42e7d6ca7c3a003db3c70c59e14b020e8811\\output\\res\\layout\\design_navigation_item_separator.xml"
     },
@@ -136,6 +160,10 @@
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\370a42e7d6ca7c3a003db3c70c59e14b020e8811\\output\\res\\layout\\design_navigation_item.xml"
     },
     {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\listitem_conversation_list_detail.xml",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\listitem_conversation_list_detail.xml"
+    },
+    {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_contacts_detail.xml",
         "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\activity_contacts_detail.xml"
     },
@@ -156,8 +184,8 @@
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\layout\\notification_template_media.xml"
     },
     {
-        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\content_conversation_detail.xml",
-        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\content_conversation_detail.xml"
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_message_detail2.xml",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\activity_message_detail2.xml"
     },
     {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_item_material.xml",
@@ -168,12 +196,12 @@
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\layout\\abc_action_bar_title_item.xml"
     },
     {
-        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_radio.xml",
-        "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\layout\\abc_list_menu_item_radio.xml"
-    },
-    {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\view_conversation_list.xml",
         "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\view_conversation_list.xml"
+    },
+    {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_radio.xml",
+        "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\layout\\abc_list_menu_item_radio.xml"
     },
     {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
@@ -192,16 +220,16 @@
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\layout\\abc_action_bar_view_list_nav_layout.xml"
     },
     {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\content_activity_conversation_list_detail.xml",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\content_activity_conversation_list_detail.xml"
+    },
+    {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_simple_overlay_action_mode.xml",
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\layout\\abc_screen_simple_overlay_action_mode.xml"
     },
     {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_alert_dialog_button_bar_material.xml",
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\layout\\abc_alert_dialog_button_bar_material.xml"
-    },
-    {
-        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\tooltip.xml",
-        "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\f7948f500fb4942b77015392ce0a8c6f787a84d4\\output\\res\\layout\\tooltip.xml"
     },
     {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_checkbox.xml",
@@ -214,6 +242,10 @@
     {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\design_layout_tab_text.xml",
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\370a42e7d6ca7c3a003db3c70c59e14b020e8811\\output\\res\\layout\\design_layout_tab_text.xml"
+    },
+    {
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\listitem_conversation_list.xml",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\listitem_conversation_list.xml"
     },
     {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\view_profile.xml",
@@ -244,16 +276,16 @@
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\370a42e7d6ca7c3a003db3c70c59e14b020e8811\\output\\res\\layout\\design_layout_snackbar.xml"
     },
     {
-        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_single_message_view.xml",
-        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\activity_single_message_view.xml"
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_conversation_list_detail.xml",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\activity_conversation_list_detail.xml"
     },
     {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_multichoice_material.xml",
         "source": "C:\\Users\\Bagus Hanindhito\\.android\\build-cache\\c7c6f2c1b5f4ac90917cfacda3d8e943d4594988\\output\\res\\layout\\select_dialog_multichoice_material.xml"
     },
     {
-        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\content_single_message_view.xml",
-        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\content_single_message_view.xml"
+        "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_valid_session_list.xml",
+        "source": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\src\\main\\res\\layout\\activity_valid_session_list.xml"
     },
     {
         "merged": "E:\\Android_Studio\\InScribeSecureSMS2\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_select_dialog_material.xml",

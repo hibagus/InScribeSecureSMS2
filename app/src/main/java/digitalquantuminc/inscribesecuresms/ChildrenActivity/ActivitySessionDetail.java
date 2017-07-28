@@ -1,26 +1,41 @@
 package digitalquantuminc.inscribesecuresms.ChildrenActivity;
 
 import android.content.Intent;
+import android.icu.text.MessagePattern;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
+import digitalquantuminc.inscribesecuresms.DataType.TypeProfile;
 import digitalquantuminc.inscribesecuresms.Intent.IntentString;
+import digitalquantuminc.inscribesecuresms.Message.MessageSender;
 import digitalquantuminc.inscribesecuresms.R;
 import digitalquantuminc.inscribesecuresms.Repository.contactRepository;
+import digitalquantuminc.inscribesecuresms.Repository.profileRepository;
 import digitalquantuminc.inscribesecuresms.Repository.sessionRepository;
 import digitalquantuminc.inscribesecuresms.DataType.TypeSession;
+import digitalquantuminc.inscribesecuresms.UserInterface.Cryptography;
 import digitalquantuminc.inscribesecuresms.UserInterface.UserInterfaceColor;
+
+import static digitalquantuminc.inscribesecuresms.UserInterface.Cryptography.BytetoPrivKeyRSA;
+import static digitalquantuminc.inscribesecuresms.UserInterface.Cryptography.CreateDigitalSignatureRSA;
+import static digitalquantuminc.inscribesecuresms.UserInterface.Cryptography.EmbedDigitalSignaturewithMessage;
+import static digitalquantuminc.inscribesecuresms.UserInterface.Cryptography.GenerateECDHKeyPair;
 
 public class ActivitySessionDetail extends AppCompatActivity {
 
@@ -39,7 +54,6 @@ public class ActivitySessionDetail extends AppCompatActivity {
     EditText text_ECDHSessionPublicKey;
     EditText text_PartnerECDHSessionPublicKey;
     EditText text_PartnerDigitalSignature;
-    EditText text_PartnerComputedDigitalSignature;
     EditText text_SharedSecret;
     EditText text_SessionAESKey;
     Button btn_InitiateSession;
@@ -88,7 +102,6 @@ public class ActivitySessionDetail extends AppCompatActivity {
         text_ECDHSessionPublicKey = (EditText) findViewById(R.id.text_ECDHSessionPublicKey);
         text_PartnerECDHSessionPublicKey = (EditText) findViewById(R.id.text_PartnerECDHSessionPublicKey);
         text_PartnerDigitalSignature = (EditText) findViewById(R.id.text_PartnerDigitalSignature);
-        text_PartnerComputedDigitalSignature = (EditText) findViewById(R.id.text_PartnerComputedDigitalSignature);
         text_SharedSecret = (EditText) findViewById(R.id.text_SharedSecret);
         text_SessionAESKey = (EditText) findViewById(R.id.text_SessionAESKey);
         btn_InitiateSession = (Button) findViewById(R.id.btn_InitiateSession);
@@ -121,11 +134,11 @@ public class ActivitySessionDetail extends AppCompatActivity {
         TypeContact contact = repo2.getContact(ContactPhoneNumber);
 
         // Set Appearance based on Session
-        setTitle("Secure Session with " + session.getName());
+        setTitle("Secure Session with " + contact.getContact_name());
         UserInterfaceColor.setStatusBarColor(color, this);
         UserInterfaceColor.setTitleBackgroundColor(color, this);
 
-        text_PartnerName.setText(session.getName());
+        text_PartnerName.setText(contact.getContact_name());
         text_PartnerNumber.setText(session.getPhone_number());
 
         // Compute Partner Role
@@ -201,10 +214,6 @@ public class ActivitySessionDetail extends AppCompatActivity {
         text_PartnerDigitalSignature.setTextIsSelectable(true);
         text_PartnerDigitalSignature.setKeyListener(null);
 
-        text_PartnerComputedDigitalSignature.setText(session.getSession_ecdh_partner_computed_digital_signature());
-        text_PartnerComputedDigitalSignature.setTextIsSelectable(true);
-        text_PartnerComputedDigitalSignature.setKeyListener(null);
-
         text_SharedSecret.setText(session.getSession_ecdh_shared_secret());
         text_SharedSecret.setTextIsSelectable(true);
         text_SharedSecret.setKeyListener(null);
@@ -235,10 +244,55 @@ public class ActivitySessionDetail extends AppCompatActivity {
 
     private void btn_InitiateSession_onClick(View v) {
 
+        // Generate Keypair
+        String PartnerNumber = text_PartnerNumber.getText().toString();
+        sessionRepository repo = new sessionRepository(this);
+        profileRepository repo2 = new profileRepository(this);
+
+        TypeProfile profile = repo2.getProfile(TypeProfile.DEFAULTID);
+        String RSAPrivateKey = profile.getRsa_privatekey();
+        PrivateKey rsaprivkey = BytetoPrivKeyRSA(Cryptography.Base64StringtoByte(RSAPrivateKey));
+
+        TypeSession session = repo.getSession(PartnerNumber);
+        KeyPair ecdhkeypair = GenerateECDHKeyPair(Cryptography.ELIPTICCURVENAME);
+        byte[] ecdhpubkey = ecdhkeypair.getPublic().getEncoded();
+        byte[] ecdhprivkey = ecdhkeypair.getPrivate().getEncoded();
+        byte[] digitalsignature = CreateDigitalSignatureRSA(ecdhpubkey, rsaprivkey);
+        byte[] contentds = EmbedDigitalSignaturewithMessage(ecdhpubkey, digitalsignature);
+
+        // DEBUG
+        PublicKey ECDHPartnerPublicKey = Cryptography.BytetoPubKeyECDH(ecdhpubkey);
+        PrivateKey ECDHSelfPrivateKey = Cryptography.BytetoPrivKeyECDH(ecdhprivkey);
+
+        //update database
+        session.setSession_ecdh_private_key(Cryptography.BytetoBase64String(ecdhprivkey));
+        session.setSession_ecdh_public_key(Cryptography.BytetoBase64String(ecdhpubkey));
+        session.setSession_num_message(0);
+        session.setSession_handshake_date(System.currentTimeMillis());
+        session.setSession_role(TypeSession.StatusRoleMaster);
+        repo.update(session, PartnerNumber);
+
+
+
+        // Send Message
+        MessageSender sender = new MessageSender(this);
+        sender.SendSessionHandshakeRequestMessage(PartnerNumber,contentds);
+        Toast.makeText(this, "Secure Session Request has been sent", Toast.LENGTH_SHORT).show();
+        IntentFeedback(RESULT_OK, IntentString.MainFeedbackCode_RefreshSessionList);
     }
 
 
     private void btn_EndSession_onClick(View v) {
+        String PartnerNumber = text_PartnerNumber.getText().toString();
+        sessionRepository repo = new sessionRepository(this);
+        TypeSession session = repo.getSession(PartnerNumber);
+        session.setSession_validity(TypeSession.StatusNotValid);
+        repo.update(session, PartnerNumber);
 
+        MessageSender sender = new MessageSender(this);
+        sender.SendSessionEndRequestMessage(PartnerNumber);
+        Toast.makeText(this, "You have ended the Secure Session", Toast.LENGTH_SHORT).show();
+
+        IntentFeedback(RESULT_OK, IntentString.MainFeedbackCode_RefreshSessionList);
     }
 }

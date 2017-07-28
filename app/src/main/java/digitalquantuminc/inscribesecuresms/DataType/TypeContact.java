@@ -8,8 +8,8 @@ package digitalquantuminc.inscribesecuresms.DataType;
 public class TypeContact {
     //region SQL Table Key
     public static final String TABLE = "contact";
-    public static final String KEY_ID = "id";
-    public static final String KEY_phone = "phonenum";
+    public static final String KEY_ID = "contactid";
+    public static final String KEY_phone = "contactphonenum";
     public static final String KEY_name = "contactname";
     public static final String KEY_date = "acquisitiondate";
     public static final String KEY_rsapub = "rsapubkey";
