@@ -8,6 +8,7 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
 
 /**
  * Created by Ulfah Nadiya on 28/06/2017.
+ * Create database for saving contact information
  */
 
 public class contactDBHelper extends SQLiteOpenHelper {

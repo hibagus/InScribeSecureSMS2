@@ -14,6 +14,7 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeProfile;
 
 /**
  * Created by Fariz Azmi Pratama on 29/06/2017.
+ * Query implementation for database profile
  */
 
 public class profileRepository {

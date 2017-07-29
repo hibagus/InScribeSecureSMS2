@@ -8,6 +8,7 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeMessage;
 
 /**
  * Created by Ulfah Nadiya on 24/07/2017.
+ * Create database for saving message format
  */
 
 public class messageDBHelper extends SQLiteOpenHelper {
