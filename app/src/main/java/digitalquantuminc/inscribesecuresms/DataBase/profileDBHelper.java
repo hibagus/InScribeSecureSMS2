@@ -1,3 +1,7 @@
+/**
+ * Create database for saving profile update
+ */
+
 package digitalquantuminc.inscribesecuresms.DataBase;
 
 import android.content.ContentValues;
