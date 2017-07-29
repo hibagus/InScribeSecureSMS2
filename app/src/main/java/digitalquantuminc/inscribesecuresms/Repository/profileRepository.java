@@ -13,8 +13,7 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
 import digitalquantuminc.inscribesecuresms.DataType.TypeProfile;
 
 /**
- * Created by Bagus Hanindhito on 29/06/2017.
- * This class handle the operation for Profile Data and its SQLite Database
+ * Created by Ulfah Nadiya on 29/06/2017.
  */
 
 public class profileRepository {
