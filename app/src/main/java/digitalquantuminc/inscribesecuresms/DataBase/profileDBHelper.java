@@ -1,7 +1,3 @@
-/**
- * Create database for saving profile update
- */
-
 package digitalquantuminc.inscribesecuresms.DataBase;
 
 import android.content.ContentValues;
@@ -13,6 +9,7 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeProfile;
 
 /**
  * Created by Fariz Azmi Pratama on 28/06/2017.
+ * Create database for saving profile update
  */
 
 public class profileDBHelper extends SQLiteOpenHelper {
