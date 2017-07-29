@@ -1,3 +1,7 @@
+/**
+ * Create database for saving message format
+ */
+
 package digitalquantuminc.inscribesecuresms.DataBase;
 
 import android.content.Context;
