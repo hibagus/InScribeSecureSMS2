@@ -2,6 +2,7 @@ package digitalquantuminc.inscribesecuresms.DataType;
 
 /**
  * Created by Ulfah Nadiya on 21/07/2017.
+ * Define the TypeAESByte to handle the AES Cryptography
  */
 
 public class TypeAESByte {
