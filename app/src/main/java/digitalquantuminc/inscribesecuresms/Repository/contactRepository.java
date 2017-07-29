@@ -12,7 +12,7 @@ import digitalquantuminc.inscribesecuresms.DataBase.contactDBHelper;
 import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
 
 /**
- * Created by Fariz Azmi Pratama on 29/06/2017.
+ * Created by Ulfah Nadiya on 29/06/2017.
  */
 
 public class contactRepository {
