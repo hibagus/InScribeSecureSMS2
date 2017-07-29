@@ -3,7 +3,7 @@ package digitalquantuminc.inscribesecuresms.UserInterface;
 import java.util.HashMap;
 
 /**
- * Created by Bagus Hanindhito on 24/07/2017.
+ * Created by Fariz Azmi Pratama on 24/07/2017.
  */
 
 public class GSMEncoderDecoder {
