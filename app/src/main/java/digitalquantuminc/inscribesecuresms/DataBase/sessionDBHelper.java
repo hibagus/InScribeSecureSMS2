@@ -1,7 +1,3 @@
-/**
- * Create database for saving session information
- */
-
 package digitalquantuminc.inscribesecuresms.DataBase;
 
 import android.content.Context;
@@ -12,6 +8,7 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeSession;
 
 /**
  * Created by Fariz Azmi Pratama on 28/06/2017.
+ * Create database for saving session information
  */
 
 public class sessionDBHelper extends SQLiteOpenHelper {
