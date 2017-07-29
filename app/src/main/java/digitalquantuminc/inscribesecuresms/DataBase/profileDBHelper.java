@@ -8,9 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import digitalquantuminc.inscribesecuresms.DataType.TypeProfile;
 
 /**
- * Created by Bagus Hanindhito on 28/06/2017.
- * This class is handle SQLite Database for the Profile Database.
- * Basically, the profile DB is also an application DB that contains last state of the apps.
+ * Created by Ulfah Nadiya on 28/06/2017.
  */
 
 public class profileDBHelper extends SQLiteOpenHelper {
