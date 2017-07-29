@@ -4,6 +4,7 @@ import digitalquantuminc.inscribesecuresms.UserInterface.ByteConverter;
 
 /**
  * Created by Fariz Azmi Pratama on 23/07/2017.
+ * Define the TypeMetaMessage to handle the MetaMessage
  */
 
 public class TypeMetaMessage {
