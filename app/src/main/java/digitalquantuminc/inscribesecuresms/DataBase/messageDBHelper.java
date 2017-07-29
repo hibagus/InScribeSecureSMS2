@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import digitalquantuminc.inscribesecuresms.DataType.TypeMessage;
 
 /**
- * Created by Fariz Azmi Pratama on 24/07/2017.
+ * Created by Ulfah Nadiya on 24/07/2017.
  */
 
 public class messageDBHelper extends SQLiteOpenHelper {
