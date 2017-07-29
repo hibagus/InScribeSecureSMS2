@@ -1,7 +1,7 @@
 package digitalquantuminc.inscribesecuresms.DataType;
 
 /**
- * Created by Bagus Hanindhito on 24/07/2017.
+ * Created by Ulfah Nadiya on 24/07/2017.
  */
 
 public class TypeMessage {

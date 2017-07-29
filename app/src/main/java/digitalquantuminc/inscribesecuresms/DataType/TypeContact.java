@@ -1,7 +1,7 @@
 package digitalquantuminc.inscribesecuresms.DataType;
 
 /**
- * Created by Bagus Hanindhito on 28/06/2017.
+ * Created by Ulfah Nadiya on 28/06/2017.
  * Define the TypeContact to handle the Contact Data
  */
 

@@ -20,7 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
- * Created by Bagus Hanindhito on 22/07/2017.
+ * Created by Ulfah Nadiya on 22/07/2017.
  */
 
 public class CompressionDecompression {

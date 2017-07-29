@@ -1,7 +1,7 @@
 package digitalquantuminc.inscribesecuresms.DataType;
 
 /**
- * Created by Bagus Hanindhito on 28/06/2017.
+ * Created by Fariz Azmi Pratama on 28/06/2017.
  * Define the TypeSession to handle the Session Data
  */
 
