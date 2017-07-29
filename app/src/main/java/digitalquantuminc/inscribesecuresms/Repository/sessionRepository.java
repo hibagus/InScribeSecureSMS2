@@ -14,7 +14,7 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
 import digitalquantuminc.inscribesecuresms.DataType.TypeSession;
 
 /**
- * Created by Bagus Hanindhito on 29/06/2017.
+ * Created by Fariz Azmi Pratama on 29/06/2017.
  * This class handle the operation for Session Data and its SQLite Database
  */
 
