@@ -12,7 +12,7 @@ import digitalquantuminc.inscribesecuresms.DataBase.messageDBHelper;
 import digitalquantuminc.inscribesecuresms.DataType.TypeMessage;
 
 /**
- * Created by Bagus Hanindhito on 24/07/2017.
+ * Created by Fariz Azmi Pratama on 24/07/2017.
  */
 
 public class messageRepository {
