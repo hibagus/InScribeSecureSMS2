@@ -1,3 +1,7 @@
+/**
+ * Create database for saving contact information
+ */
+
 package digitalquantuminc.inscribesecuresms.DataBase;
 
 import android.content.Context;
