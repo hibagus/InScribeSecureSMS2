@@ -7,8 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
 
 /**
- * Created by Bagus Hanindhito on 28/06/2017.
- * This class is handle SQLite Database for the Contact Database.
+ * Created by Fariz Azmi Pratama on 28/06/2017.
  */
 
 public class contactDBHelper extends SQLiteOpenHelper {
