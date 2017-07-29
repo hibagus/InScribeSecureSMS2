@@ -7,8 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import digitalquantuminc.inscribesecuresms.DataType.TypeSession;
 
 /**
- * Created by Bagus Hanindhito on 28/06/2017.
- * This class is handle SQLite Database for the Session Database.
+ * Created by Ulfah Nadiya on 28/06/2017.
  */
 
 public class sessionDBHelper extends SQLiteOpenHelper {
