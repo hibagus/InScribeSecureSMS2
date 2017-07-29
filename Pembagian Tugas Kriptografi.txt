@@ -1,0 +1,62 @@
+java/
+-- digitalquantuminc/
+---- ChildrenActivity/
+------ ActivityContactsDetail.java (Bagus Hanindhito)
+------ ActivityConversationListDetail.java (Bagus Hanindhito)
+------ ActivityMessageDetail.java (Bagus Hanindhito)
+------ ActivitySessionDetail.java (Bagus Hanindhito)
+------ ActivityValidSessionList.java (Bagus Hanindhito)
+---- DataBase/
+------ contactDBHelper.java (Ulfah Nadiya)
+------ messageDBHelper.java (Ulfah Nadiya)
+------ profileDBHelper.java (Fariz Azmi Pratama)
+------ sessionDBHelper.java (Fariz Azmi Pratama)
+---- DataType/
+------ TypeAESByte.java (Ulfah Nadiya)
+------ TypeContact.java (Ulfah Nadiya)
+------ TypeMessage.java (Ulfah Nadiya)
+------ TypeMetaMessage.java (Fariz Azmi Pratama)
+------ TypeProfile.java (Fariz Azmi Pratama)
+------ TypeSession.java (Fariz Azmi Pratama)
+---- Development/
+------ ContactDummyData.java (Bagus Hanindhito)
+------ MessageDummyData.java (Bagus Hanindhito)
+------ ProfileDummyData.java (Bagus Hanindhito)
+------ SessionDummyData.java (Bagus Hanindhito)
+---- Intent/
+------ IntentString.java (Bagus Hanindhito)
+---- ListViewAdapter/
+------ contactListAdapter.java (Bagus Hanindhito)
+------ conversationListAdapter.java (Bagus Hanindhito)
+------ conversationListDetailAdapter.java (Bagus Hanindhito)
+------ sessionListAdapter.java (Bagus Hanindhito)
+---- ListViewHolder/
+------ contactListViewHolder.java (Bagus Hanindhito)
+------ conversationListDetailViewHolder.java (Bagus Hanindhito)
+------ conversationListViewHolder.java (Bagus Hanindhito)
+------ sessionListViewHolder.java (Bagus Hanindhito)
+---- Message/
+------ IncomingSMSListener.java (Bagus Hanindhito)
+------ MessageSender.java (Bagus Hanindhito)
+---- Repository/
+------ contactRepository.java (Ulfah Nadiya)
+------ messageRepository.java (Ulfah Nadiya)
+------ profileRepository.java (Fariz Azmi Pratama)
+------ sessionRepository.java (Fariz Azmi Pratama)
+---- UserInterface/
+------ ByteConverter.java (Bagus Hanindhito)
+------ CompressionDecompression.java (Ulfah Nadiya)
+------ Crytography.java (Bagus Hanindhito)
+------ GSMEncoderDecoder.java (Fariz Azmi Pratama)
+------ QRCodeHandler.java (Bagus Hanindhito)
+------ UserInterfaceColor.java (Bagus Hanindhito)
+---- View/
+------ Presenter.java (Bagus Hanindhito)
+------ ViewAbout.java (Bagus Hanindhito)
+------ ViewCompose.java (Bagus Hanindhito)
+------ ViewContactList.java (Bagus Hanindhito)
+------ ViewConversationList.java (Bagus Hanindhito)
+------ ViewPagerAdapter.java (Bagus Hanindhito)
+------ ViewProfile.java (Bagus Hanindhito)
+------ ViewSessionList.java (Bagus Hanindhito)
+---- ActivityMain.java (Bagus Hanindhito)
