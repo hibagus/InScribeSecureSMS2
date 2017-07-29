@@ -13,6 +13,7 @@ import digitalquantuminc.inscribesecuresms.DataType.TypeContact;
 
 /**
  * Created by Ulfah Nadiya on 29/06/2017.
+ * Query implementation for database contact
  */
 
 public class contactRepository {
